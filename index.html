@@ -56,6 +56,202 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/07/kafka集群/" class="article-date">
+  <time datetime="2017-01-07T04:16:17.000Z" itemprop="datePublished">2017-01-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/07/kafka集群/">kafka集群</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Kafka初识"><a href="#Kafka初识" class="headerlink" title="Kafka初识"></a>Kafka初识</h2><ul>
+<li><p>Kafka使用背景</p>
+<p>  在我们大量使用分布式数据库、分布式计算集群的时候，是否会遇到这样的一些问题：</p>
+<ul>
+<li>我们想分析下用户行为（pageviews），以便我们设计出更好的广告位</li>
+<li>我想对用户的搜索关键词进行统计，分析出当前的流行趋势</li>
+<li>有些数据，存储数据库浪费，直接存储硬盘效率又低</li>
+</ul>
+</li>
+<li><p>Kafka的定义</p>
+<p>  它是一个分布式消息系统,具有高水平扩展和高吞吐量的特点。</p>
+</li>
+</ul>
+<h2 id="Kafka相关概念"><a href="#Kafka相关概念" class="headerlink" title="Kafka相关概念"></a>Kafka相关概念</h2><ul>
+<li><p>AMQP协议：是一个标准开放的应用层的消息中间件（Message Oriented Middleware）协议。AMQP定义了通过网络发送的字节流的数据格式。因此兼容性非常好，任何实现AMQP协议的程序都可以和与AMQP协议兼容的其他程序交互，可以很容易做到跨语言，跨平台。</p>
+</li>
+<li><p>一些基本的概念</p>
+<ul>
+<li>消费者：（Consumer）：从消息队列中请求消息的客户端应用程序</li>
+<li>生产者：（Producer）：向broker发布消息的应用程序</li>
+<li>AMQP服务端（broker）：用来接收生产者发送的消息并将这些消息路由给服务器中的队列，便于fafka将生产者发送的消息，动态的添加到磁盘并给每一条消息一个偏移量，所以对于kafka一个broker就是一个应用程序的实例</li>
+</ul>
+</li>
+</ul>
+<p>kafka支持的客户端语言：Kafka客户端支持当前大部分主流语言，包括：C、C++、Erlang、Java、.net、perl、PHP、Python、Ruby、Go、Javascript<br>可以使用以上任何一种语言和kafka服务器进行通信（即辨析自己的consumer从kafka集群订阅消息也可以自己写producer程序）</p>
+<ul>
+<li><p>Kafka架构</p>
+<p>  生产者生产消息、kafka集群、消费者获取消息这样一种架构，如下图：</p>
+<p>  <img src="https://i.imgur.com/fFh8aZr.png" alt=""></p>
+<p>  kafka集群中的消息，是通过Topic（主题）来进行组织的，如下图：</p>
+<p>  <img src="https://i.imgur.com/yMOoyNJ.png" alt=""></p>
+<p>  一些基本的概念：</p>
+<ul>
+<li>主题（Topic）：一个主题类似新闻中的体育、娱乐、教育等分类概念，在实际工程中通常一个业务一个主题。</li>
+<li><p>分区（Partition）：一个Topic中的消息数据按照多个分区组织，分区是kafka消息队列组织的最小单位，一个分区可以看作是一个FIFO（ First Input First Output的缩写，先入先出队列）的队列。</p>
+<p>kafka分区是提高kafka性能的关键所在，当你发现你的集群性能不高时，常用手段就是增加Topic的分区，分区里面的消息是按照从新到老的顺序进行组织，消费者从队列头订阅消息，生产者从队列尾添加消息。</p>
+<p>工作图：<br><img src="https://i.imgur.com/4eSzo4r.png" alt=""></p>
+<p>备份（Replication）：为了保证分布式可靠性，kafka0.8开始对每个分区的数据进行备份（不同的Broker上），防止其中一个Broker宕机造成分区上的数据不可用。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Kafka集群搭建"><a href="#Kafka集群搭建" class="headerlink" title="Kafka集群搭建"></a>Kafka集群搭建</h2><ul>
+<li><p>软件环境</p>
+<ul>
+<li>已经搭建好的zookeeper集群(文章最后另写)</li>
+<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
+<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
+</ul>
+</li>
+<li><p>创建目录并下载安装软件</p>
+<pre><code>#下载软件
+wget https://archive.apache.org/dist/kafka/0.9.0.1/kafka_2.11-0.9.0.1.tgz
+#解压软件
+tar -xvf kafka_2.11-0.9.0.1.tgz
+</code></pre></li>
+<li><p>修改配置文件</p>
+<p>  主要关注config/server.properties     </p>
+<pre><code>broker.id=0  #当前机器在集群中的唯一标识，和zookeeper的myid性质一样
+port=9092 #当前kafka对外提供服务的端口默认是9092
+host.name = 120.76.230.134 #这个参数默认是关闭的，在0.8.1有个bug，DNS解析问题，失败率的问题
+#申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址，如果是在远程服务器上运行则必须配置
+listeners = PLAINTEXT://120.76.230.134:9092 
+advertised.host.name = 120.76.230.134
+advertised.listeners=PLAINTEXT://120.76.230.134:9092
+log.dirs=/data/kafka/kafkalogs  #消息存放的目录
+#在log.retention.hours=168 下面新增下面三项
+message.max.byte=5242880
+default.replication.factor=2
+replica.fetch.max.bytes=5242880
+zookeeper.connect=120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 #zookeeper配置地址
+</code></pre></li>
+</ul>
+<pre><code>每个机子的broker.id、host.name都是不一样的，主要是关注以上几项参数配置。
+</code></pre><ul>
+<li><p>启动Kafka集群并测试</p>
+<p>  启动服务</p>
+<pre><code>#从后台启动Kafka集群（3台都需要启动）
+cd /data/kafka/kafka_2.11-0.11.0.1/bin #进入到kafka的bin目录 
+./kafka-server-start.sh -daemon ../config/server.properties
+</code></pre><p>  检查服务是否启动</p>
+<pre><code>#执行命令jps
+22246 Bootstrap
+26393 Kafka
+</code></pre><p>  创建Topic来验证是否创建成功</p>
+<pre><code>#创建Topic
+./kafka-topics.sh --create --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 --replication-factor 2 --partitions 1 --topic test
+
+#解释
+--replication-factor 2   #复制两份
+--partitions 1 #创建1个分区
+--topic #主题为test
+
+#在一台服务器上创建一个发布者
+#创建一个broker，发布者
+./kafka-console-producer.sh --broker-list 120.76.230.134:9092 --topic test
+
+#在一台服务器上创建一个订阅者
+./kafka-console-consumer.sh --bootstrap-server 120.76.230.134:9092 --topic test --from-beginning
+</code></pre><p>  测试（在发布者那里发布消息看看订阅者那里是否能正常收到~）：</p>
+</li>
+<li><p>其他命令    </p>
+<p>  大部分命令可以去官方文档查看</p>
+<ul>
+<li><p>查看topic</p>
+<pre><code>./kafka-topics.sh --list --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181
+#就会显示我们创建的所有topic
+</code></pre><p>kafka集群搭建完毕</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="zookeeper集群部署"><a href="#zookeeper集群部署" class="headerlink" title="zookeeper集群部署"></a>zookeeper集群部署</h2><ul>
+<li><p>为什么是基数</p>
+<ul>
+<li>集群必须有一半以上的机器统一才能成为leader</li>
+<li>一半的机器挂掉 整个集群挂掉</li>
+</ul>
+</li>
+<li><p>去官网下载好zookeeper包，解压</p>
+</li>
+<li><p>修改配置/conf/zoo.cfg文件</p>
+<pre><code># 基本事件单元，以毫秒为单位，用来控制心跳和超时
+tickTime=2000
+# 参数设定了允许所有跟随者与领导者进行连接并同步的时间，如果在设定的时间段内，半数以上的跟随者未能完成同步，领导者便会宣布放弃领导地位，进行另一次的领导选举
+# 如果zk集群环境数量确实很大，同步数据的时间会变长，因此这种情况下可以适当调大该参数
+#集群中的follower服务器(F)与leader服务器(L)之间 初始连接 时能容忍的最多心跳数（tickTime的数量）
+initLimit=10
+# 参数设定了允许一个跟随者与一个领导者进行同步的时间，如果在设定的时间段内，跟随者未完成同步，它将会被集群丢弃
+# 所有关联到这个跟随者的客户端将连接到另外一个跟随着
+syncLimit=5
+# 存储持久数据的本地文件系统位置
+dataDir=/data/zookeeper-3.4.9/data
+dataLogDir=/data/zookeeper-3.4.9/logs
+# 监听客户端连接的端口
+clientPort=5181
+
+server.1=120.76.230.134:2888:3888
+server.2=120.76.193.192:2888:3888
+server.3=120.25.239.155:2888:3888
+
+#server.1 这个1是服务器的标识也可以是其他的数字， 表示这个是第几号服务器，用来标识服务器，这个标识要写到快照目录下面myid文件里
+#120.76.230.134为集群里的IP地址，第一个端口是master和slave之间的通信端口，默认是2888，第二个端口是leader选举的端口，集群刚启动的时候选举或者leader挂掉之后进行新的选举的端口默认是3888
+</code></pre><p>  zoo_sample.cfg  这个文件是官方给我们的zookeeper的样板文件，给他复制一份命名为zoo.cfg，zoo.cfg是官方指定的文件命名规则。</p>
+</li>
+<li><p>创建myid文件</p>
+<p>  /data/zookeeper-3.4.9/data目录下要配置myid文件，内容跟server.id相对应，比如:1</p>
+<p>  ./zkServer.sh star启动zookeeper，每台都要启动一遍</p>
+</li>
+<li><p>重要配置说明</p>
+<ul>
+<li><p>myid文件和server.myid  在快照目录下存放的标识本台服务器的文件，他是整个zk集群用来发现彼此的一个重要标识。</p>
+</li>
+<li><p>zoo.cfg 文件是zookeeper配置文件 在conf目录里。</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/07/kafka集群/" data-id="cjkpg59v4000a7gpxh8yqptty" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/04/快速排序/" class="article-date">
@@ -146,114 +342,7 @@ public static void quickSort(int[] arr, int L, int R) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/04/快速排序/" data-id="cjk1aaetk0005tspxu9tc1zwn" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-冒泡排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/03/冒泡排序/" class="article-date">
-  <time datetime="2016-06-03T14:16:29.000Z" itemprop="datePublished">2016-06-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/03/冒泡排序/">冒泡排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="冒泡排序就这么简单"><a href="#冒泡排序就这么简单" class="headerlink" title="冒泡排序就这么简单"></a>冒泡排序就这么简单</h2><p>排序对我们来说是一点也不陌生了，当你打Dota的时候也有天梯分，从高往下数，这个排名是有规律的，就是一种排序。</p>
-<h2 id="冒泡排序的实现"><a href="#冒泡排序的实现" class="headerlink" title="冒泡排序的实现"></a>冒泡排序的实现</h2><blockquote>
-<p>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名冒泡排序。</p>
-</blockquote>
-<p>算法描述：</p>
-<ul>
-<li>i从0开始，i与i+1比较，如果i&gt;i+1，那么就互换</li>
-<li>i不断增加，直到i&lt;n-1（n是数组元素的个数，n-1是数组已经最后一个元素） ，一趟下来，可以让数组元素中最大值排在数组的最后面</li>
-</ul>
-<p>从最简单开始，首先我们创建一个数组，该数组有6位数字：</p>
-<pre><code>int[] arrays = {8, 3, 2, 6, 7, 9};
-</code></pre><p>6位数的数组需要5躺排序的，每躺排序之后次数减1(因为前一趟已经把前一趟数的最大值确定下来了)！</p>
-<p>于是我们可以根据for循环和变量将上面的代码进行排序：</p>
-<pre><code>int temp;
-
-//外层循环是排序的趟数
-for (int i = 0; i &lt; arrays.length - 1 ; i++) {
-
-    //内层循环是当前趟数需要比较的次数
-    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
-
-        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
-        if (arrays[j] &gt; arrays[j + 1]) {
-            temp = arrays[j];
-            arrays[j] = arrays[j + 1];
-            arrays[j + 1] = temp;
-        }
-    }
-}
-</code></pre><h2 id="冒泡排序优化"><a href="#冒泡排序优化" class="headerlink" title="冒泡排序优化"></a>冒泡排序优化</h2><p>从上面的例子我们可以看出来，如果数据足够乱的情况下是需要经过5躺比较才能将数组完整排好序。但是我们在第二躺比较后就已经得到排好序的数组了。</p>
-<p>但是，我们的程序在第二趟排序后仍会执行第三趟、第四趟排序。这是没有必要的，因此我们可以对其进行优化一下：</p>
-<ul>
-<li>如果在某躺排序中没有发生交换位置，那么我们可以认为该数组已经排好序了<ul>
-<li>因为我们每趟排序的目的就是将当前趟最大的数置换到对应的位置上，没有发生置换说明就已经排好序了</li>
-</ul>
-</li>
-</ul>
-<p>代码如下：</p>
-<pre><code>//装载临时变量
-int temp;
-
-//记录是否发生了置换， 0 表示没有发生置换、 1 表示发生了置换
-int isChange;
-
-//外层循环是排序的趟数
-for (int i = 0; i &lt; arrays.length - 1; i++) {
-
-    //每比较一趟就重新初始化为0
-    isChange = 0;
-
-    //内层循环是当前趟数需要比较的次数
-    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
-
-        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
-        if (arrays[j] &gt; arrays[j + 1]) {
-            temp = arrays[j];
-            arrays[j] = arrays[j + 1];
-            arrays[j + 1] = temp;
-
-            //如果进到这里面了，说明发生置换了
-            isChange = 1;
-
-        }
-    }
-    //如果比较完一趟没有发生置换，那么说明已经排好序了，不需要再执行下去了
-    if (isChange == 0) {
-        break;
-    }
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/冒泡排序/" data-id="cjk1aaeth0004tspxa7mhbmjo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/04/快速排序/" data-id="cjkpg59v100087gpxj5yvgxvh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -435,7 +524,114 @@ public static int fibonacci(int n) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/递归/" data-id="cjk1aaetm0006tspxyxaweuxl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/递归/" data-id="cjkpg59ux00077gpx5r763pi5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-冒泡排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/03/冒泡排序/" class="article-date">
+  <time datetime="2016-06-03T14:16:29.000Z" itemprop="datePublished">2016-06-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/03/冒泡排序/">冒泡排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="冒泡排序就这么简单"><a href="#冒泡排序就这么简单" class="headerlink" title="冒泡排序就这么简单"></a>冒泡排序就这么简单</h2><p>排序对我们来说是一点也不陌生了，当你打Dota的时候也有天梯分，从高往下数，这个排名是有规律的，就是一种排序。</p>
+<h2 id="冒泡排序的实现"><a href="#冒泡排序的实现" class="headerlink" title="冒泡排序的实现"></a>冒泡排序的实现</h2><blockquote>
+<p>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名冒泡排序。</p>
+</blockquote>
+<p>算法描述：</p>
+<ul>
+<li>i从0开始，i与i+1比较，如果i&gt;i+1，那么就互换</li>
+<li>i不断增加，直到i&lt;n-1（n是数组元素的个数，n-1是数组已经最后一个元素） ，一趟下来，可以让数组元素中最大值排在数组的最后面</li>
+</ul>
+<p>从最简单开始，首先我们创建一个数组，该数组有6位数字：</p>
+<pre><code>int[] arrays = {8, 3, 2, 6, 7, 9};
+</code></pre><p>6位数的数组需要5躺排序的，每躺排序之后次数减1(因为前一趟已经把前一趟数的最大值确定下来了)！</p>
+<p>于是我们可以根据for循环和变量将上面的代码进行排序：</p>
+<pre><code>int temp;
+
+//外层循环是排序的趟数
+for (int i = 0; i &lt; arrays.length - 1 ; i++) {
+
+    //内层循环是当前趟数需要比较的次数
+    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
+
+        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
+        if (arrays[j] &gt; arrays[j + 1]) {
+            temp = arrays[j];
+            arrays[j] = arrays[j + 1];
+            arrays[j + 1] = temp;
+        }
+    }
+}
+</code></pre><h2 id="冒泡排序优化"><a href="#冒泡排序优化" class="headerlink" title="冒泡排序优化"></a>冒泡排序优化</h2><p>从上面的例子我们可以看出来，如果数据足够乱的情况下是需要经过5躺比较才能将数组完整排好序。但是我们在第二躺比较后就已经得到排好序的数组了。</p>
+<p>但是，我们的程序在第二趟排序后仍会执行第三趟、第四趟排序。这是没有必要的，因此我们可以对其进行优化一下：</p>
+<ul>
+<li>如果在某躺排序中没有发生交换位置，那么我们可以认为该数组已经排好序了<ul>
+<li>因为我们每趟排序的目的就是将当前趟最大的数置换到对应的位置上，没有发生置换说明就已经排好序了</li>
+</ul>
+</li>
+</ul>
+<p>代码如下：</p>
+<pre><code>//装载临时变量
+int temp;
+
+//记录是否发生了置换， 0 表示没有发生置换、 1 表示发生了置换
+int isChange;
+
+//外层循环是排序的趟数
+for (int i = 0; i &lt; arrays.length - 1; i++) {
+
+    //每比较一趟就重新初始化为0
+    isChange = 0;
+
+    //内层循环是当前趟数需要比较的次数
+    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
+
+        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
+        if (arrays[j] &gt; arrays[j + 1]) {
+            temp = arrays[j];
+            arrays[j] = arrays[j + 1];
+            arrays[j + 1] = temp;
+
+            //如果进到这里面了，说明发生置换了
+            isChange = 1;
+
+        }
+    }
+    //如果比较完一趟没有发生置换，那么说明已经排好序了，不需要再执行下去了
+    if (isChange == 0) {
+        break;
+    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/03/冒泡排序/" data-id="cjkpg59vz000k7gpxs21fve89" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -696,439 +892,7 @@ public class EmpAction {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/11/Mybatis【与Spring整合】/" data-id="cjk1aaeu1000gtspxlo5leybo" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Mybatis【入门】" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/10/Mybatis【入门】/" class="article-date">
-  <time datetime="2016-04-10T13:10:08.000Z" itemprop="datePublished">2016-04-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/10/Mybatis【入门】/">mybatis【入门】</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是MyBatis"><a href="#什么是MyBatis" class="headerlink" title="什么是MyBatis"></a>什么是MyBatis</h2><p>Spring是一个开源框架，它由Rod Johnson创建。它是为了解决企业应用开发的复杂性而创建的。</p>
-<blockquote>
-<p>MyBatis 本是apache的一个开源项目iBatis, 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis。是一个基于Java的持久层框架</p>
-</blockquote>
-<h2 id="为什么我们要用Mybatis？"><a href="#为什么我们要用Mybatis？" class="headerlink" title="为什么我们要用Mybatis？"></a>为什么我们要用Mybatis？</h2><p>无论是Mybatis、Hibernate都是ORM的一种实现框架，都是对JDBC的一种封装！</p>
-<p><img src="https://i.imgur.com/pUCRpyB.png" alt=""></p>
-<p>我们已经在持久层中学了几种技术了…</p>
-<ul>
-<li>Hibernate</li>
-<li>jdbc</li>
-<li>SpringDAO</li>
-</ul>
-<p>那我们为啥还要学Mybatis呢？？？现在Mybatis在业内大行其道，那为啥他能那么火呢？？</p>
-<p>Hibernate是一个比较老旧的框架，用过他的同学都知道，只要你会用，用起来十分舒服…啥sql代码都不用写…但是呢，它也是有的缺点：：处理复杂业务时，灵活度差, 复杂的HQL难写难理解，例如多表查询的HQL语句</p>
-<p>而JDBC很容易理解，就那么几个固定的步骤，就是开发起来太麻烦了，因为什么都要我们自己干</p>
-<p>而SpringDAO其实就是JDBC的一层封装，就类似于dbutils一样，没有特别出彩的地方</p>
-<p>我们可以认为，Mybatis就是jdbc和Hibernate之间的一个平衡点…毕竟现在业界都是用这个框架，我们也不能不学呀！</p>
-<h2 id="Mybatis快速入门"><a href="#Mybatis快速入门" class="headerlink" title="Mybatis快速入门"></a>Mybatis快速入门</h2><p>我们已经学过了Hibernate了，对于Mybatis入门其实就非常类似的，因此就很简单就能掌握基本的开发了。</p>
-<h4 id="导入开发包"><a href="#导入开发包" class="headerlink" title="导入开发包"></a>导入开发包</h4><p>导入Mybatis开发包</p>
-<ul>
-<li>mybatis-3.1.1.jar</li>
-<li>commons-logging-1.1.1.jar</li>
-<li>log4j-1.2.16.jar</li>
-<li>cglib-2.2.2.jar</li>
-<li>asm-3.3.1.jar</li>
-</ul>
-<p>导入mysql/oracle开发包</p>
-<ul>
-<li>mysql-connector-java-5.1.7-bin.jar</li>
-<li>Oracle 11g 11.2.0.1.0 JDBC_ojdbc6.jar</li>
-</ul>
-<h4 id="准备测试工作"><a href="#准备测试工作" class="headerlink" title="准备测试工作"></a>准备测试工作</h4><p>创建一张表:</p>
-<pre><code>create table students(
-  id  int(5) primary key,
-  name varchar(10),
-  sal double(8,2)
-);
-</code></pre><p>创建实体：</p>
-<pre><code>/**
- * Created by xing on 2017/7/21.
- */
-
-public class Student {
-    private Integer id;
-    private String name;
-    private Double sal;
-
-    public Student() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getSal() {
-        return sal;
-    }
-
-    public void setSal(Double sal) {
-        this.sal = sal;
-    }
-}
-</code></pre><h4 id="创建mybatis配置文件"><a href="#创建mybatis配置文件" class="headerlink" title="创建mybatis配置文件"></a>创建mybatis配置文件</h4><p>创建mybatis的配置文件，配置数据库的信息,数据库我们可以配置多个，但是默认的只能用一个.</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-
-&lt;configuration&gt;
-
-
-    &lt;!-- 加载类路径下的属性文件 --&gt;
-    &lt;properties resource=&quot;db.properties&quot;/&gt;
-
-    &lt;!-- 设置一个默认的连接环境信息 --&gt;
-    &lt;environments default=&quot;mysql_developer&quot;&gt;
-        &lt;!-- 连接环境信息，取一个任意唯一的名字 --&gt;
-        &lt;environment id=&quot;mysql_developer&quot;&gt;
-            &lt;!-- mybatis使用jdbc事务管理方式 --&gt;
-            &lt;transactionManager type=&quot;jdbc&quot;/&gt;
-            &lt;!-- mybatis使用连接池方式来获取连接 --&gt;
-            &lt;dataSource type=&quot;pooled&quot;&gt;
-                &lt;!-- 配置与数据库交互的4个必要属性 --&gt;
-                &lt;property name=&quot;driver&quot; value=&quot;${mysql.driver}&quot;/&gt;
-                &lt;property name=&quot;url&quot; value=&quot;${mysql.url}&quot;/&gt;
-                &lt;property name=&quot;username&quot; value=&quot;${mysql.username}&quot;/&gt;
-                &lt;property name=&quot;password&quot; value=&quot;${mysql.password}&quot;/&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-
-
-        &lt;!-- 连接环境信息，取一个任意唯一的名字 --&gt;
-        &lt;environment id=&quot;oracle_developer&quot;&gt;
-            &lt;!-- mybatis使用jdbc事务管理方式 --&gt;
-            &lt;transactionManager type=&quot;jdbc&quot;/&gt;
-            &lt;!-- mybatis使用连接池方式来获取连接 --&gt;
-            &lt;dataSource type=&quot;pooled&quot;&gt;
-                &lt;!-- 配置与数据库交互的4个必要属性 --&gt;
-                &lt;property name=&quot;driver&quot; value=&quot;${oracle.driver}&quot;/&gt;
-                &lt;property name=&quot;url&quot; value=&quot;${oracle.url}&quot;/&gt;
-                &lt;property name=&quot;username&quot; value=&quot;${oracle.username}&quot;/&gt;
-                &lt;property name=&quot;password&quot; value=&quot;${oracle.password}&quot;/&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-
-
-&lt;/configuration&gt;
-</code></pre><h4 id="编写工具类测试是否获取到连接"><a href="#编写工具类测试是否获取到连接" class="headerlink" title="编写工具类测试是否获取到连接"></a>编写工具类测试是否获取到连接</h4><p>使用Mybatis的API来创建一个工具类，通过mybatis配置文件与数据库的信息，得到Connection对象</p>
-<pre><code>package cn.javaee.mybatis.util;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.sql.Connection;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-/**
- * 工具类
- * @author xing
- */
-public class MybatisUtil {
-    private static ThreadLocal&lt;SqlSession&gt; threadLocal = new ThreadLocal&lt;SqlSession&gt;();
-    private static SqlSessionFactory sqlSessionFactory;
-    /**
-     * 加载位于src/mybatis.xml配置文件
-     */
-    static{
-        try {
-            Reader reader = Resources.getResourceAsReader(&quot;mybatis.xml&quot;);
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-    /**
-     * 禁止外界通过new方法创建 
-     */
-    private MybatisUtil(){}
-    /**
-     * 获取SqlSession
-     */
-    public static SqlSession getSqlSession(){
-        //从当前线程中获取SqlSession对象
-        SqlSession sqlSession = threadLocal.get();
-        //如果SqlSession对象为空
-        if(sqlSession == null){
-            //在SqlSessionFactory非空的情况下，获取SqlSession对象
-            sqlSession = sqlSessionFactory.openSession();
-            //将SqlSession对象与当前线程绑定在一起
-            threadLocal.set(sqlSession);
-        }
-        //返回SqlSession对象
-        return sqlSession;
-    }
-    /**
-     * 关闭SqlSession与当前线程分开
-     */
-    public static void closeSqlSession(){
-        //从当前线程中获取SqlSession对象
-        SqlSession sqlSession = threadLocal.get();
-        //如果SqlSession对象非空
-        if(sqlSession != null){
-            //关闭SqlSession对象
-            sqlSession.close();
-            //分开当前线程与SqlSession对象的关系，目的是让GC尽早回收
-            threadLocal.remove();
-        }
-    }   
-    /**
-     * 测试
-     */
-    public static void main(String[] args) {
-        Connection conn = MybatisUtil.getSqlSession().getConnection();
-        System.out.println(conn!=null?&quot;连接成功&quot;:&quot;连接失败&quot;);
-    }
-}
-</code></pre><h4 id="创建实体与映射关系文件"><a href="#创建实体与映射关系文件" class="headerlink" title="创建实体与映射关系文件"></a>创建实体与映射关系文件</h4><p>配置实体与表的映射关系</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
-&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;!-- namespace属性是名称空间，必须唯一 --&gt;
-&lt;mapper namespace=&quot;cn.com.Student&quot;&gt;    
-
-    &lt;!-- resultMap标签:映射实体与表 
-         type属性：表示实体全路径名
-         id属性：为实体与表的映射取一个任意的唯一的名字
-    --&gt;
-    &lt;resultMap type=&quot;student&quot; id=&quot;studentMap&quot;&gt;
-        &lt;!-- id标签:映射主键属性
-             result标签：映射非主键属性
-             property属性:实体的属性名
-             column属性：表的字段名  
-        --&gt;                         
-        &lt;id property=&quot;id&quot; column=&quot;id&quot;/&gt;
-        &lt;result property=&quot;name&quot; column=&quot;name&quot;/&gt;
-        &lt;result property=&quot;sal&quot; column=&quot;sal&quot;/&gt;
-    &lt;/resultMap&gt;
-
-&lt;/mapper&gt;
-</code></pre><p>现在我们已经有了Mybatis的配置文件和表与实体之前的映射文件了，因此我们要将配置文件和映射文件关联起来</p>
-<pre><code>&lt;mappers&gt;
-    &lt;mapper resource=&quot;StudentMapper.xml&quot;/&gt;
-&lt;/mappers&gt;
-</code></pre><h4 id="编写DAO"><a href="#编写DAO" class="headerlink" title="编写DAO"></a>编写DAO</h4><pre><code>public class StudentDao {
-
-
-    public void add(Student student) throws Exception {
-        //得到连接对象
-        SqlSession sqlSession = MybatisUtil.getSqlSession();
-        sqlSession.insert();
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        StudentDao studentDao = new StudentDao();
-
-        Student student = new Student(1, &quot;zhongfucheng&quot;, 10000D);
-        studentDao.add(student);
-
-    }
-}
-</code></pre><p>到现在为止，我们实体与表的映射文件仅仅映射了实体属性与表的字段的关系,而我们Mybatis是需要自己手动编写SQL代码,在实体与表的映射文件中写。</p>
-<p><strong>==Mybatis实体与表的映射文件中提供了insert标签==【SQL代码片段】供我们使用</strong></p>
-<pre><code>//在JDBC中我们通常使用?号作为占位符，而在Mybatis中，我们是使用#{}作为占位符
-//parameterType我们指定了传入参数的类型
-//#{}实际上就是调用了Student属性的get方法
-
-&lt;insert id=&quot;add&quot; parameterType=&quot;Student&quot;&gt;
-
-    INSERT INTO ZHONGFUCHENG.STUDENTS (ID, NAME, SAL) VALUES (#{id},#{name},#{sal});
-&lt;/insert&gt;
-</code></pre><p>在程序中调用映射文件的SQL代码片段</p>
-<pre><code>public void add(Student student) throws Exception {
-    //得到连接对象
-    SqlSession sqlSession = MybatisUtil.getSqlSession();
-    try{
-        //映射文件的命名空间.SQL片段的ID，就可以调用对应的映射文件中的SQL
-        sqlSession.insert(&quot;StudentID.add&quot;, student);
-        sqlSession.commit();
-    }catch(Exception e){
-        e.printStackTrace();
-        sqlSession.rollback();
-        throw e;
-    }finally{
-        MybatisUtil.closeSqlSession();
-    }
-}
-</code></pre><p>值得注意的是：Mybatis中的事务是默认开启的，因此我们在完成操作以后，需要我们手动去提交事务！</p>
-<h4 id="Mybatis工作流程"><a href="#Mybatis工作流程" class="headerlink" title="Mybatis工作流程"></a>Mybatis工作流程</h4><ul>
-<li>通过Reader对象读取Mybatis映射文件</li>
-<li>通过SqlSessionFactoryBuilder对象创建SqlSessionFactory对象</li>
-<li>获取当前线程的SQLSession</li>
-<li>事务默认开启</li>
-<li>通过SQLSession读取映射文件中的操作编号，从而读取SQL语句</li>
-<li>提交事务</li>
-<li>关闭资源</li>
-</ul>
-<h4 id="Mybatis分页"><a href="#Mybatis分页" class="headerlink" title="Mybatis分页"></a>Mybatis分页</h4><p>分页是一个非常实用的技术点，我们也来学习一下使用Mybatis是怎么分页的!</p>
-<p>我们的分页是需要多个参数的，并不是像我们之前的例子中只有一个参数。当需要接收多个参数的时候，我们使用Map集合来装载！</p>
-<pre><code>public List&lt;Student&gt;  pagination(int start ,int end) throws Exception {
-    //得到连接对象
-    SqlSession sqlSession = MybatisUtil.getSqlSession();
-    try{
-        //映射文件的命名空间.SQL片段的ID，就可以调用对应的映射文件中的SQL
-
-
-        /**
-         * 由于我们的参数超过了两个，而方法中只有一个Object参数收集
-         * 因此我们使用Map集合来装载我们的参数
-         */
-        Map&lt;String, Object&gt; map = new HashMap();
-        map.put(&quot;start&quot;, start);
-        map.put(&quot;end&quot;, end);
-        return sqlSession.selectList(&quot;StudentID.pagination&quot;, map);
-    }catch(Exception e){
-        e.printStackTrace();
-        sqlSession.rollback();
-        throw e;
-    }finally{
-        MybatisUtil.closeSqlSession();
-    }
-}
-public static void main(String[] args) throws Exception {
-    StudentDao studentDao = new StudentDao();
-    List&lt;Student&gt; students = studentDao.pagination(0, 3);
-    for (Student student : students) {
-
-        System.out.println(student.getId());
-
-    }
-
-}
-</code></pre><p>那么在实体与表映射文件中，我们接收的参数就是map集合</p>
-<pre><code>&lt;!--分页查询--&gt;
-&lt;select id=&quot;pagination&quot; parameterType=&quot;map&quot; resultMap=&quot;studentMap&quot;&gt;
-
-    /*根据key自动找到对应Map集合的value*/
-    select * from students limit #{start},#{end};
-
-&lt;/select&gt;
-</code></pre><h2 id="Mapper代理方式"><a href="#Mapper代理方式" class="headerlink" title="Mapper代理方式"></a>Mapper代理方式</h2><p>Mapper代理方式的意思就是：程序员只需要写dao接口，dao接口实现对象由mybatis自动生成代理对象。</p>
-<p>我们可以发现DaoImpl是十分重复的：</p>
-<ul>
-<li>dao的实现类中存在重复代码，整个mybatis操作的过程代码模板重复（先创建sqlsession、调用sqlsession的方法、关闭sqlsession）</li>
-<li>dao的实现 类中存在硬编码，调用sqlsession方法时将statement的id硬编码。</li>
-</ul>
-<p>以前的重复代码和硬编码如下：</p>
-<pre><code>public class StudentDao {
-
-    public void add(Student student) throws Exception {
-        //得到连接对象
-        SqlSession sqlSession = MybatisUtil.getSqlSession();
-        try{
-            //映射文件的命名空间.SQL片段的ID，就可以调用对应的映射文件中的SQL
-            sqlSession.insert(&quot;StudentID.add&quot;, student);
-            sqlSession.commit();
-        }catch(Exception e){
-            e.printStackTrace();
-            sqlSession.rollback();
-            throw e;
-        }finally{
-            MybatisUtil.closeSqlSession();
-        }
-    }
-    public static void main(String[] args) throws Exception {
-        StudentDao studentDao = new StudentDao();
-        Student student = new Student(3, &quot;zhong3&quot;, 10000D);
-        studentDao.add(student);
-    }
-}
-</code></pre><h4 id="Mapper开发规范"><a href="#Mapper开发规范" class="headerlink" title="Mapper开发规范"></a>Mapper开发规范</h4><p>想要Mybatis帮我们自动生成Mapper代理的话，我们需要遵循以下的规范：</p>
-<ul>
-<li>mapper.xml中namespace指定为mapper接口的全限定名<ul>
-<li>此步骤目的：通过mapper.xml和mapper.java进行关联</li>
-</ul>
-</li>
-<li>mapper.xml中statement的id就是mapper.java中方法名</li>
-<li>mapper.xml中statement的parameterType和mapper.java中方法输入参数类型一致</li>
-<li>mapper.xml中statement的resultType和mapper.java中方法返回值类型一致</li>
-</ul>
-<p>==<strong>再次说明</strong>：statement就是我们在mapper.xml文件中命名空间+sql指定的id==</p>
-<h4 id="Mapper代理返回值问题"><a href="#Mapper代理返回值问题" class="headerlink" title="Mapper代理返回值问题"></a>Mapper代理返回值问题</h4><p>mapper接口方法返回值：</p>
-<ul>
-<li>如果是返回的单个对象，返回值类型是pojo类型，生成的代理对象内部通过selectOne获取记录</li>
-<li>如果返回值类型是集合对象，生成的代理对象内部通过selectList获取记录</li>
-</ul>
-<h4 id="Mybatis解决JDBC编程的问题"><a href="#Mybatis解决JDBC编程的问题" class="headerlink" title="Mybatis解决JDBC编程的问题"></a>Mybatis解决JDBC编程的问题</h4><ul>
-<li>数据库链接创建、释放频繁造成系统资源浪费从而影响系统性能，如果使用数据库链接池可解决此问题。<ul>
-<li>解决：在SqlMapConfig.xml中配置数据链接池，使用连接池管理数据库链接。</li>
-</ul>
-</li>
-<li>Sql语句写在代码中造成代码不易维护，实际应用sql变化的可能较大，sql变动需要改变java代码。<ul>
-<li>解决：将Sql语句配置在XXXXmapper.xml文件中与java代码分离。</li>
-</ul>
-</li>
-<li>向sql语句传参数麻烦，因为sql语句的where条件不一定，可能多也可能少，占位符需要和参数一一对应。<ul>
-<li>解决：Mybatis自动将java对象映射至sql语句，通过statement中的parameterType定义输入参数的类型。</li>
-</ul>
-</li>
-<li>对结果集解析麻烦，sql变化导致解析代码变化，且解析前需要遍历，如果能将数据库记录封装成pojo对象解析比较方便。<ul>
-<li>解决：Mybatis自动将sql执行结果映射至java对象，通过statement中的resultType定义输出结果的类型。</li>
-</ul>
-</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>Mybatis的准备工作与Hibernate差不多，都需要一个总配置文件、一个映射文件。</li>
-<li>Mybatis的SQLSession工具类使用ThreadLocal来对线程中的Session来进行管理。</li>
-<li>Mybatis的事务默认是开启的，需要我们手动去提交事务。</li>
-<li>Mybatis的SQL语句是需要手写的，在程序中通过映射文件的命名空间.sql语句的id来进行调用!</li>
-<li>在Mybatis中，增删改查都是需要我们自己写SQL语句的，然后在程序中调用即可了。SQL由于是我们自己写的，于是就相对Hibernate灵活一些。</li>
-<li>如果需要传入多个参数的话，那么我们一般在映射文件中用Map来接收。<br>由于我们在开发中会经常用到条件查询，Mybatis的话，我们是自己手写SQL代码的。</li>
-<li>Mapper的代理方式简化开发<ul>
-<li>命名空间要与JavaBean的全类名相同</li>
-<li>sql片段语句的id要与Dao接口的方法名相同</li>
-<li>方法的参数和返回值要与SQL片段的接收参数类型和返回类型相同</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/10/Mybatis【入门】/" data-id="cjk1aaeuf000ktspxnvj1yuly" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/11/Mybatis【与Spring整合】/" data-id="cjkpg59v7000b7gpx32zrogyn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
