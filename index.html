@@ -56,6 +56,248 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-redis入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/10/redis入门/" class="article-date">
+  <time datetime="2017-05-10T11:06:07.000Z" itemprop="datePublished">2017-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/10/redis入门/">redis入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装gcc"><a href="#安装gcc" class="headerlink" title="安装gcc"></a>安装gcc</h2><ul>
+<li><p>Redis在linux上的安装首先必须先安装gcc，这个是用来编译redis的源文件的。首先需要先切换的到root用户：</p>
+<pre><code>[chenjx@localhost ~]$ su
+Password: 
+[root@localhost chenjx]#
+</code></pre></li>
+<li><p>然后开始安装gcc:</p>
+<pre><code>//这个命令是在线安装的，所以在这之前你的PC必须能够上网
+[root@localhost /]# yum install gcc-c++
+</code></pre></li>
+</ul>
+<h2 id="解压redis的源文件"><a href="#解压redis的源文件" class="headerlink" title="解压redis的源文件"></a>解压redis的源文件</h2><pre><code>[root@localhost chenjx]# cd Desktop/
+[root@localhost Desktop]# ls
+redis-4.0.1.tar.gz
+[root@localhost Desktop]# tar zxvf redis-4.0.1.tar.gz 
+redis-4.0.1/
+redis-4.0.1/.gitignore
+redis-4.0.1/00-RELEASENOTES
+redis-4.0.1/BUGS
+redis-4.0.1/CONTRIBUTING
+</code></pre><h2 id="进入redis的解压目录"><a href="#进入redis的解压目录" class="headerlink" title="进入redis的解压目录"></a>进入redis的解压目录</h2><pre><code>[root@localhost Desktop]# ls
+redis-4.0.1  redis-4.0.1.tar.gz
+[root@localhost Desktop]# cd redis-4.0.1/
+</code></pre><h2 id="使用make命令编译"><a href="#使用make命令编译" class="headerlink" title="使用make命令编译"></a>使用make命令编译</h2><pre><code>[root@localhost redis-4.0.1]# make
+
+//出现以下信息即是编译成功
+CC notify.o
+CC setproctitle.o
+CC blocked.o
+CC hyperloglog.o
+CC latency.o
+CC sparkline.o
+CC redis-check-rdb.o
+CC redis-check-aof.o
+CC geo.o
+CC lazyfree.o
+CC module.o
+CC evict.o
+CC expire.o
+CC geohash.o
+CC geohash_helper.o
+CC childinfo.o
+CC defrag.o
+CC siphash.o
+CC rax.o
+LINK redis-server
+INSTALL redis-sentinel
+CC redis-cli.o
+LINK redis-cli
+CC redis-benchmark.o
+LINK redis-benchmark
+INSTALL redis-check-rdb
+INSTALL redis-check-aof
+</code></pre><p>进入解压的src目录下</p>
+<pre><code>[root@localhost redis-4.0.1]# cd src
+</code></pre><p>运行make test测试是否可以安装,检查的一大堆，都是绿色的ok。这就可以了</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>[root@localhost src]# make PREFIX=/usr/local/redis install 
+</code></pre><p>安装成功后，去/usr/local/redis/bin目录看，会发现如下文件：</p>
+<p><img src="https://i.imgur.com/esFeEOX.png" alt=""></p>
+<p>都是一个个工具命令</p>
+<p>然后把解压的redis路径下的redis.conf文件拷贝到安装路径/usr/local/redis下面</p>
+<pre><code>[root@localhost redis-4.0.1]# cp redis.conf /usr/local/redis
+[root@localhost redis-4.0.1]# cd /usr/local/redis
+[root@localhost redis]# ls
+bin  redis.conf
+</code></pre><p>到这里redis已经安装成功了。</p>
+<h2 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h2><h4 id="第一种方法：进入安装路径下的bin"><a href="#第一种方法：进入安装路径下的bin" class="headerlink" title="第一种方法：进入安装路径下的bin"></a>第一种方法：进入安装路径下的bin</h4><pre><code>[root@localhost redis]# cd bin
+[root@localhost bin]# ./redis-server
+</code></pre><p>但是这属于前端启动，启动redis之后，我们的控制台就不能进行任何操作了。只能ctrl+c停止启动。</p>
+<h4 id="第二种方法：后端启动"><a href="#第二种方法：后端启动" class="headerlink" title="第二种方法：后端启动"></a>第二种方法：后端启动</h4><ul>
+<li><p>首先编辑redis.conf</p>
+<p>  [root@localhost redis]# vim redis.conf</p>
+</li>
+<li><p>找到daemonize no将其改为yes</p>
+</li>
+<li><p>再次启动 </p>
+<pre><code>[root@localhost redis]# ls
+bin  redis.conf
+[root@localhost redis]# ./bin/redis-server ./redis.conf
+//这里加载配置文件
+
+80167:C 30 Jul 16:01:58.145 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+80167:C 30 Jul 16:01:58.145 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=80167, just started
+80167:C 30 Jul 16:01:58.145 # Configuration loaded
+</code></pre></li>
+</ul>
+<p>这样redis就启动了</p>
+<pre><code>可以通过
+ps -ef|grep redis
+来查看是否启动
+</code></pre><p>关闭redis</p>
+<pre><code>[root@localhost redis]# ./bin/redis-cli shutdown
+</code></pre><h2 id="简单的使用"><a href="#简单的使用" class="headerlink" title="简单的使用"></a>简单的使用</h2><pre><code>//首先链接客户端
+[root@localhost redis]# ./bin/redis-cli
+//检查网络是否可以
+127.0.0.1:6379&gt; ping
+PONG
+//设置一个键值对
+127.0.0.1:6379&gt; set name chenjx
+OK
+//获取刚刚设置的键值对
+127.0.0.1:6379&gt; get name
+&quot;chenjx&quot;
+//查看所有的键
+127.0.0.1:6379&gt; keys *
+1) &quot;name&quot;
+//删除name这个键
+127.0.0.1:6379&gt; del name
+(integer) 1
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt;
+</code></pre><h2 id="设置登录密码"><a href="#设置登录密码" class="headerlink" title="设置登录密码"></a>设置登录密码</h2><p>redis在生产环境中通常都会设置密码以保证一定的安全性</p>
+<h4 id="首先修改redis-conf"><a href="#首先修改redis-conf" class="headerlink" title="首先修改redis.conf"></a>首先修改redis.conf</h4><p>打开redis.conf文件，搜索requirepass关键字</p>
+<pre><code>################################## SECURITY ###################################
+
+# Require clients to issue AUTH &lt;PASSWORD&gt; before processing any other
+# commands.  This might be useful in environments in which you do not trust
+# others with access to the host running redis-server.
+#
+# This should stay commented out for backward compatibility and because most
+# people do not need auth (e.g. they run their own servers).
+#
+# Warning: since Redis is pretty fast an outside user can try up to
+# 150k passwords per second against a good box. This means that you should
+# use a very strong password otherwise it will be very easy to break.
+#
+# requirepass foobared
+</code></pre><p>关注标记的那一行，#requirepass foobared。设置密码的方法就是去掉注释的#，把foobared替换成自己的密码即可，例如将密码设置为123456： </p>
+<pre><code>################################## SECURITY ###################################
+
+# Require clients to issue AUTH &lt;PASSWORD&gt; before processing any other
+# commands.  This might be useful in environments in which you do not trust
+# others with access to the host running redis-server.
+#
+# This should stay commented out for backward compatibility and because most
+# people do not need auth (e.g. they run their own servers).
+#
+# Warning: since Redis is pretty fast an outside user can try up to
+# 150k passwords per second against a good box. This means that you should
+# use a very strong password otherwise it will be very easy to break.
+#
+requirepass 123456
+</code></pre><p>修改完成后重启redis，再次通过redis客户端redis-cli登录并操作可以发现会报一个身份认证错误：</p>
+<p><img src="https://i.imgur.com/sR9PtPZ.png" alt=""></p>
+<p>这就说明我们已经成功的设置了密码，所以通过客户端连接的话必须加上密码参数才能正常连接： </p>
+<p><img src="https://i.imgur.com/EpEgFQr.png" alt=""></p>
+<p>如上图所示，加了-a参数之后即可正常连接并操作redis。</p>
+<h2 id="jedis连接设置密码"><a href="#jedis连接设置密码" class="headerlink" title="jedis连接设置密码"></a>jedis连接设置密码</h2><p>当我们用Java客户端连接redis时会遇到同样的问题，下面看一段简单的jedis连接redis的测试代码：</p>
+<pre><code>@Test
+public void testTwo() {
+    Jedis jedis = new Jedis(&quot;192.168.145.10&quot;);
+    System.out.println(&quot;Connection to server sucessfully&quot;);
+    // 查看服务是否运行
+    System.out.println(&quot;Server is running: &quot; + jedis.ping());
+}
+</code></pre><p>运行junit后我们发现报异常了：</p>
+<pre><code>redis.clients.jedis.exceptions.JedisDataException: NOAUTH Authentication required.
+at redis.clients.jedis.Protocol.processError(Protocol.java:117)
+at redis.clients.jedis.Protocol.process(Protocol.java:142)
+at redis.clients.jedis.Protocol.read(Protocol.java:196)
+</code></pre><p>由于我们设置了密码但在这里又没有指定密码，所以报了和刚才相同的错误,Jedis的父类BinaryJedis提供了这样一样方法：</p>
+<pre><code>public String auth(final String password) {
+    checkIsInMulti();
+    client.auth(password);
+    return client.getStatusCodeReply();
+}
+</code></pre><p>所以在创建了Jedis的实例后再加上一行jedis.auth(“123456”); 即可</p>
+<pre><code>@Test
+public void testTwo() {
+    Jedis jedis = new Jedis(&quot;192.168.145.10&quot;);
+    jedis.auth(&quot;123456&quot;);
+    System.out.println(&quot;Connection to server sucessfully&quot;);
+    // 查看服务是否运行
+    System.out.println(&quot;Server is running: &quot; + jedis.ping());
+}
+</code></pre><p><img src="https://i.imgur.com/MpHJLvu.png" alt=""></p>
+<h2 id="spring-data-redis设置密码"><a href="#spring-data-redis设置密码" class="headerlink" title="spring-data-redis设置密码"></a>spring-data-redis设置密码</h2><p>通常情况下在实际的java项目中我们会选择Spring提供的spring-data-redis来操作redis，spring的封装可以给我们提供很多便捷之处。那么spring-data-redis又是如何设置密码的呢？首先定义一个redis.properties配置文件，定义一组redis属性供spring加载使用，其中就包含密码（redis.password）：</p>
+<pre><code># Redis settings  
+redis.host=192.168.145.10 
+redis.port=6379  
+redis.password=123456
+redis.database=2
+redis.timeout=100000  
+redis.maxTotal=300  
+redis.maxIdle=100
+redis.minIdle=10
+redis.maxWaitMillis=1000  
+redis.testOnBorrow=true  
+</code></pre><p>然后在由Spring封装的JedisConnectionFactory中来设置密码属性即可，下面是完整redis配置：</p>
+<pre><code>&lt;!-- redis配置 --&gt;
+&lt;bean id=&quot;poolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;
+    &lt;property name=&quot;maxIdle&quot; value=&quot;${redis.maxIdle}&quot; /&gt;
+    &lt;property name=&quot;maxWaitMillis&quot; value=&quot;${redis.maxWaitMillis}&quot; /&gt;
+    &lt;property name=&quot;testOnBorrow&quot; value=&quot;${redis.testOnBorrow}&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;connectionFactory&quot; class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;
+    p:host-name=&quot;${redis.host}&quot; p:port=&quot;${redis.port}&quot; 
+    p:password=&quot;${redis.password}&quot; p:pool-config-ref=&quot;poolConfig&quot; /&gt;
+
+&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.StringRedisTemplate&quot;&gt;
+    &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/10/redis入门/" data-id="cjkqla1tl000o2kpxoai4c1wm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/07/kafka集群/" class="article-date">
@@ -240,7 +482,7 @@ server.3=120.25.239.155:2888:3888
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/01/07/kafka集群/" data-id="cjkpg59v4000a7gpxh8yqptty" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/01/07/kafka集群/" data-id="cjkqla1se000f2kpxi0wsobqv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
@@ -342,7 +584,7 @@ public static void quickSort(int[] arr, int L, int R) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/04/快速排序/" data-id="cjkpg59v100087gpxj5yvgxvh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/04/快速排序/" data-id="cjkqla1ql00062kpxewv7z46j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -524,7 +766,7 @@ public static int fibonacci(int n) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/递归/" data-id="cjkpg59ux00077gpx5r763pi5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/递归/" data-id="cjkqla1qn00072kpxih05ocyk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -631,7 +873,7 @@ for (int i = 0; i &lt; arrays.length - 1; i++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/03/冒泡排序/" data-id="cjkpg59vz000k7gpxs21fve89" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/03/冒泡排序/" data-id="cjkqla1r7000d2kpxf6q7a3vx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
@@ -643,270 +885,9 @@ for (int i = 0; i &lt; arrays.length - 1; i++) {
 
 
   
-    <article id="post-Mybatis【与Spring整合】" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/11/Mybatis【与Spring整合】/" class="article-date">
-  <time datetime="2016-04-11T12:36:29.000Z" itemprop="datePublished">2016-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/11/Mybatis【与Spring整合】/">Mybatis【与Spring整合】</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h4><p>以下使用的是Oracle数据库来进行测试</p>
-<ul>
-<li>aopalliance.jar</li>
-<li>asm-3.3.1.jar</li>
-<li>aspectjweaver.jar</li>
-<li>c3p0-0.9.1.2.jar</li>
-<li>cglib-2.2.2.jar</li>
-<li>commons-logging.jar</li>
-<li>log4j-1.2.16.jar</li>
-<li>mybatis-3.1.1.jar</li>
-<li>mybatis-spring-1.1.1.jar</li>
-<li>mysql-connector-java-5.1.7-bin.jar</li>
-<li>ojdbc5.jar</li>
-<li>org.springframework.aop-3.0.5.RELEASE.jar</li>
-<li>org.springframework.asm-3.0.5.RELEASE.jar</li>
-<li>org.springframework.beans-3.0.5.RELEASE.jar</li>
-<li>org.springframework.context-3.0.5.RELEASE.jar</li>
-<li>org.springframework.core-3.0.5.RELEASE.jar</li>
-<li>org.springframework.expression-3.0.5.RELEASE.jar</li>
-<li>org.springframework.jdbc-3.0.5.RELEASE.jar</li>
-<li>org.springframework.orm-3.0.5.RELEASE.jar</li>
-<li>org.springframework.transaction-3.0.5.RELEASE.jar</li>
-<li>org.springframework.web.servlet-3.0.5.RELEASE.jar</li>
-<li>org.springframework.web-3.0.5.RELEASE.jar</li>
-</ul>
-<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><p>create table emps(<br>  eid number(5) primary key,<br>  ename varchar2(20),<br>  esal number(8,2),<br>  esex varchar2(2)<br>);</p>
-<h4 id="创建实体"><a href="#创建实体" class="headerlink" title="创建实体"></a>创建实体</h4><pre><code>package entity;
-
-/**
- * 员工
- * @author AdminTC
- */
-public class Emp {
-    private Integer id;
-    private String name;
-    private Double sal;
-    private String sex;
-    public Emp(){}
-    public Emp(Integer id, String name, Double sal, String sex) {
-        this.id = id;
-        this.name = name;
-        this.sal = sal;
-        this.sex = sex;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Double getSal() {
-        return sal;
-    }
-    public void setSal(Double sal) {
-        this.sal = sal;
-    }
-    public String getSex() {
-        return sex;
-    }
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-}
-</code></pre><h4 id="创建实体与表的映射文件"><a href="#创建实体与表的映射文件" class="headerlink" title="创建实体与表的映射文件"></a>创建实体与表的映射文件</h4><p>&lt;?xml version=”1.0” encoding=”UTF-8” ?&gt;<br>&lt;!DOCTYPE mapper PUBLIC “-//mybatis.org//DTD Mapper 3.0//EN”<br>“<a href="http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;" target="_blank" rel="noopener">http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</a></p>
-<mapper namespace="empNamespace"><br><br>    <resultmap type="entity.Emp" id="empMap"><br>        <id property="id" column="eid"><br>        <result property="name" column="ename"><br>        <result property="sal" column="esal"><br>        <result property="sex" column="esex"><br>    </result></result></result></id></resultmap><br><br>    <!-- 增加员工 --><br>    <insert id="add" parametertype="entity.Emp"><br>        insert into emps(eid,ename,esal,esex) values(#{id},#{name},#{sal},#{sex})<br>    </insert><br><br></mapper>
-
-<h4 id="创建Mybatis映射文件配置环境"><a href="#创建Mybatis映射文件配置环境" class="headerlink" title="创建Mybatis映射文件配置环境"></a>创建Mybatis映射文件配置环境</h4><p>数据库的信息交由Spring管理！Mybatis配置文件负责加载对应映射文件即可</p>
-<pre><code>&lt;configuration&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;zhongfucheng/entity/EmpMapper.xml&quot;/&gt;
-
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre><h4 id="配置Spring核心过滤器【也是加载总配置文件】"><a href="#配置Spring核心过滤器【也是加载总配置文件】" class="headerlink" title="配置Spring核心过滤器【也是加载总配置文件】"></a>配置Spring核心过滤器【也是加载总配置文件】</h4><pre><code>&lt;!-- 核心springmvc核心控制器 --&gt;
-&lt;servlet&gt;
-    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-        &lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
-    &lt;/init-param&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-</code></pre><h4 id="配置数据库信息、事务"><a href="#配置数据库信息、事务" class="headerlink" title="配置数据库信息、事务"></a>配置数据库信息、事务</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
-       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
-       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
-
-
-    &lt;!-- 配置C3P0连接池,目的：管理数据库连接 --&gt;
-    &lt;bean id=&quot;comboPooledDataSourceID&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
-        &lt;property name=&quot;driverClass&quot; value=&quot;oracle.jdbc.driver.OracleDriver&quot;/&gt;
-        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:oracle:thin:@127.0.0.1:1521:test&quot;/&gt;
-        &lt;property name=&quot;user&quot; value=&quot;scott&quot;/&gt;
-        &lt;property name=&quot;password&quot; value=&quot;tiger&quot;/&gt;
-    &lt;/bean&gt;
-
-
-    &lt;!-- 配置SqlSessionFactoryBean，目的：加载mybaits配置文件和映射文件，即替代原Mybatis工具类的作用 --&gt;
-    &lt;bean id=&quot;sqlSessionFactoryBeanID&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis.xml&quot;/&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
-    &lt;/bean&gt;
-
-
-    &lt;!-- 配置Mybatis的事务管理器，即因为Mybatis底层用的是JDBC事务管事器，所以在这里依然配置JDBC事务管理器 --&gt;
-    &lt;bean id=&quot;dataSourceTransactionManagerID&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
-    &lt;/bean&gt;
-
-    &lt;!-- 配置事务通知，即让哪些方法需要事务支持 --&gt;
-    &lt;tx:advice id=&quot;tx&quot; transaction-manager=&quot;dataSourceTransactionManagerID&quot;&gt;
-        &lt;tx:attributes&gt;
-            &lt;tx:method name=&quot;*&quot; propagation=&quot;REQUIRED&quot;/&gt;
-        &lt;/tx:attributes&gt;
-    &lt;/tx:advice&gt;
-
-    &lt;!-- 配置事务切面，即让哪些包下的类需要事务 --&gt;
-    &lt;aop:config&gt;
-        &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* cn.com.service.*.*(..))&quot;/&gt;
-        &lt;aop:advisor advice-ref=&quot;tx&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
-    &lt;/aop:config&gt;
-
-    &lt;!--扫描注解--&gt;
-    &lt;context:component-scan base-package=&quot;cn.com&quot;/&gt;
-
-
-&lt;/beans&gt;
-</code></pre><h4 id="创建Dao、Service、Action"><a href="#创建Dao、Service、Action" class="headerlink" title="创建Dao、Service、Action"></a>创建Dao、Service、Action</h4><pre><code>@Repository
-public class EmpDao {
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
-    /**
-     * 增加员工
-     */
-    public void add(Emp emp) throws Exception {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        sqlSession.insert(&quot;empNamespace.add&quot;, emp);
-        sqlSession.close();
-    }
-
-
-}
-
-@Service
-public class EmpService {
-
-
-    @Autowired
-    private zhongfucheng.dao.EmpDao empDao;
-    public void addEmp(Emp emp) throws Exception {
-        empDao.add(emp);
-    }
-}
-
-@Controller
-@RequestMapping(&quot;/emp&quot;)
-public class EmpAction {
-
-    @Autowired
-    private EmpService empService;
-
-    @RequestMapping(&quot;/register&quot;)
-    public void register(Emp emp) throws Exception {
-        empService.addEmp(emp);
-        System.out.println(&quot;注册成功&quot;);
-    }
-
-}
-</code></pre><h4 id="JSP页面测试"><a href="#JSP页面测试" class="headerlink" title="JSP页面测试"></a>JSP页面测试</h4><pre><code>&lt;%@ page language=&quot;java&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;员工注册&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;form action=&quot;${pageContext.request.contextPath}/emp/register.action&quot; method=&quot;POST&quot;&gt;
-        &lt;table border=&quot;2&quot; align=&quot;center&quot;&gt;
-            &lt;tr&gt;
-                &lt;th&gt;编号&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;姓名&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;薪水&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;sal&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;性别&lt;/th&gt;
-                &lt;td&gt;
-                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;/&gt;男
-                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; checked/&gt;女
-                &lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;
-                    &lt;input type=&quot;submit&quot; value=&quot;注册&quot;/&gt;
-                &lt;/td&gt;
-            &lt;/tr&gt;
-        &lt;/table&gt;
-    &lt;/form&gt;     
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>web.xml加载Spring配置文件</li>
-<li>Spring配置文件配置数据连接池，SessionFactory、事务、扫描注解</li>
-<li>Mybatis总配置文件、实体以及相对应的映射文件</li>
-<li>将映射文件加入到总配置文件中</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/11/Mybatis【与Spring整合】/" data-id="cjkpg59v7000b7gpx32zrogyn" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 </section>

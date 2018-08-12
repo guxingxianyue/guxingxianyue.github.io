@@ -56,6 +56,267 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Mybatis【与Spring整合】" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/11/Mybatis【与Spring整合】/" class="article-date">
+  <time datetime="2016-04-11T12:36:29.000Z" itemprop="datePublished">2016-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/11/Mybatis【与Spring整合】/">Mybatis【与Spring整合】</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h4><p>以下使用的是Oracle数据库来进行测试</p>
+<ul>
+<li>aopalliance.jar</li>
+<li>asm-3.3.1.jar</li>
+<li>aspectjweaver.jar</li>
+<li>c3p0-0.9.1.2.jar</li>
+<li>cglib-2.2.2.jar</li>
+<li>commons-logging.jar</li>
+<li>log4j-1.2.16.jar</li>
+<li>mybatis-3.1.1.jar</li>
+<li>mybatis-spring-1.1.1.jar</li>
+<li>mysql-connector-java-5.1.7-bin.jar</li>
+<li>ojdbc5.jar</li>
+<li>org.springframework.aop-3.0.5.RELEASE.jar</li>
+<li>org.springframework.asm-3.0.5.RELEASE.jar</li>
+<li>org.springframework.beans-3.0.5.RELEASE.jar</li>
+<li>org.springframework.context-3.0.5.RELEASE.jar</li>
+<li>org.springframework.core-3.0.5.RELEASE.jar</li>
+<li>org.springframework.expression-3.0.5.RELEASE.jar</li>
+<li>org.springframework.jdbc-3.0.5.RELEASE.jar</li>
+<li>org.springframework.orm-3.0.5.RELEASE.jar</li>
+<li>org.springframework.transaction-3.0.5.RELEASE.jar</li>
+<li>org.springframework.web.servlet-3.0.5.RELEASE.jar</li>
+<li>org.springframework.web-3.0.5.RELEASE.jar</li>
+</ul>
+<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><p>create table emps(<br>  eid number(5) primary key,<br>  ename varchar2(20),<br>  esal number(8,2),<br>  esex varchar2(2)<br>);</p>
+<h4 id="创建实体"><a href="#创建实体" class="headerlink" title="创建实体"></a>创建实体</h4><pre><code>package entity;
+
+/**
+ * 员工
+ * @author AdminTC
+ */
+public class Emp {
+    private Integer id;
+    private String name;
+    private Double sal;
+    private String sex;
+    public Emp(){}
+    public Emp(Integer id, String name, Double sal, String sex) {
+        this.id = id;
+        this.name = name;
+        this.sal = sal;
+        this.sex = sex;
+    }
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Double getSal() {
+        return sal;
+    }
+    public void setSal(Double sal) {
+        this.sal = sal;
+    }
+    public String getSex() {
+        return sex;
+    }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+}
+</code></pre><h4 id="创建实体与表的映射文件"><a href="#创建实体与表的映射文件" class="headerlink" title="创建实体与表的映射文件"></a>创建实体与表的映射文件</h4><p>&lt;?xml version=”1.0” encoding=”UTF-8” ?&gt;<br>&lt;!DOCTYPE mapper PUBLIC “-//mybatis.org//DTD Mapper 3.0//EN”<br>“<a href="http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;" target="_blank" rel="noopener">http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</a></p>
+<mapper namespace="empNamespace"><br><br>    <resultmap type="entity.Emp" id="empMap"><br>        <id property="id" column="eid"><br>        <result property="name" column="ename"><br>        <result property="sal" column="esal"><br>        <result property="sex" column="esex"><br>    </result></result></result></id></resultmap><br><br>    <!-- 增加员工 --><br>    <insert id="add" parametertype="entity.Emp"><br>        insert into emps(eid,ename,esal,esex) values(#{id},#{name},#{sal},#{sex})<br>    </insert><br><br></mapper>
+
+<h4 id="创建Mybatis映射文件配置环境"><a href="#创建Mybatis映射文件配置环境" class="headerlink" title="创建Mybatis映射文件配置环境"></a>创建Mybatis映射文件配置环境</h4><p>数据库的信息交由Spring管理！Mybatis配置文件负责加载对应映射文件即可</p>
+<pre><code>&lt;configuration&gt;
+    &lt;mappers&gt;
+        &lt;mapper resource=&quot;zhongfucheng/entity/EmpMapper.xml&quot;/&gt;
+
+    &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre><h4 id="配置Spring核心过滤器【也是加载总配置文件】"><a href="#配置Spring核心过滤器【也是加载总配置文件】" class="headerlink" title="配置Spring核心过滤器【也是加载总配置文件】"></a>配置Spring核心过滤器【也是加载总配置文件】</h4><pre><code>&lt;!-- 核心springmvc核心控制器 --&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre><h4 id="配置数据库信息、事务"><a href="#配置数据库信息、事务" class="headerlink" title="配置数据库信息、事务"></a>配置数据库信息、事务</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+
+    &lt;!-- 配置C3P0连接池,目的：管理数据库连接 --&gt;
+    &lt;bean id=&quot;comboPooledDataSourceID&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
+        &lt;property name=&quot;driverClass&quot; value=&quot;oracle.jdbc.driver.OracleDriver&quot;/&gt;
+        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:oracle:thin:@127.0.0.1:1521:test&quot;/&gt;
+        &lt;property name=&quot;user&quot; value=&quot;scott&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;tiger&quot;/&gt;
+    &lt;/bean&gt;
+
+
+    &lt;!-- 配置SqlSessionFactoryBean，目的：加载mybaits配置文件和映射文件，即替代原Mybatis工具类的作用 --&gt;
+    &lt;bean id=&quot;sqlSessionFactoryBeanID&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis.xml&quot;/&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
+    &lt;/bean&gt;
+
+
+    &lt;!-- 配置Mybatis的事务管理器，即因为Mybatis底层用的是JDBC事务管事器，所以在这里依然配置JDBC事务管理器 --&gt;
+    &lt;bean id=&quot;dataSourceTransactionManagerID&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;!-- 配置事务通知，即让哪些方法需要事务支持 --&gt;
+    &lt;tx:advice id=&quot;tx&quot; transaction-manager=&quot;dataSourceTransactionManagerID&quot;&gt;
+        &lt;tx:attributes&gt;
+            &lt;tx:method name=&quot;*&quot; propagation=&quot;REQUIRED&quot;/&gt;
+        &lt;/tx:attributes&gt;
+    &lt;/tx:advice&gt;
+
+    &lt;!-- 配置事务切面，即让哪些包下的类需要事务 --&gt;
+    &lt;aop:config&gt;
+        &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* cn.com.service.*.*(..))&quot;/&gt;
+        &lt;aop:advisor advice-ref=&quot;tx&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+    &lt;/aop:config&gt;
+
+    &lt;!--扫描注解--&gt;
+    &lt;context:component-scan base-package=&quot;cn.com&quot;/&gt;
+
+
+&lt;/beans&gt;
+</code></pre><h4 id="创建Dao、Service、Action"><a href="#创建Dao、Service、Action" class="headerlink" title="创建Dao、Service、Action"></a>创建Dao、Service、Action</h4><pre><code>@Repository
+public class EmpDao {
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
+    /**
+     * 增加员工
+     */
+    public void add(Emp emp) throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        sqlSession.insert(&quot;empNamespace.add&quot;, emp);
+        sqlSession.close();
+    }
+
+
+}
+
+@Service
+public class EmpService {
+
+
+    @Autowired
+    private zhongfucheng.dao.EmpDao empDao;
+    public void addEmp(Emp emp) throws Exception {
+        empDao.add(emp);
+    }
+}
+
+@Controller
+@RequestMapping(&quot;/emp&quot;)
+public class EmpAction {
+
+    @Autowired
+    private EmpService empService;
+
+    @RequestMapping(&quot;/register&quot;)
+    public void register(Emp emp) throws Exception {
+        empService.addEmp(emp);
+        System.out.println(&quot;注册成功&quot;);
+    }
+
+}
+</code></pre><h4 id="JSP页面测试"><a href="#JSP页面测试" class="headerlink" title="JSP页面测试"></a>JSP页面测试</h4><pre><code>&lt;%@ page language=&quot;java&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;员工注册&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;form action=&quot;${pageContext.request.contextPath}/emp/register.action&quot; method=&quot;POST&quot;&gt;
+        &lt;table border=&quot;2&quot; align=&quot;center&quot;&gt;
+            &lt;tr&gt;
+                &lt;th&gt;编号&lt;/th&gt;
+                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;th&gt;姓名&lt;/th&gt;
+                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;th&gt;薪水&lt;/th&gt;
+                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;sal&quot;&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;th&gt;性别&lt;/th&gt;
+                &lt;td&gt;
+                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;/&gt;男
+                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; checked/&gt;女
+                &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;
+                    &lt;input type=&quot;submit&quot; value=&quot;注册&quot;/&gt;
+                &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/form&gt;     
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>web.xml加载Spring配置文件</li>
+<li>Spring配置文件配置数据连接池，SessionFactory、事务、扫描注解</li>
+<li>Mybatis总配置文件、实体以及相对应的映射文件</li>
+<li>将映射文件加入到总配置文件中</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/04/11/Mybatis【与Spring整合】/" data-id="cjkqla1sg000g2kpxc7gzfhgh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Mybatis【入门】" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/04/10/Mybatis【入门】/" class="article-date">
@@ -476,7 +737,7 @@ public static void main(String[] args) throws Exception {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/10/Mybatis【入门】/" data-id="cjkpg59w9000n7gpx54yheb1m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/10/Mybatis【入门】/" data-id="cjkqla1sr000k2kpxj22drqnx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
@@ -1033,7 +1294,7 @@ public class App {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/04/02/spring【入门】/" data-id="cjkpg59vq000i7gpxof4w5cur" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/04/02/spring【入门】/" data-id="cjkqla1st000l2kpx0j03y5az" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
@@ -1195,7 +1456,7 @@ public class App {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/20/JAVA多线程的应用场景和目的/" data-id="cjkpg59u300007gpxndribxw0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/20/JAVA多线程的应用场景和目的/" data-id="cjkqla1q300002kpx0haih08o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
@@ -1472,101 +1733,7 @@ class MyRunnable implements Runnable {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/05/关于对java多线程的一些基础认识/" data-id="cjkpg59w6000m7gpx4rbp6rh8" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-my-new-post" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/05/my-new-post/" class="article-date">
-  <time datetime="2016-01-05T15:47:08.000Z" itemprop="datePublished">2016-01-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/05/my-new-post/">Github+hexo 搭建个人独立博客</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="关于自建独立博客"><a href="#关于自建独立博客" class="headerlink" title="关于自建独立博客"></a>关于自建独立博客</h2><hr>
-<p>这里引用某位知友的原话：</p>
-<pre><code>自主权比较高，博客平台的话会有这样那样的限制，技术上，可能会限制插件的代码使用，内容上，各种审查以防触雷以及广告等等。
-</code></pre><p>作为一个技术宅，没有比“show me the code”“show me the writings”更有说服力。当然这话是我说的。</p>
-<h2 id="什么是hexo"><a href="#什么是hexo" class="headerlink" title="什么是hexo"></a>什么是hexo</h2><hr>
-<p>一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在github上，可以绑定自己的域名，用markdown写文章（简直不要太爽）。</p>
-<pre><code>快速、简单且功能强大的 Node.js 博客框架。
-A fast, simple &amp; powerful blog framework, powered by Node.js.
-</code></pre><h2 id="为什么要用hexo"><a href="#为什么要用hexo" class="headerlink" title="为什么要用hexo"></a>为什么要用hexo</h2><hr>
-<ul>
-<li>不可思议的快速，眨眼即可完成</li>
-<li>支持markdown，支持markdown，支持markdown，重要的话说三遍</li>
-<li>一道指令即可将文章部署到 GitHub Pages</li>
-<li>高扩展性、自定义性</li>
-<li>兼容于 Windows &amp; Mac &amp; Linux</li>
-<li>易用。不仅部署简单，平时使用中仅需要hexo new、hexo generate、hexo server、hexo deploy四个命令。</li>
-<li>轻、文件少、小，易理解，方便自定义，</li>
-</ul>
-<h2 id="谁能使用hexo"><a href="#谁能使用hexo" class="headerlink" title="谁能使用hexo"></a>谁能使用hexo</h2><hr>
-<p>这是一个免费开源的博客程序，任何人都可以使用和修改，整个独立博客搭建过程仅需要用到Github,Git,Markdown,Node.js这样的工具。好多插件、widget都需要自己安装、设置。比较适合那些有一定计算机基础，喜欢折腾的人。下面我们开始吧!</p>
-<h2 id="搭建hexo博客（一）"><a href="#搭建hexo博客（一）" class="headerlink" title="搭建hexo博客（一）"></a>搭建hexo博客（一）</h2><hr>
-<p><strong>注意：本节教程只针对Windows用户，Linux和Mac用户请移步</strong></p>
-<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><hr>
-<p>下载<a href="http://pan.baidu.com/s/1bcsvP8" title="git" target="_blank" rel="noopener">msysgit</a>,版本最好不要用高于1.8.5，有bug，至少截至2015-12-7年为止，这个bug是有的，此处用的是1.8.4。</p>
-<h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><hr>
-<p>在 Windows 环境下安装 Node.js很简单，仅须<a href="http://pan.baidu.com/s/1dDYO1w9" target="_blank" rel="noopener">点此下载</a>安装文件并一步一步往下执行即可完成安装。</p>
-<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><hr>
-<p>利用 npm 命令即可安装。（在任意位置点击鼠标右键，选择Git bash）</p>
-<pre><code>npm install -g hexo
-</code></pre><h3 id="创建hexo文件夹"><a href="#创建hexo文件夹" class="headerlink" title="创建hexo文件夹"></a>创建hexo文件夹</h3><hr>
-<p>安装完成后，在你喜爱的文件夹下（如H:\hexo），执行以下指令(在H:\hexo内点击鼠标右键，选择Git bash)，Hexo 即会自动在目标文件夹建立网站所需要的所有文件。</p>
-<pre><code>hexo init
-</code></pre><h3 id="安装依赖包"><a href="#安装依赖包" class="headerlink" title="安装依赖包"></a>安装依赖包</h3><hr>
-<pre><code>npm install
-</code></pre><h3 id="本地查看"><a href="#本地查看" class="headerlink" title="本地查看"></a>本地查看</h3><hr>
-<p>现在我们已经搭建起本地的hexo博客了，执行以下命令(在H:\hexo)，然后到浏览器输入<code>localhost:4000</code>看看。</p>
-<pre><code>hexo generate
-hexo server
-</code></pre><p>至此，本地博客已经搭建起来了，嘘~~~现在只有你自己能看到，别人是看不到的。下面，我们要部署到Github，让所有人都能看到你的博客。</p>
-<h3 id="注册Github账号"><a href="#注册Github账号" class="headerlink" title="注册Github账号"></a>注册Github账号</h3><hr>
-<p>已有账号可以跳过，没有的，<a href="https://www.github.com" target="_blank" rel="noopener">请在此进行注册</a>，很简单，这里就不介绍了。</p>
-<h3 id="创建repository"><a href="#创建repository" class="headerlink" title="创建repository"></a>创建repository</h3><hr>
-<p>在自己Github主页右下角，创建一个新的repository。比如我的Github账号是guxingxianyue，那么我应该创建的repository名字应该是guxingxianyue.github.io。</p>
-<h3 id="部署到Github"><a href="#部署到Github" class="headerlink" title="部署到Github"></a>部署到Github</h3><hr>
-<p>编辑_config.yml(在H:\hexo下)。你在部署时，要把下面的guxingxianyue都换成你的账号名。</p>
-<pre><code>deploy:
-  type: git
-  repository: https://github.com/guxingxianyue/guxingxianyue.github.io.git
-  branch: master
-</code></pre><h3 id="执行下列指令即可完成部署。"><a href="#执行下列指令即可完成部署。" class="headerlink" title="执行下列指令即可完成部署。"></a>执行下列指令即可完成部署。</h3><hr>
-<pre><code>npm install hexo-deployer-git --save(有的哥们竟然不需要这个指令也能部署成功)
-hexo generate
-hexo deploy
-</code></pre><p><strong>注意：</strong>有些新用户需要设置ssh，否则上述命令会失败。ssh 的介绍和设置方法请看<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="noopener">官方教程</a>不用担心，很简单。</p>
-<p><strong>记住：</strong>每次修改本地文件后，需要hexo generate才能保存。每次使用命令时，都要在H:\hexo目录下右键选择Git Bash指令窗口。</p>
-<p>Okay,至此博客已经完全搭建起来了，在浏览器访问guxingxianyue.github.io就能看到你的成就了！Good luck。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/05/my-new-post/" data-id="cjkpg59uc00017gpxlx5ni6me" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/05/关于对java多线程的一些基础认识/" data-id="cjkqla1tm000p2kpxusowqqzo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
@@ -1580,7 +1747,7 @@ hexo deploy
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </section>
