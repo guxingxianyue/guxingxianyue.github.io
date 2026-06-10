@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>陈金星写字的地方</title>
@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="/css/style.css">
   
 
-</head>
+</head></html>
 <body>
   <div id="container">
     <div id="wrap">
@@ -68,6 +68,138 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Codex提高软件编程效率的10个技巧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/06/10/Codex提高软件编程效率的10个技巧/" class="article-date">
+  <time datetime="2026-06-10T04:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/06/10/Codex提高软件编程效率的10个技巧/">Codex提高软件编程效率的10个技巧</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>前面几篇文章里，我写了 AI 编程助手、AI Agent 工作流，以及普通开发者使用 AI 时需要守住的边界。写到 Codex 这一篇时，我更想把它写成一篇可以反复翻回来的实践笔记。</p>
+<p>Codex 这类工具和普通聊天机器人不太一样。普通聊天机器人更像一个问答窗口，你问一句，它答一句；Codex 更像一个可以进入项目、阅读代码、修改文件、运行命令、解释结果的开发协作者。OpenAI 官方把 Codex 描述为用于软件开发的 coding agent，可以帮助写代码、理解陌生代码库、review 代码、调试问题和自动化开发任务。</p>
+<p>但工具越强，越不能随便用。很多人第一次用 Codex，会把它当成“高级代码生成器”：给一句需求，期待它马上给出完美代码。这样当然偶尔能成功，但不稳定。真正稳定提升效率的方法，是把 Codex 放进一套清楚的工程流程里：准备上下文、明确任务、让它先计划、让它小步实现、跑测试、看 diff、复盘沉淀。</p>
+<p>下面这 10 个技巧，是我理解里最适合普通开发者落地的用法。</p>
+<p><img src="/images/ai-flowcharts/codex-ten-tips-map.svg" alt="Codex提高软件编程效率的10个技巧总览"></p>
+<h2 id="技巧一：把需求写成一个小-issue，而不是一句口号"><a href="#技巧一：把需求写成一个小-issue，而不是一句口号" class="headerlink" title="技巧一：把需求写成一个小 issue，而不是一句口号"></a>技巧一：把需求写成一个小 issue，而不是一句口号</h2><p>很多人对 Codex 的第一句提示是：“帮我优化一下代码。”这句话的问题不是太短，而是没有验收标准。什么叫优化？是性能变快、代码更短、结构更清楚，还是减少重复？如果没有边界，Codex 只能猜。</p>
+<p>更好的写法，是把任务写成一个小 issue：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">目标：给订单列表增加按状态筛选功能。</span><br><span class="line">范围：只改订单列表页和相关查询参数，不调整全局路由。</span><br><span class="line">验收：页面出现状态筛选框；选择状态后列表刷新；刷新页面后筛选条件保留。</span><br><span class="line">验证：运行 npm <span class="built_in">test</span>，并手动检查订单列表页。</span><br><span class="line">限制：不要重构无关组件，不要修改接口返回结构。</span><br></pre></td></tr></table></figure>
+<p>这种写法看起来啰嗦，但它会显著降低返工。Codex 最怕的不是任务复杂，而是任务含糊。你越能把“想要什么”和“不要什么”说清楚，它越容易给出可 review 的结果。</p>
+<p>我的经验是：凡是超过十分钟的开发任务，都值得先写成小 issue。即使最后不是交给 Codex 做，这个过程也能帮自己想清楚。</p>
+<h2 id="技巧二：为仓库准备-AGENTS-md，把长期规则沉淀下来"><a href="#技巧二：为仓库准备-AGENTS-md，把长期规则沉淀下来" class="headerlink" title="技巧二：为仓库准备 AGENTS.md，把长期规则沉淀下来"></a>技巧二：为仓库准备 AGENTS.md，把长期规则沉淀下来</h2><p>如果每次都在提示里重复“项目用 pnpm”“测试命令是 npm test”“不要改 public 目录”“提交前要跑 lint”，时间久了会很烦，而且容易漏。</p>
+<p>Codex 支持通过 <code>AGENTS.md</code> 这类仓库说明文件获得项目规则。你可以把它理解成给 AI 看的 README：告诉它项目结构、常用命令、代码风格、测试方式、哪些目录不能动、遇到失败时如何处理。</p>
+<p>一个简单的 <code>AGENTS.md</code> 可以这样写：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 项目规则</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>文章源码在 source/_posts。</span><br><span class="line"><span class="bullet">- </span>静态资源放在 source/images。</span><br><span class="line"><span class="bullet">- </span>public 是生成目录，非必要不要手写修改。</span><br><span class="line"><span class="bullet">- </span>修改文章后需要运行生成命令，并检查 archives 页面。</span><br><span class="line"><span class="bullet">- </span>保持 Markdown front matter 格式：title/date/tags。</span><br></pre></td></tr></table></figure>
+<p>这类规则越早沉淀，后面越省心。Codex 做得不稳定，很多时候不是模型能力问题，而是项目没有把“好结果长什么样”告诉它。</p>
+<h2 id="技巧三：先让-Codex-读代码和写计划，不要直接开改"><a href="#技巧三：先让-Codex-读代码和写计划，不要直接开改" class="headerlink" title="技巧三：先让 Codex 读代码和写计划，不要直接开改"></a>技巧三：先让 Codex 读代码和写计划，不要直接开改</h2><p>面对一个真实项目，我不建议第一步就让 Codex 修改文件。更稳的方式是先让它做两件事：</p>
+<p>第一，阅读相关代码并总结当前结构。</p>
+<p>第二，给出准备修改的计划。</p>
+<p>比如可以这样说：</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">先不要修改代码。请阅读和用户登录相关的文件，说明当前登录流程、</span><br><span class="line"><span class="built_in">token</span> 存储位置、错误处理方式，然后给出最小修改计划。</span><br></pre></td></tr></table></figure>
+<p>这一步的价值很大。它能让你提前发现 Codex 是否找对了入口、是否理解了业务、是否准备改错层级。如果计划已经偏了，就不要让它继续实现。</p>
+<p>对复杂任务来说，“先计划再实现”比“直接生成代码”慢几分钟，但通常能省掉半小时返工。</p>
+<h2 id="技巧四：一个任务只做一个焦点，避免让-Codex-一次背太多锅"><a href="#技巧四：一个任务只做一个焦点，避免让-Codex-一次背太多锅" class="headerlink" title="技巧四：一个任务只做一个焦点，避免让 Codex 一次背太多锅"></a>技巧四：一个任务只做一个焦点，避免让 Codex 一次背太多锅</h2><p>人类开发也一样，一个 PR 同时做登录、样式、数据库迁移、依赖升级，review 会非常痛苦。Codex 更是如此。</p>
+<p>好的任务应该是可切分、可验证、可回滚的。比如：</p>
+<p>不太好的任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我把后台系统整体优化一下，顺便修几个 bug，再加点测试。</span><br></pre></td></tr></table></figure>
+<p>更好的拆法：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">任务<span class="number">1</span>：修复用户列表分页参数丢失问题。</span><br><span class="line">任务<span class="number">2</span>：给用户列表补充分页相关测试。</span><br><span class="line">任务<span class="number">3</span>：整理用户列表组件里重复的状态判断。</span><br></pre></td></tr></table></figure>
+<p>每个任务都有一个焦点，Codex 就不容易迷路。你也更容易 review 它的输出。</p>
+<h2 id="技巧五：让-Codex-小步实现，并要求解释关键取舍"><a href="#技巧五：让-Codex-小步实现，并要求解释关键取舍" class="headerlink" title="技巧五：让 Codex 小步实现，并要求解释关键取舍"></a>技巧五：让 Codex 小步实现，并要求解释关键取舍</h2><p>Codex 能一次性生成很多代码，但“大量生成”不等于“高效”。我更喜欢让它小步推进：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先完成最小可运行版本，不要做额外抽象。</span><br><span class="line">完成后说明：</span><br><span class="line"><span class="bullet">1. </span>改了哪些文件；</span><br><span class="line"><span class="bullet">2. </span>为什么这样改；</span><br><span class="line"><span class="bullet">3. </span>哪些地方可能需要后续优化。</span><br></pre></td></tr></table></figure>
+<p>这样做有两个好处。</p>
+<p>第一，你能快速看到方向是否正确。</p>
+<p>第二，Codex 会被迫解释自己的取舍，而不是只给结果。</p>
+<p>当它解释“为什么这样改”时，你很容易看出它有没有理解项目。如果解释含糊，就继续追问；如果解释清楚，再进入下一步。</p>
+<h2 id="技巧六：把测试命令写进任务，而不是事后才想起来"><a href="#技巧六：把测试命令写进任务，而不是事后才想起来" class="headerlink" title="技巧六：把测试命令写进任务，而不是事后才想起来"></a>技巧六：把测试命令写进任务，而不是事后才想起来</h2><p>Codex 的一个重要价值，是它可以帮你运行测试、构建、类型检查、格式检查等命令。但前提是它知道应该跑什么。</p>
+<p>所以在任务里直接写：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">完成后请运行：</span><br><span class="line">- npm test</span><br><span class="line">- npm <span class="keyword">run</span><span class="bash"> lint</span></span><br><span class="line">- npm <span class="keyword">run</span><span class="bash"> build</span></span><br><span class="line"></span><br><span class="line">如果某个命令失败，请说明失败原因、是否和本次改动有关，以及你如何处理。</span><br></pre></td></tr></table></figure>
+<p>如果项目没有自动化测试，也可以写手工验证标准：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">没有单元测试。请生成后检查：</span><br><span class="line"><span class="number">1.</span> archives 页面出现 <span class="number">2026</span> 年分组；</span><br><span class="line"><span class="number">2.</span> 新文章页面能打开；</span><br><span class="line"><span class="number">3.</span> 中文标题和标签显示正常。</span><br></pre></td></tr></table></figure>
+<p>这比“你看着办”可靠得多。Codex 可以帮你执行验证，但验证标准应该由人来定。</p>
+<p><img src="/images/ai-flowcharts/codex-task-loop.svg" alt="Codex任务执行闭环"></p>
+<h2 id="技巧七：把-Codex-用在阅读和定位上，不只是写代码"><a href="#技巧七：把-Codex-用在阅读和定位上，不只是写代码" class="headerlink" title="技巧七：把 Codex 用在阅读和定位上，不只是写代码"></a>技巧七：把 Codex 用在阅读和定位上，不只是写代码</h2><p>很多人低估了 Codex 的阅读能力。实际工作里，最耗时间的不一定是写代码，而是弄清楚代码在哪里、数据怎么流、为什么这个 bug 会出现。</p>
+<p>有些特别适合交给 Codex 的阅读任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请梳理这个接口从路由到数据库查询的调用链。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请找出用户头像上传失败可能经过的所有错误处理分支。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请比较这两个组件的重复逻辑，说明是否值得抽公共组件。</span><br></pre></td></tr></table></figure>
+<p>这类任务风险低，收益高。即使最后不让 Codex 改代码，它也能帮你节省大量翻文件的时间。</p>
+<p>我的习惯是：先让 Codex 当“代码导游”，再决定要不要让它当“代码作者”。</p>
+<h2 id="技巧八：用-review-或明确-review-指令，让它站到审查者角度"><a href="#技巧八：用-review-或明确-review-指令，让它站到审查者角度" class="headerlink" title="技巧八：用 /review 或明确 review 指令，让它站到审查者角度"></a>技巧八：用 /review 或明确 review 指令，让它站到审查者角度</h2><p>写代码和审代码是两种不同心态。让 Codex 生成代码之后，最好再让它切换角色：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请以 code review 的角度检查刚才的改动，重点看：</span><br><span class="line"><span class="bullet">1. </span>是否有无关文件改动；</span><br><span class="line"><span class="bullet">2. </span>是否有未处理的异常路径；</span><br><span class="line"><span class="bullet">3. </span>是否有兼容性风险；</span><br><span class="line"><span class="bullet">4. </span>是否缺少测试；</span><br><span class="line"><span class="bullet">5. </span>是否引入了过度抽象。</span><br></pre></td></tr></table></figure>
+<p>OpenAI 的 Codex 最佳实践也强调，不要只让 Codex 改代码，还要让它创建测试、运行检查、确认结果并 review 工作。这个思路非常重要：Codex 不应该只是“生产代码”，还应该帮助发现代码里的风险。</p>
+<p>当然，AI review 不能代替人类 review。它更像第一道自动筛查，可以提前发现低级问题、遗漏分支和不一致风格。最终是否接受，仍然要人判断。</p>
+<h2 id="技巧九：权限要克制，默认从安全配置开始"><a href="#技巧九：权限要克制，默认从安全配置开始" class="headerlink" title="技巧九：权限要克制，默认从安全配置开始"></a>技巧九：权限要克制，默认从安全配置开始</h2><p>效率和权限不是一回事。给 Codex 越多权限，它能做的事越多，但风险也越高。</p>
+<p>比较稳的原则是：</p>
+<p>第一，默认使用沙箱和审批。</p>
+<p>第二，不把生产密钥、真实用户数据、内部敏感信息交给它。</p>
+<p>第三，危险命令必须先说明目的，再由人确认。</p>
+<p>第四，部署、删除、迁移、批量替换这类任务要格外谨慎。</p>
+<p>官方最佳实践里也提到，如果刚开始使用 coding agent，应该从默认权限开始，保持 approval 和 sandboxing 收紧，等你理解工作流之后，再对可信仓库或特定流程放宽。</p>
+<p>这点我很赞同。AI 工具最容易制造一种错觉：既然它能做，就让它全做。但工程里真正可靠的方式，是最小权限、可观察、可回滚。</p>
+<p><img src="/images/ai-flowcharts/codex-safety-gate.svg" alt="Codex权限与安全门禁"></p>
+<h2 id="技巧十：每次用完都复盘，把经验写回项目"><a href="#技巧十：每次用完都复盘，把经验写回项目" class="headerlink" title="技巧十：每次用完都复盘，把经验写回项目"></a>技巧十：每次用完都复盘，把经验写回项目</h2><p>Codex 用得好不好，不只取决于一次提示词，还取决于你有没有把经验沉淀下来。</p>
+<p>每次任务结束后，可以复盘几个问题：</p>
+<p>第一，哪些上下文给得有效？</p>
+<p>第二，Codex 哪一步误解了？</p>
+<p>第三，哪些测试命令必须写进下次任务？</p>
+<p>第四，哪些规则应该放进 <code>AGENTS.md</code>？</p>
+<p>第五，有没有可以沉淀成固定提示模板？</p>
+<p>比如你发现 Codex 总是忘记运行某个检查，就把它写进 <code>AGENTS.md</code>。你发现某类任务总要提醒“不要修改生成目录”，也写进去。你发现某种 review checklist 很有效，就整理成 <code>code_review.md</code>，以后让 Codex 引用。</p>
+<p>这就是复利。第一次用 Codex，可能只是省一点时间；第十次之后，如果规则、模板、测试、权限都沉淀好了，它省下的就不只是写代码时间，而是整个工程流程的沟通成本。</p>
+<h2 id="一个完整的使用模板"><a href="#一个完整的使用模板" class="headerlink" title="一个完整的使用模板"></a>一个完整的使用模板</h2><p>下面是我比较推荐的一段 Codex 任务模板，可以按项目改：</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">请完成以下任务：</span><br><span class="line"></span><br><span class="line">目标：</span><br><span class="line"><span class="bullet">- </span>...</span><br><span class="line"></span><br><span class="line">范围：</span><br><span class="line"><span class="bullet">- </span>允许修改：</span><br><span class="line"><span class="bullet">- </span>不要修改：</span><br><span class="line"></span><br><span class="line">上下文：</span><br><span class="line"><span class="bullet">- </span>相关文件：</span><br><span class="line"><span class="bullet">- </span>当前现象：</span><br><span class="line"><span class="bullet">- </span>期望行为：</span><br><span class="line"></span><br><span class="line">实现要求：</span><br><span class="line"><span class="bullet">- </span>先阅读相关代码并给出计划。</span><br><span class="line"><span class="bullet">- </span>计划确认后再修改。</span><br><span class="line"><span class="bullet">- </span>保持改动最小，不做无关重构。</span><br><span class="line"></span><br><span class="line">验证要求：</span><br><span class="line"><span class="bullet">- </span>运行：</span><br><span class="line"><span class="bullet">- </span>如果无法运行，请说明原因。</span><br><span class="line"><span class="bullet">- </span>最后总结改动、验证结果和剩余风险。</span><br></pre></td></tr></table></figure>
+<p>这个模板看起来很普通，但它能解决大部分“AI 写偏了”的问题。因为它把目标、范围、上下文、实现、验证都拆开了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Codex 提高效率的关键，不是让开发者少思考，而是把重复、明确、可验证的工作交出去，让开发者把精力放在判断、设计和质量把关上。</p>
+<p>我认为最值得记住的是这 10 点：</p>
+<ol>
+<li>把需求写成小 issue。</li>
+<li>用 <code>AGENTS.md</code> 沉淀项目规则。</li>
+<li>先让 Codex 读代码和写计划。</li>
+<li>一个任务只做一个焦点。</li>
+<li>小步实现，并解释关键取舍。</li>
+<li>把测试命令写进任务。</li>
+<li>让 Codex 帮你阅读和定位。</li>
+<li>用 review 指令检查风险。</li>
+<li>默认收紧权限和沙箱。</li>
+<li>每次用完都复盘沉淀。</li>
+</ol>
+<p>用 Codex 最好的状态，不是“我完全不管，它自动完成”，而是“我把任务定义清楚，它帮我推进，我负责判断和验收”。这样才是真正稳定的软件工程效率提升。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://developers.openai.com/codex/" target="_blank" rel="noopener">OpenAI Codex</a></li>
+<li><a href="https://developers.openai.com/codex/learn/best-practices" target="_blank" rel="noopener">OpenAI Codex best practices</a></li>
+<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/Codex提高软件编程效率的10个技巧/" data-id="cmq84a2h20002xsqhd6avnpuj" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Codex/">Codex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-普通开发者使用AI的三条边界" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2026/06/10/普通开发者使用AI的三条边界/" class="article-date">
@@ -93,6 +225,7 @@
         <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>AI 工具变强之后，最容易出现两种极端看法。一种是觉得它什么都能做，开发者很快就不重要了；另一种是觉得它经常出错，所以完全不值得用。</p>
 <p>我的感受比较中间：AI 很有用，但它不是魔法。它能帮我们节省大量搜索、整理、样板代码和重复验证的时间，也会在上下文不足、需求模糊、边界复杂时犯错。关键不是用不用，而是知道在哪些边界内用。</p>
 <p>对普通开发者来说，我认为最重要的是三条边界：成本边界、隐私边界、正确性边界。只要这三条边界想清楚，AI 就会从一个让人焦虑的新东西，变成一个可以稳定使用的工具。</p>
+<p><img src="/images/ai-flowcharts/ai-boundaries-decision.svg" alt="普通开发者使用AI的三条边界"></p>
 <h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI 的能力越强，越不能无脑使用。因为它不只是生成几句话，还可能参与代码修改、文档总结、日志分析、数据处理，甚至操作开发环境。</p>
 <p>一个成熟的使用方式，不是问“AI 能不能做这件事”，而是问三个问题：</p>
 <p>第一，这件事交给 AI 做，成本是否划算？</p>
@@ -125,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/普通开发者使用AI的三条边界/" data-id="cmq83mcvo000grgqhdck6k16x" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/普通开发者使用AI的三条边界/" data-id="cmq84a2hc000nxsqhci0rcuns" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li></ul>
@@ -162,6 +295,7 @@
         <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>以前说到 AI 编程，大多数人想到的是代码补全：写一半函数，它帮你补完；写一个注释，它生成几行实现。这当然有用，但它更像是键盘旁边的加速器。</p>
 <p>现在越来越多工具开始强调 Agent。Agent 和普通聊天助手最大的区别，是它不只是回答问题，而是可以围绕一个目标持续执行：读仓库、找文件、改代码、运行命令、生成 diff、创建分支，甚至提交 pull request。</p>
 <p>这让我想到以前搭建 Hexo 博客的时候，很多事情都是一步一步手工来：写 Markdown、生成静态文件、检查页面、部署到 GitHub Pages。今天这些步骤仍然存在，只是其中一部分可以交给 AI Agent 帮忙跑。开发者要做的，不再只是“亲手敲完每一步”，而是设计一个可靠的工作流。</p>
+<p><img src="/images/ai-flowcharts/ai-agent-workflow.svg" alt="AI Agent开发工作流"></p>
 <h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI Agent 时代的开发工作流，本质上是从“同步结对”走向“异步委派”。</p>
 <p>同步结对很好理解：你坐在编辑器前，AI 在旁边补代码，你一边看一边改。这适合探索、小修小补、快速理解代码。</p>
 <p>异步委派则更像给同事派任务：你把目标、背景、限制、验收标准说清楚，让 agent 自己在一个隔离环境里完成，然后你再 review 它的结果。OpenAI Codex 和 GitHub Copilot cloud agent 这类工具，都在往这个方向发展。</p>
@@ -188,7 +322,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/AI-Agent时代的开发工作流/" data-id="cmq83mcvl0008rgqh602ch0oj" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/AI-Agent时代的开发工作流/" data-id="cmq84a2h30004xsqhodog60rx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
@@ -225,6 +359,7 @@
         <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>从 2017 年之后，这个博客停了很久。中间几年技术变化很多，但真正让我觉得开发方式被改变的，不是某一个框架，也不是某一种语言，而是 AI 编程助手变得越来越像一个可以一起干活的同事。</p>
 <p>刚开始用 AI 的时候，我更习惯把它当成搜索引擎的升级版：问一个概念，让它解释；贴一段报错，让它分析；想不起某个 API，就让它补一下示例代码。这个阶段确实有用，但用久了会发现，它只是让“查资料”变快了，并没有真正改变开发流程。</p>
 <p>到了 2026 年，我对 AI 编程助手的理解变了。它不是简单替我写几行代码，而是参与到“理解需求、阅读代码、拆分任务、修改实现、运行验证、总结结果”的整个链路里。真正的差别不在于它能不能生成代码，而在于它能不能在一个真实项目里按上下文做事。</p>
+<p><img src="/images/ai-flowcharts/ai-coding-assistant-loop.svg" alt="AI编程助手协作闭环"></p>
 <h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>我现在更愿意把 AI 编程助手看成一种协作工具，而不是答案机器。</p>
 <p>答案机器的使用方式是：“我问一个问题，你给我一个答案。”这种方式适合查概念、写小片段、解释命令，但一旦进入真实项目，就很容易失真。因为真实项目里最重要的不是“这段代码理论上怎么写”，而是“在这个项目已有结构里应该怎么改”。</p>
 <p>协作工具的使用方式则不一样。我们需要先让 AI 了解项目背景，再把任务拆成可验证的小步骤，然后让它读代码、提出方案、做修改、跑检查。最后人再 review 它的 diff，而不是直接相信它的结论。</p>
@@ -249,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/2026年重新理解AI编程助手/" data-id="cmq83mcve0000rgqhqvt8p8i6" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/2026年重新理解AI编程助手/" data-id="cmq84a2gz0000xsqhngo76a2w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li></ul>
@@ -341,7 +476,7 @@ INSTALL redis-check-aof
 </code></pre><p>运行make test测试是否可以安装,检查的一大堆，都是绿色的ok。这就可以了</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>[root@localhost src]# make PREFIX=/usr/local/redis install 
 </code></pre><p>安装成功后，去/usr/local/redis/bin目录看，会发现如下文件：</p>
-<p><img src="https://i.imgur.com/esFeEOX.png" alt=""></p>
+<p><img src="https://i.imgur.com/esFeEOX.png" alt></p>
 <p>都是一个个工具命令</p>
 <p>然后把解压的redis路径下的redis.conf文件拷贝到安装路径/usr/local/redis下面</p>
 <pre><code>[root@localhost redis-4.0.1]# cp redis.conf /usr/local/redis
@@ -427,9 +562,9 @@ OK
 #
 requirepass 123456
 </code></pre><p>修改完成后重启redis，再次通过redis客户端redis-cli登录并操作可以发现会报一个身份认证错误：</p>
-<p><img src="https://i.imgur.com/sR9PtPZ.png" alt=""></p>
+<p><img src="https://i.imgur.com/sR9PtPZ.png" alt></p>
 <p>这就说明我们已经成功的设置了密码，所以通过客户端连接的话必须加上密码参数才能正常连接： </p>
-<p><img src="https://i.imgur.com/EpEgFQr.png" alt=""></p>
+<p><img src="https://i.imgur.com/EpEgFQr.png" alt></p>
 <p>如上图所示，加了-a参数之后即可正常连接并操作redis。</p>
 <h2 id="jedis连接设置密码"><a href="#jedis连接设置密码" class="headerlink" title="jedis连接设置密码"></a>jedis连接设置密码</h2><p>当我们用Java客户端连接redis时会遇到同样的问题，下面看一段简单的jedis连接redis的测试代码：</p>
 <pre><code>@Test
@@ -459,7 +594,7 @@ public void testTwo() {
     // 查看服务是否运行
     System.out.println(&quot;Server is running: &quot; + jedis.ping());
 }
-</code></pre><p><img src="https://i.imgur.com/MpHJLvu.png" alt=""></p>
+</code></pre><p><img src="https://i.imgur.com/MpHJLvu.png" alt></p>
 <h2 id="spring-data-redis设置密码"><a href="#spring-data-redis设置密码" class="headerlink" title="spring-data-redis设置密码"></a>spring-data-redis设置密码</h2><p>通常情况下在实际的java项目中我们会选择Spring提供的spring-data-redis来操作redis，spring的封装可以给我们提供很多便捷之处。那么spring-data-redis又是如何设置密码的呢？首先定义一个redis.properties配置文件，定义一组redis属性供spring加载使用，其中就包含密码（redis.password）：</p>
 <pre><code># Redis settings  
 redis.host=192.168.145.10 
@@ -836,203 +971,7 @@ redis 127.0.0.1:6379&gt; zrangebyscore dbs 98 100
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2017/05/10/redis入门/" data-id="cmq83mcvp000irgqhjci5besf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/kafka集群/" class="article-date">
-  <time datetime="2017-01-07T04:16:17.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/07/kafka集群/">kafka集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Kafka初识"><a href="#Kafka初识" class="headerlink" title="Kafka初识"></a>Kafka初识</h2><ul>
-<li><p>Kafka使用背景</p>
-<p>  在我们大量使用分布式数据库、分布式计算集群的时候，是否会遇到这样的一些问题：</p>
-<ul>
-<li>我们想分析下用户行为（pageviews），以便我们设计出更好的广告位</li>
-<li>我想对用户的搜索关键词进行统计，分析出当前的流行趋势</li>
-<li>有些数据，存储数据库浪费，直接存储硬盘效率又低</li>
-</ul>
-</li>
-<li><p>Kafka的定义</p>
-<p>  它是一个分布式消息系统,具有高水平扩展和高吞吐量的特点。</p>
-</li>
-</ul>
-<h2 id="Kafka相关概念"><a href="#Kafka相关概念" class="headerlink" title="Kafka相关概念"></a>Kafka相关概念</h2><ul>
-<li><p>AMQP协议：是一个标准开放的应用层的消息中间件（Message Oriented Middleware）协议。AMQP定义了通过网络发送的字节流的数据格式。因此兼容性非常好，任何实现AMQP协议的程序都可以和与AMQP协议兼容的其他程序交互，可以很容易做到跨语言，跨平台。</p>
-</li>
-<li><p>一些基本的概念</p>
-<ul>
-<li>消费者：（Consumer）：从消息队列中请求消息的客户端应用程序</li>
-<li>生产者：（Producer）：向broker发布消息的应用程序</li>
-<li>AMQP服务端（broker）：用来接收生产者发送的消息并将这些消息路由给服务器中的队列，便于fafka将生产者发送的消息，动态的添加到磁盘并给每一条消息一个偏移量，所以对于kafka一个broker就是一个应用程序的实例</li>
-</ul>
-</li>
-</ul>
-<p>kafka支持的客户端语言：Kafka客户端支持当前大部分主流语言，包括：C、C++、Erlang、Java、.net、perl、PHP、Python、Ruby、Go、Javascript<br>可以使用以上任何一种语言和kafka服务器进行通信（即辨析自己的consumer从kafka集群订阅消息也可以自己写producer程序）</p>
-<ul>
-<li><p>Kafka架构</p>
-<p>  生产者生产消息、kafka集群、消费者获取消息这样一种架构，如下图：</p>
-<p>  <img src="https://i.imgur.com/fFh8aZr.png" alt=""></p>
-<p>  kafka集群中的消息，是通过Topic（主题）来进行组织的，如下图：</p>
-<p>  <img src="https://i.imgur.com/yMOoyNJ.png" alt=""></p>
-<p>  一些基本的概念：</p>
-<ul>
-<li>主题（Topic）：一个主题类似新闻中的体育、娱乐、教育等分类概念，在实际工程中通常一个业务一个主题。</li>
-<li><p>分区（Partition）：一个Topic中的消息数据按照多个分区组织，分区是kafka消息队列组织的最小单位，一个分区可以看作是一个FIFO（ First Input First Output的缩写，先入先出队列）的队列。</p>
-<p>kafka分区是提高kafka性能的关键所在，当你发现你的集群性能不高时，常用手段就是增加Topic的分区，分区里面的消息是按照从新到老的顺序进行组织，消费者从队列头订阅消息，生产者从队列尾添加消息。</p>
-<p>工作图：<br><img src="https://i.imgur.com/4eSzo4r.png" alt=""></p>
-<p>备份（Replication）：为了保证分布式可靠性，kafka0.8开始对每个分区的数据进行备份（不同的Broker上），防止其中一个Broker宕机造成分区上的数据不可用。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Kafka集群搭建"><a href="#Kafka集群搭建" class="headerlink" title="Kafka集群搭建"></a>Kafka集群搭建</h2><ul>
-<li><p>软件环境</p>
-<ul>
-<li>已经搭建好的zookeeper集群(文章最后另写)</li>
-<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
-<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
-</ul>
-</li>
-<li><p>创建目录并下载安装软件</p>
-<pre><code>#下载软件
-wget https://archive.apache.org/dist/kafka/0.9.0.1/kafka_2.11-0.9.0.1.tgz
-#解压软件
-tar -xvf kafka_2.11-0.9.0.1.tgz
-</code></pre></li>
-<li><p>修改配置文件</p>
-<p>  主要关注config/server.properties     </p>
-<pre><code>broker.id=0  #当前机器在集群中的唯一标识，和zookeeper的myid性质一样
-port=9092 #当前kafka对外提供服务的端口默认是9092
-host.name = 120.76.230.134 #这个参数默认是关闭的，在0.8.1有个bug，DNS解析问题，失败率的问题
-#申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址，如果是在远程服务器上运行则必须配置
-listeners = PLAINTEXT://120.76.230.134:9092 
-advertised.host.name = 120.76.230.134
-advertised.listeners=PLAINTEXT://120.76.230.134:9092
-log.dirs=/data/kafka/kafkalogs  #消息存放的目录
-#在log.retention.hours=168 下面新增下面三项
-message.max.byte=5242880
-default.replication.factor=2
-replica.fetch.max.bytes=5242880
-zookeeper.connect=120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 #zookeeper配置地址
-</code></pre></li>
-</ul>
-<pre><code>每个机子的broker.id、host.name都是不一样的，主要是关注以上几项参数配置。
-</code></pre><ul>
-<li><p>启动Kafka集群并测试</p>
-<p>  启动服务</p>
-<pre><code>#从后台启动Kafka集群（3台都需要启动）
-cd /data/kafka/kafka_2.11-0.11.0.1/bin #进入到kafka的bin目录 
-./kafka-server-start.sh -daemon ../config/server.properties
-</code></pre><p>  检查服务是否启动</p>
-<pre><code>#执行命令jps
-22246 Bootstrap
-26393 Kafka
-</code></pre><p>  创建Topic来验证是否创建成功</p>
-<pre><code>#创建Topic
-./kafka-topics.sh --create --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 --replication-factor 2 --partitions 1 --topic test
-
-#解释
---replication-factor 2   #复制两份
---partitions 1 #创建1个分区
---topic #主题为test
-
-#在一台服务器上创建一个发布者
-#创建一个broker，发布者
-./kafka-console-producer.sh --broker-list 120.76.230.134:9092 --topic test
-
-#在一台服务器上创建一个订阅者
-./kafka-console-consumer.sh --bootstrap-server 120.76.230.134:9092 --topic test --from-beginning
-</code></pre><p>  测试（在发布者那里发布消息看看订阅者那里是否能正常收到~）：</p>
-</li>
-<li><p>其他命令    </p>
-<p>  大部分命令可以去官方文档查看</p>
-<ul>
-<li><p>查看topic</p>
-<pre><code>./kafka-topics.sh --list --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181
-#就会显示我们创建的所有topic
-</code></pre><p>kafka集群搭建完毕</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="zookeeper集群部署"><a href="#zookeeper集群部署" class="headerlink" title="zookeeper集群部署"></a>zookeeper集群部署</h2><ul>
-<li><p>为什么是基数</p>
-<ul>
-<li>集群必须有一半以上的机器统一才能成为leader</li>
-<li>一半的机器挂掉 整个集群挂掉</li>
-</ul>
-</li>
-<li><p>去官网下载好zookeeper包，解压</p>
-</li>
-<li><p>修改配置/conf/zoo.cfg文件</p>
-<pre><code># 基本事件单元，以毫秒为单位，用来控制心跳和超时
-tickTime=2000
-# 参数设定了允许所有跟随者与领导者进行连接并同步的时间，如果在设定的时间段内，半数以上的跟随者未能完成同步，领导者便会宣布放弃领导地位，进行另一次的领导选举
-# 如果zk集群环境数量确实很大，同步数据的时间会变长，因此这种情况下可以适当调大该参数
-#集群中的follower服务器(F)与leader服务器(L)之间 初始连接 时能容忍的最多心跳数（tickTime的数量）
-initLimit=10
-# 参数设定了允许一个跟随者与一个领导者进行同步的时间，如果在设定的时间段内，跟随者未完成同步，它将会被集群丢弃
-# 所有关联到这个跟随者的客户端将连接到另外一个跟随着
-syncLimit=5
-# 存储持久数据的本地文件系统位置
-dataDir=/data/zookeeper-3.4.9/data
-dataLogDir=/data/zookeeper-3.4.9/logs
-# 监听客户端连接的端口
-clientPort=5181
-
-server.1=120.76.230.134:2888:3888
-server.2=120.76.193.192:2888:3888
-server.3=120.25.239.155:2888:3888
-
-#server.1 这个1是服务器的标识也可以是其他的数字， 表示这个是第几号服务器，用来标识服务器，这个标识要写到快照目录下面myid文件里
-#120.76.230.134为集群里的IP地址，第一个端口是master和slave之间的通信端口，默认是2888，第二个端口是leader选举的端口，集群刚启动的时候选举或者leader挂掉之后进行新的选举的端口默认是3888
-</code></pre><p>  zoo_sample.cfg  这个文件是官方给我们的zookeeper的样板文件，给他复制一份命名为zoo.cfg，zoo.cfg是官方指定的文件命名规则。</p>
-</li>
-<li><p>创建myid文件</p>
-<p>  /data/zookeeper-3.4.9/data目录下要配置myid文件，内容跟server.id相对应，比如:1</p>
-<p>  ./zkServer.sh star启动zookeeper，每台都要启动一遍</p>
-</li>
-<li><p>重要配置说明</p>
-<ul>
-<li><p>myid文件和server.myid  在快照目录下存放的标识本台服务器的文件，他是整个zk集群用来发现彼此的一个重要标识。</p>
-</li>
-<li><p>zoo.cfg 文件是zookeeper配置文件 在conf目录里。</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2017/01/07/kafka集群/" data-id="cmq83mcvh0002rgqhx5xx1clr" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2017/05/10/redis入门/" data-id="cmq84a2h7000bxsqha5z2ouje" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
@@ -1059,7 +998,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/">Codex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -1068,7 +1007,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AI/" style="font-size: 16.67px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/分布式/" style="font-size: 13.33px;">分布式</a> <a href="/tags/工程实践/" style="font-size: 10px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 20px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 16.67px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 10px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 10px;">软件工程</a>
+      <a href="/tags/AI/" style="font-size: 17.5px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Codex/" style="font-size: 10px;">Codex</a> <a href="/tags/分布式/" style="font-size: 12.5px;">分布式</a> <a href="/tags/工程实践/" style="font-size: 10px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 20px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 15px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 12.5px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 12.5px;">软件工程</a>
     </div>
   </div>
 
@@ -1077,7 +1016,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1087,6 +1026,10 @@ server.3=120.25.239.155:2888:3888
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2026/06/10/Codex提高软件编程效率的10个技巧/">Codex提高软件编程效率的10个技巧</a>
+          </li>
         
           <li>
             <a href="/2026/06/10/普通开发者使用AI的三条边界/">普通开发者使用AI的三条边界</a>
@@ -1102,10 +1045,6 @@ server.3=120.25.239.155:2888:3888
         
           <li>
             <a href="/2017/05/10/redis入门/">redis入门</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/07/kafka集群/">kafka集群</a>
           </li>
         
       </ul>
