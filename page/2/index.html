@@ -68,6 +68,789 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-普通开发者使用AI的三条边界" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/06/10/普通开发者使用AI的三条边界/" class="article-date">
+  <time datetime="2026-06-10T03:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/06/10/普通开发者使用AI的三条边界/">普通开发者使用AI的三条边界</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>AI 工具变强之后，最容易出现两种极端看法。一种是觉得它什么都能做，开发者很快就不重要了；另一种是觉得它经常出错，所以完全不值得用。</p>
+<p>我的感受比较中间：AI 很有用，但它不是魔法。它能帮我们节省大量搜索、整理、样板代码和重复验证的时间，也会在上下文不足、需求模糊、边界复杂时犯错。关键不是用不用，而是知道在哪些边界内用。</p>
+<p>对普通开发者来说，我认为最重要的是三条边界：成本边界、隐私边界、正确性边界。只要这三条边界想清楚，AI 就会从一个让人焦虑的新东西，变成一个可以稳定使用的工具。</p>
+<p><img src="/images/ai-flowcharts/ai-boundaries-decision.svg" alt="普通开发者使用AI的三条边界"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI 的能力越强，越不能无脑使用。因为它不只是生成几句话，还可能参与代码修改、文档总结、日志分析、数据处理，甚至操作开发环境。</p>
+<p>一个成熟的使用方式，不是问“AI 能不能做这件事”，而是问三个问题：</p>
+<p>第一，这件事交给 AI 做，成本是否划算？</p>
+<p>第二，交给 AI 的上下文里，有没有不该暴露的信息？</p>
+<p>第三，AI 给出的结果，能不能被验证？</p>
+<p>如果这三个问题都能回答清楚，就可以大胆用。如果回答不清楚，就应该缩小任务范围，或者干脆自己处理。</p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>先说成本边界。AI 的成本不只是钱，还包括时间和注意力。一个简单命令、一个熟悉 API、一个五分钟能写完的函数，如果反复和 AI 解释背景，可能反而更慢。比较适合交给 AI 的，是那些信息量大、重复性高、需要整理但风险可控的任务，比如读一批代码总结结构、补测试用例初稿、整理迁移步骤、生成文档草稿。</p>
+<p>再说隐私边界。不要把密钥、生产数据库、用户隐私数据、公司内部敏感信息直接贴给 AI。即使工具声称有企业级保护，也应该遵守最小暴露原则。能脱敏就脱敏，能用样例数据就不用真实数据，能描述结构就不要贴完整内容。</p>
+<p>最后是正确性边界。AI 的回答必须可验证。代码要能跑测试，SQL 要能解释执行计划，配置要能在测试环境验证，技术结论要能找到官方文档或源码依据。对于无法验证的内容，最多只能当成思路，不能当成结论。</p>
+<p>我自己比较喜欢把 AI 任务分成三类。</p>
+<p>第一类是低风险任务，可以直接让它做，比如整理 Markdown、解释报错、生成脚手架、翻译英文文档。</p>
+<p>第二类是中风险任务，可以让它做初稿，但必须 review，比如修改业务代码、补单元测试、调整配置。</p>
+<p>第三类是高风险任务，只能让它辅助分析，不能直接执行，比如生产数据修复、权限策略、支付金额计算、安全漏洞处理。</p>
+<p>这样分层之后，使用 AI 会稳很多。不是每次都纠结“能不能信”，而是先判断任务风险，再决定让它参与到什么程度。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把“说得像真的”当成“真的”。AI 很擅长组织语言，所以它的错误也可能很顺。遇到版本号、API 行为、兼容性、法律合规、安全策略这些问题，最好看官方资料。</p>
+<p>第二个坑是把完整代码库一次性丢给 AI。上下文越多不一定越好，关键是相关。给太多无关信息，既增加成本，也可能让它抓错重点。</p>
+<p>第三个坑是用 AI 掩盖自己没想清楚的问题。如果需求本身模糊，AI 只能扩大这种模糊。比较好的做法是先让它帮你把需求拆清楚，再进入实现。</p>
+<p>第四个坑是跳过复盘。每次 AI 帮你完成一个任务，都可以回头看一下：哪些提示有效，哪些地方它误解了，哪些验证步骤必不可少。用 AI 也需要积累经验。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>普通开发者使用 AI，不需要追每一个新模型，也不需要把所有工作都交出去。真正重要的是建立边界感。</p>
+<p>成本边界提醒我们：不是所有问题都值得用 AI。</p>
+<p>隐私边界提醒我们：不是所有上下文都可以交给 AI。</p>
+<p>正确性边界提醒我们：不是所有回答都能直接相信。</p>
+<p>把这三条边界守住，AI 就会是一个很好的放大器。它放大的不是偷懒，而是开发者已经具备的判断力、表达能力和工程习惯。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
+<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/普通开发者使用AI的三条边界/" data-id="cmq84a2hc000nxsqhci0rcuns" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-AI-Agent时代的开发工作流" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/06/10/AI-Agent时代的开发工作流/" class="article-date">
+  <time datetime="2026-06-10T02:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/06/10/AI-Agent时代的开发工作流/">AI Agent时代的开发工作流</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>以前说到 AI 编程，大多数人想到的是代码补全：写一半函数，它帮你补完；写一个注释，它生成几行实现。这当然有用，但它更像是键盘旁边的加速器。</p>
+<p>现在越来越多工具开始强调 Agent。Agent 和普通聊天助手最大的区别，是它不只是回答问题，而是可以围绕一个目标持续执行：读仓库、找文件、改代码、运行命令、生成 diff、创建分支，甚至提交 pull request。</p>
+<p>这让我想到以前搭建 Hexo 博客的时候，很多事情都是一步一步手工来：写 Markdown、生成静态文件、检查页面、部署到 GitHub Pages。今天这些步骤仍然存在，只是其中一部分可以交给 AI Agent 帮忙跑。开发者要做的，不再只是“亲手敲完每一步”，而是设计一个可靠的工作流。</p>
+<p><img src="/images/ai-flowcharts/ai-agent-workflow.svg" alt="AI Agent开发工作流"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI Agent 时代的开发工作流，本质上是从“同步结对”走向“异步委派”。</p>
+<p>同步结对很好理解：你坐在编辑器前，AI 在旁边补代码，你一边看一边改。这适合探索、小修小补、快速理解代码。</p>
+<p>异步委派则更像给同事派任务：你把目标、背景、限制、验收标准说清楚，让 agent 自己在一个隔离环境里完成，然后你再 review 它的结果。OpenAI Codex 和 GitHub Copilot cloud agent 这类工具，都在往这个方向发展。</p>
+<p>这并不意味着开发者可以完全放手。恰恰相反，工作流变复杂之后，人更需要把关。一个好的 agent 任务，应该像一个好的 issue：背景明确、范围可控、验收清楚、失败时容易回滚。</p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>我理解的 AI Agent 开发工作流，可以分成四步：任务委派、计划、实现、审查。</p>
+<p>第一步是任务委派。不要只写一句“优化一下项目”。更好的写法是：“请阅读文章列表生成逻辑，新增 2026 年文章后确认归档页按年份展示；不要修改主题样式；完成后运行 hexo generate 并说明结果。”这样的任务有目标、有边界、有验证方式。</p>
+<p>第二步是计划。Agent 动手之前，最好先让它说明会改哪些地方、为什么要改、如何验证。这个环节非常重要，因为很多错误不是发生在写代码时，而是发生在理解需求时。方向错了，代码越多越麻烦。</p>
+<p>第三步是实现。实现时要鼓励 agent 小步提交思路，而不是一次性做大改。比如先新增文件，再运行生成，再检查输出。每一步都有反馈，问题就容易定位。</p>
+<p>第四步是审查。审查不是简单看它说“已完成”，而是看实际 diff、命令输出和页面效果。尤其是自动生成内容、批量替换、依赖升级、部署脚本这类任务，一定要确认没有改到不该改的地方。</p>
+<p>如果团队里使用 GitHub 工作流，还可以把 agent 的输出放到 PR 里处理。这样人类 review、CI、讨论记录都还在原来的工程体系里，不会因为用了 AI 就绕过质量门禁。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把 Agent 当成万能自动化。Agent 能执行任务，但它依赖上下文和工具权限。环境不完整、依赖装不上、测试命令缺失、文档过时，都会让它走偏。</p>
+<p>第二个坑是权限给得太大。能读仓库、能改文件、能跑命令已经很强了，如果再加上网络、密钥、生产环境权限，就必须非常谨慎。Agent 适合在隔离环境里处理开发任务，不适合不经审查直接操作生产系统。</p>
+<p>第三个坑是没有验收标准。人类开发者接到模糊需求会反问，Agent 往往会直接猜。猜出来的结果可能看上去很完整，但并不一定是你要的东西。</p>
+<p>第四个坑是忽略团队习惯。一个项目原来怎么写测试、怎么发版、怎么做 code review，不应该因为引入 AI 就全部推翻。更好的方式是让 AI 进入现有流程，而不是让流程迁就 AI。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>AI Agent 带来的变化，不只是“写代码更快”，而是开发任务的组织方式变了。以前很多事情必须人一直盯着做，现在可以把一部分明确任务放到后台执行，人再回来审查结果。</p>
+<p>但越是这样，越需要工程纪律。任务要小，边界要清楚，验证要真实，权限要克制，结果要 review。Agent 做的是执行和辅助判断，人做的是方向、责任和最后确认。</p>
+<p>我觉得这会成为 2026 年之后开发者的一项基本能力：不是和 AI 比谁写代码快，而是学会把 AI 放进可靠的软件工程流程里。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
+<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/AI-Agent时代的开发工作流/" data-id="cmq84a2h30004xsqhodog60rx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-2026年重新理解AI编程助手" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/06/10/2026年重新理解AI编程助手/" class="article-date">
+  <time datetime="2026-06-10T01:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/06/10/2026年重新理解AI编程助手/">2026年，重新理解AI编程助手</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>从 2017 年之后，这个博客停了很久。中间几年技术变化很多，但真正让我觉得开发方式被改变的，不是某一个框架，也不是某一种语言，而是 AI 编程助手变得越来越像一个可以一起干活的同事。</p>
+<p>刚开始用 AI 的时候，我更习惯把它当成搜索引擎的升级版：问一个概念，让它解释；贴一段报错，让它分析；想不起某个 API，就让它补一下示例代码。这个阶段确实有用，但用久了会发现，它只是让“查资料”变快了，并没有真正改变开发流程。</p>
+<p>到了 2026 年，我对 AI 编程助手的理解变了。它不是简单替我写几行代码，而是参与到“理解需求、阅读代码、拆分任务、修改实现、运行验证、总结结果”的整个链路里。真正的差别不在于它能不能生成代码，而在于它能不能在一个真实项目里按上下文做事。</p>
+<p><img src="/images/ai-flowcharts/ai-coding-assistant-loop.svg" alt="AI编程助手协作闭环"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>我现在更愿意把 AI 编程助手看成一种协作工具，而不是答案机器。</p>
+<p>答案机器的使用方式是：“我问一个问题，你给我一个答案。”这种方式适合查概念、写小片段、解释命令，但一旦进入真实项目，就很容易失真。因为真实项目里最重要的不是“这段代码理论上怎么写”，而是“在这个项目已有结构里应该怎么改”。</p>
+<p>协作工具的使用方式则不一样。我们需要先让 AI 了解项目背景，再把任务拆成可验证的小步骤，然后让它读代码、提出方案、做修改、跑检查。最后人再 review 它的 diff，而不是直接相信它的结论。</p>
+<p>这也是我认为 2026 年普通开发者最该掌握的能力：不是会不会问“帮我写一个函数”，而是会不会把问题描述成一个清楚、边界明确、可以验收的开发任务。</p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>第一步是给上下文。不要只说“帮我修一下这个 bug”，而是说清楚现象、期望、相关文件、怎么复现、什么不能改。如果项目里有测试命令，也应该直接告诉它。AI 最怕的是上下文不完整，它会用猜测填空，而猜测在工程里通常会变成 bug。</p>
+<p>第二步是拆任务。比如要做一个功能，不要一上来就让 AI “完整实现”。更稳妥的方式是先让它读相关代码并说明当前结构，再让它给出改动计划。计划确认之后，再让它动手实现。这样做的好处是，中间每一步都能纠偏，不至于最后得到一大坨看起来很努力但方向不对的代码。</p>
+<p>第三步是看 diff。AI 写代码再快，也不能跳过 review。尤其要看三类地方：有没有改到无关文件，有没有引入过度抽象，有没有把异常路径处理得过于乐观。很多时候 AI 的代码能跑通主流程，但边界条件会比较脆。</p>
+<p>第四步是跑测试。没有测试的项目，至少也要跑构建、启动、本地页面检查，或者准备几个手工验证步骤。AI 的自信程度和代码正确率不是一回事。它说“应该可以”没有意义，命令输出和实际页面才有意义。</p>
+<p>第五步是让它总结。每次完成一个任务后，我会让 AI 说明改了什么、为什么这样改、跑了哪些验证、还有什么风险。这个总结不是形式主义，它能帮助人快速进入 review 状态，也能暴露它有没有真的理解任务。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把 AI 生成的代码当成最终答案。它可以很快给出一个能看的版本，但工程质量还需要人来兜底。尤其是权限、金额、隐私、并发、删除数据这些地方，不能因为它写得顺手就直接合并。</p>
+<p>第二个坑是一次性给太大的任务。任务越大，AI 越容易在中途丢失重点。一个比较好的经验是，把任务拆到“一个 PR 可以清楚 review”的大小。如果你自己都说不清验收标准，AI 更不可能稳定完成。</p>
+<p>第三个坑是只追求速度。AI 最容易制造一种错觉：好像所有事情都能马上完成。但软件开发里，快只是其中一个指标。可维护、可验证、符合项目风格，很多时候比快更重要。</p>
+<p>第四个坑是忽略成本。2026 年的 AI 工具已经越来越强，但强模型、长上下文、多轮对话、后台 agent 都是有成本的。日常开发中，简单问题可以用轻量方式解决，复杂问题再交给更强的模型或 agent。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>AI 编程助手真正改变的，不是让开发者不用写代码，而是让开发者可以把一部分明确、重复、可验证的工作委派出去。开发者的价值并没有消失，反而更集中在判断、设计、拆解、验证和取舍上。</p>
+<p>如果把 AI 当成搜索框，它只是一个更快的问答工具；如果把它当成协作对象，就需要给它上下文、边界和验收标准。2026 年重新理解 AI 编程助手，我觉得关键就在这里：少一点神奇想象，多一点工程方法。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
+<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
+<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2026/06/10/2026年重新理解AI编程助手/" data-id="cmq84a2gz0000xsqhngo76a2w" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-redis入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/10/redis入门/" class="article-date">
+  <time datetime="2017-05-10T11:06:07.000Z" itemprop="datePublished">2017-05-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/10/redis入门/">redis入门</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="安装gcc"><a href="#安装gcc" class="headerlink" title="安装gcc"></a>安装gcc</h2><ul>
+<li><p>Redis在linux上的安装首先必须先安装gcc，这个是用来编译redis的源文件的。首先需要先切换的到root用户：</p>
+<pre><code>[chenjx@localhost ~]$ su
+Password: 
+[root@localhost chenjx]#
+</code></pre></li>
+<li><p>然后开始安装gcc:</p>
+<pre><code>//这个命令是在线安装的，所以在这之前你的PC必须能够上网
+[root@localhost /]# yum install gcc-c++
+</code></pre></li>
+</ul>
+<h2 id="解压redis的源文件"><a href="#解压redis的源文件" class="headerlink" title="解压redis的源文件"></a>解压redis的源文件</h2><pre><code>[root@localhost chenjx]# cd Desktop/
+[root@localhost Desktop]# ls
+redis-4.0.1.tar.gz
+[root@localhost Desktop]# tar zxvf redis-4.0.1.tar.gz 
+redis-4.0.1/
+redis-4.0.1/.gitignore
+redis-4.0.1/00-RELEASENOTES
+redis-4.0.1/BUGS
+redis-4.0.1/CONTRIBUTING
+</code></pre><h2 id="进入redis的解压目录"><a href="#进入redis的解压目录" class="headerlink" title="进入redis的解压目录"></a>进入redis的解压目录</h2><pre><code>[root@localhost Desktop]# ls
+redis-4.0.1  redis-4.0.1.tar.gz
+[root@localhost Desktop]# cd redis-4.0.1/
+</code></pre><h2 id="使用make命令编译"><a href="#使用make命令编译" class="headerlink" title="使用make命令编译"></a>使用make命令编译</h2><pre><code>[root@localhost redis-4.0.1]# make
+
+//出现以下信息即是编译成功
+CC notify.o
+CC setproctitle.o
+CC blocked.o
+CC hyperloglog.o
+CC latency.o
+CC sparkline.o
+CC redis-check-rdb.o
+CC redis-check-aof.o
+CC geo.o
+CC lazyfree.o
+CC module.o
+CC evict.o
+CC expire.o
+CC geohash.o
+CC geohash_helper.o
+CC childinfo.o
+CC defrag.o
+CC siphash.o
+CC rax.o
+LINK redis-server
+INSTALL redis-sentinel
+CC redis-cli.o
+LINK redis-cli
+CC redis-benchmark.o
+LINK redis-benchmark
+INSTALL redis-check-rdb
+INSTALL redis-check-aof
+</code></pre><p>进入解压的src目录下</p>
+<pre><code>[root@localhost redis-4.0.1]# cd src
+</code></pre><p>运行make test测试是否可以安装,检查的一大堆，都是绿色的ok。这就可以了</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>[root@localhost src]# make PREFIX=/usr/local/redis install 
+</code></pre><p>安装成功后，去/usr/local/redis/bin目录看，会发现如下文件：</p>
+<p><img src="https://i.imgur.com/esFeEOX.png" alt></p>
+<p>都是一个个工具命令</p>
+<p>然后把解压的redis路径下的redis.conf文件拷贝到安装路径/usr/local/redis下面</p>
+<pre><code>[root@localhost redis-4.0.1]# cp redis.conf /usr/local/redis
+[root@localhost redis-4.0.1]# cd /usr/local/redis
+[root@localhost redis]# ls
+bin  redis.conf
+</code></pre><p>到这里redis已经安装成功了。</p>
+<h2 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h2><h4 id="第一种方法：进入安装路径下的bin"><a href="#第一种方法：进入安装路径下的bin" class="headerlink" title="第一种方法：进入安装路径下的bin"></a>第一种方法：进入安装路径下的bin</h4><pre><code>[root@localhost redis]# cd bin
+[root@localhost bin]# ./redis-server
+</code></pre><p>但是这属于前端启动，启动redis之后，我们的控制台就不能进行任何操作了。只能ctrl+c停止启动。</p>
+<h4 id="第二种方法：后端启动"><a href="#第二种方法：后端启动" class="headerlink" title="第二种方法：后端启动"></a>第二种方法：后端启动</h4><ul>
+<li><p>首先编辑redis.conf</p>
+<p>  [root@localhost redis]# vim redis.conf</p>
+</li>
+<li><p>找到daemonize no将其改为yes</p>
+</li>
+<li><p>再次启动 </p>
+<pre><code>[root@localhost redis]# ls
+bin  redis.conf
+[root@localhost redis]# ./bin/redis-server ./redis.conf
+//这里加载配置文件
+
+80167:C 30 Jul 16:01:58.145 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+80167:C 30 Jul 16:01:58.145 # Redis version=4.0.1, bits=64, commit=00000000, modified=0, pid=80167, just started
+80167:C 30 Jul 16:01:58.145 # Configuration loaded
+</code></pre></li>
+</ul>
+<p>这样redis就启动了</p>
+<pre><code>可以通过
+ps -ef|grep redis
+来查看是否启动
+</code></pre><p>关闭redis</p>
+<pre><code>[root@localhost redis]# ./bin/redis-cli shutdown
+</code></pre><h2 id="简单的使用"><a href="#简单的使用" class="headerlink" title="简单的使用"></a>简单的使用</h2><pre><code>//首先链接客户端
+[root@localhost redis]# ./bin/redis-cli
+//检查网络是否可以
+127.0.0.1:6379&gt; ping
+PONG
+//设置一个键值对
+127.0.0.1:6379&gt; set name chenjx
+OK
+//获取刚刚设置的键值对
+127.0.0.1:6379&gt; get name
+&quot;chenjx&quot;
+//查看所有的键
+127.0.0.1:6379&gt; keys *
+1) &quot;name&quot;
+//删除name这个键
+127.0.0.1:6379&gt; del name
+(integer) 1
+127.0.0.1:6379&gt; keys *
+(empty list or set)
+127.0.0.1:6379&gt;
+</code></pre><h2 id="设置登录密码"><a href="#设置登录密码" class="headerlink" title="设置登录密码"></a>设置登录密码</h2><p>redis在生产环境中通常都会设置密码以保证一定的安全性</p>
+<h4 id="首先修改redis-conf"><a href="#首先修改redis-conf" class="headerlink" title="首先修改redis.conf"></a>首先修改redis.conf</h4><p>打开redis.conf文件，搜索requirepass关键字</p>
+<pre><code>################################## SECURITY ###################################
+
+# Require clients to issue AUTH &lt;PASSWORD&gt; before processing any other
+# commands.  This might be useful in environments in which you do not trust
+# others with access to the host running redis-server.
+#
+# This should stay commented out for backward compatibility and because most
+# people do not need auth (e.g. they run their own servers).
+#
+# Warning: since Redis is pretty fast an outside user can try up to
+# 150k passwords per second against a good box. This means that you should
+# use a very strong password otherwise it will be very easy to break.
+#
+# requirepass foobared
+</code></pre><p>关注标记的那一行，#requirepass foobared。设置密码的方法就是去掉注释的#，把foobared替换成自己的密码即可，例如将密码设置为123456： </p>
+<pre><code>################################## SECURITY ###################################
+
+# Require clients to issue AUTH &lt;PASSWORD&gt; before processing any other
+# commands.  This might be useful in environments in which you do not trust
+# others with access to the host running redis-server.
+#
+# This should stay commented out for backward compatibility and because most
+# people do not need auth (e.g. they run their own servers).
+#
+# Warning: since Redis is pretty fast an outside user can try up to
+# 150k passwords per second against a good box. This means that you should
+# use a very strong password otherwise it will be very easy to break.
+#
+requirepass 123456
+</code></pre><p>修改完成后重启redis，再次通过redis客户端redis-cli登录并操作可以发现会报一个身份认证错误：</p>
+<p><img src="https://i.imgur.com/sR9PtPZ.png" alt></p>
+<p>这就说明我们已经成功的设置了密码，所以通过客户端连接的话必须加上密码参数才能正常连接： </p>
+<p><img src="https://i.imgur.com/EpEgFQr.png" alt></p>
+<p>如上图所示，加了-a参数之后即可正常连接并操作redis。</p>
+<h2 id="jedis连接设置密码"><a href="#jedis连接设置密码" class="headerlink" title="jedis连接设置密码"></a>jedis连接设置密码</h2><p>当我们用Java客户端连接redis时会遇到同样的问题，下面看一段简单的jedis连接redis的测试代码：</p>
+<pre><code>@Test
+public void testTwo() {
+    Jedis jedis = new Jedis(&quot;192.168.145.10&quot;);
+    System.out.println(&quot;Connection to server sucessfully&quot;);
+    // 查看服务是否运行
+    System.out.println(&quot;Server is running: &quot; + jedis.ping());
+}
+</code></pre><p>运行junit后我们发现报异常了：</p>
+<pre><code>redis.clients.jedis.exceptions.JedisDataException: NOAUTH Authentication required.
+at redis.clients.jedis.Protocol.processError(Protocol.java:117)
+at redis.clients.jedis.Protocol.process(Protocol.java:142)
+at redis.clients.jedis.Protocol.read(Protocol.java:196)
+</code></pre><p>由于我们设置了密码但在这里又没有指定密码，所以报了和刚才相同的错误,Jedis的父类BinaryJedis提供了这样一样方法：</p>
+<pre><code>public String auth(final String password) {
+    checkIsInMulti();
+    client.auth(password);
+    return client.getStatusCodeReply();
+}
+</code></pre><p>所以在创建了Jedis的实例后再加上一行jedis.auth(“123456”); 即可</p>
+<pre><code>@Test
+public void testTwo() {
+    Jedis jedis = new Jedis(&quot;192.168.145.10&quot;);
+    jedis.auth(&quot;123456&quot;);
+    System.out.println(&quot;Connection to server sucessfully&quot;);
+    // 查看服务是否运行
+    System.out.println(&quot;Server is running: &quot; + jedis.ping());
+}
+</code></pre><p><img src="https://i.imgur.com/MpHJLvu.png" alt></p>
+<h2 id="spring-data-redis设置密码"><a href="#spring-data-redis设置密码" class="headerlink" title="spring-data-redis设置密码"></a>spring-data-redis设置密码</h2><p>通常情况下在实际的java项目中我们会选择Spring提供的spring-data-redis来操作redis，spring的封装可以给我们提供很多便捷之处。那么spring-data-redis又是如何设置密码的呢？首先定义一个redis.properties配置文件，定义一组redis属性供spring加载使用，其中就包含密码（redis.password）：</p>
+<pre><code># Redis settings  
+redis.host=192.168.145.10 
+redis.port=6379  
+redis.password=123456
+redis.database=2
+redis.timeout=100000  
+redis.maxTotal=300  
+redis.maxIdle=100
+redis.minIdle=10
+redis.maxWaitMillis=1000  
+redis.testOnBorrow=true  
+</code></pre><p>然后在由Spring封装的JedisConnectionFactory中来设置密码属性即可，下面是完整redis配置：</p>
+<pre><code>&lt;!-- redis配置 --&gt;
+&lt;bean id=&quot;poolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;
+    &lt;property name=&quot;maxIdle&quot; value=&quot;${redis.maxIdle}&quot; /&gt;
+    &lt;property name=&quot;maxWaitMillis&quot; value=&quot;${redis.maxWaitMillis}&quot; /&gt;
+    &lt;property name=&quot;testOnBorrow&quot; value=&quot;${redis.testOnBorrow}&quot; /&gt;
+&lt;/bean&gt;
+
+&lt;bean id=&quot;connectionFactory&quot; class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot;
+    p:host-name=&quot;${redis.host}&quot; p:port=&quot;${redis.port}&quot; 
+    p:password=&quot;${redis.password}&quot; p:pool-config-ref=&quot;poolConfig&quot; /&gt;
+
+&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.StringRedisTemplate&quot;&gt;
+    &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot; /&gt;
+&lt;/bean&gt;
+</code></pre><h2 id="Redis常用数据类型介绍、使用场景及其操作命令"><a href="#Redis常用数据类型介绍、使用场景及其操作命令" class="headerlink" title="Redis常用数据类型介绍、使用场景及其操作命令"></a>Redis常用数据类型介绍、使用场景及其操作命令</h2><p>Redis目前支持5种数据类型，分别是：</p>
+<ul>
+<li>String（字符串）</li>
+<li>List（列表）</li>
+<li>Hash（字典）</li>
+<li>Set（集合）</li>
+<li>Sorted Set（有序集合）</li>
+</ul>
+<p>下面就分别介绍这五种数据类型及其相应的操作命令。</p>
+<h3 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h3><p>String是简单的 key-value 键值对，value 不仅可以是 String，也可以是数字。String在redis内部存储默认就是一个字符串，被redisObject所引用，当遇到incr,decr等操作时会转成数值型进行计算，此时redisObject的encoding字段为int。</p>
+<p>String在redis内部存储默认就是一个字符串，被redisObject所引用，当遇到incr,decr等操作时会转成数值型进行计算，此时redisObject的encoding字段为int。</p>
+<ul>
+<li>应用场景</li>
+</ul>
+<p>String是最常用的一种数据类型，普通的key/value存储都可以归为此类，这里就不所做解释了。</p>
+<ul>
+<li><p>相关命令</p>
+<pre><code>SET key value                   设置key=value
+GET key                         或者键key对应的值
+GETRANGE key start end          得到字符串的子字符串存放在一个键
+GETSET key value                设置键的字符串值，并返回旧值
+GETBIT key offset               返回存储在键位值的字符串值的偏移
+MGET key1 [key2..]              得到所有的给定键的值
+SETBIT key offset value         设置或清除该位在存储在键的字符串值偏移
+SETEX key seconds value         键到期时设置值
+SETNX key value                 设置键的值，只有当该键不存在
+SETRANGE key offset value       覆盖字符串的一部分从指定键的偏移
+STRLEN key                      得到存储在键的值的长度
+MSET key value [key value...]   设置多个键和多个值
+MSETNX key value [key value...] 设置多个键多个值，只有在当没有按键的存在时
+PSETEX key milliseconds value   设置键的毫秒值和到期时间
+INCR key                        增加键的整数值一次
+INCRBY key increment            由给定的数量递增键的整数值
+INCRBYFLOAT key increment       由给定的数量递增键的浮点值
+DECR key                        递减键一次的整数值
+DECRBY key decrement            由给定数目递减键的整数值
+APPEND key value                追加值到一个键
+</code></pre></li>
+<li><p>其中用于操作管理键的命令有：</p>
+<pre><code>DEL key                         如果存在删除键
+DUMP key                        返回存储在指定键的值的序列化版本
+EXISTS key                      此命令检查该键是否存在
+EXPIRE key seconds              指定键的过期时间
+EXPIREAT key timestamp          指定的键过期时间。在这里，时间是在Unix时间戳格式
+PEXPIRE key milliseconds        设置键以毫秒为单位到期
+PEXPIREAT key milliseconds-timestamp        设置键在Unix时间戳指定为毫秒到期
+KEYS pattern                    查找与指定模式匹配的所有键
+MOVE key db                     移动键到另一个数据库
+PERSIST key                     移除过期的键
+PTTL key                        以毫秒为单位获取剩余时间的到期键。
+TTL key                         获取键到期的剩余时间。
+RANDOMKEY                       从Redis返回随机键
+RENAME key newkey               更改键的名称
+RENAMENX key newkey             重命名键，如果新的键不存在
+TYPE key                        返回存储在键的数据类型的值。
+</code></pre></li>
+<li><p>实例：</p>
+<pre><code>redis 127.0.0.1:6379&gt; set baidu http://www.baidu
+OK
+redis 127.0.0.1:6379&gt; append baidu .com
+(integer) 20
+redis 127.0.0.1:6379&gt; get baidu
+&quot;http://www.baidu.com&quot;
+redis 127.0.0.1:6379&gt; set visitors 0
+OK
+redis 127.0.0.1:6379&gt; incr visitors
+(integer) 1
+redis 127.0.0.1:6379&gt; incr visitors
+(integer) 2
+redis 127.0.0.1:6379&gt; get visitors
+&quot;2&quot;
+redis 127.0.0.1:6379&gt; incrby visitors 100
+(integer) 102
+redis 127.0.0.1:6379&gt; get visitors
+&quot;102&quot;
+redis 127.0.0.1:6379&gt; type baidu
+string
+redis 127.0.0.1:6379&gt; type visitors
+string
+redis 127.0.0.1:6379&gt; ttl baidu
+(integer) -1
+redis 127.0.0.1:6379&gt; rename baidu baidu-site
+OK
+redis 127.0.0.1:6379&gt; get baidu
+(nil)
+redis 127.0.0.1:6379&gt; get baidu-site
+&quot;http://www.baidu.com&quot;
+</code></pre></li>
+</ul>
+<h4 id="List（列表）"><a href="#List（列表）" class="headerlink" title="List（列表）"></a>List（列表）</h4><p>Redis list的实现为一个双向链表，即可以支持反向查找和遍历，更方便操作，不过带来了部分额外的内存开销，Redis内部的很多实现，包括发送缓冲队列等也都是用的这个数据结构。可以从头部或尾部向Redis列表添加元素。列表的最大长度为2^32 - 1，也即每个列表支持超过40亿个元素。</p>
+<ul>
+<li>应用场景</li>
+</ul>
+<p>Redis list的应用场景非常多，也是Redis最重要的数据结构之一，比如twitter的关注列表、粉丝列表等都可以用Redis的list结构来实现，再比如有的应用使用Redis的list类型实现一个简单的轻量级消息队列，生产者push，消费者pop</p>
+<ul>
+<li><p>相关命令</p>
+<pre><code>BLPOP
+BLPOP key1 [key2 ] timeout 取出并获取列表中的第一个元素，或阻塞，直到有可用
+BRPOP
+BRPOP key1 [key2 ] timeout 取出并获取列表中的最后一个元素，或阻塞，直到有可用
+BRPOPLPUSH
+BRPOPLPUSH source destination timeout 从列表中弹出一个值，它推到另一个列表并返回它;或阻塞，直到有可用
+LINDEX
+LINDEX key index 从一个列表其索引获取对应的元素
+LINSERT
+LINSERT key BEFORE|AFTER pivot value 在列表中的其他元素之后或之前插入一个元素
+LLEN
+LLEN key 获取列表的长度
+LPOP
+LPOP key 获取并取出列表中的第一个元素
+LPUSH
+LPUSH key value1 [value2] 在前面加上一个或多个值的列表
+LPUSHX
+LPUSHX key value 在前面加上一个值列表，仅当列表中存在
+LRANGE
+LRANGE key start stop 从一个列表获取各种元素
+LREM
+LREM key count value 从列表中删除元素
+LSET
+LSET key index value 在列表中的索引设置一个元素的值
+LTRIM
+LTRIM key start stop 修剪列表到指定的范围内
+RPOP
+RPOP key 取出并获取列表中的最后一个元素
+RPOPLPUSH
+RPOPLPUSH source destination 删除最后一个元素的列表，将其附加到另一个列表并返回它
+RPUSH
+RPUSH key value1 [value2] 添加一个或多个值到列表头部
+RPUSHX
+RPUSHX key value 添加一个值列表，仅当列表中存在
+</code></pre></li>
+<li><p>使用示例</p>
+<pre><code>redis 127.0.0.1:6379&gt; lpush list1 redis
+(integer) 1
+redis 127.0.0.1:6379&gt; lpush list1 hello
+(integer) 2
+redis 127.0.0.1:6379&gt; rpush list1 world
+(integer) 3
+redis 127.0.0.1:6379&gt; llen list1
+(integer) 3
+redis 127.0.0.1:6379&gt; lrange list1 0 3
+1) &quot;hello&quot;
+2) &quot;redis&quot;
+3) &quot;world&quot;
+redis 127.0.0.1:6379&gt; lpop list1
+&quot;hello&quot;
+redis 127.0.0.1:6379&gt; rpop list1
+&quot;world&quot;
+redis 127.0.0.1:6379&gt; lrange list1 0 3
+1) &quot;redis&quot;
+</code></pre></li>
+</ul>
+<h4 id="Hash（字典，哈希表）"><a href="#Hash（字典，哈希表）" class="headerlink" title="Hash（字典，哈希表）"></a>Hash（字典，哈希表）</h4><p>类似C#中的dict类型或者C++中的hash_map类型</p>
+<p>Redis Hash对应Value内部实际就是一个HashMap，实际这里会有2种不同实现，这个Hash的成员比较少时Redis为了节省内存会采用类似一维数组的方式来紧凑存储，而不会采用真正的HashMap结构，对应的value redisObject的encoding为zipmap,当成员数量增大时会自动转成真正的HashMap</p>
+<ul>
+<li>应用场景</li>
+</ul>
+<p>假设有多个用户及对应的用户信息，可以用来存储以用户ID为key，将用户信息序列化为比如json格式做为value进行保存。</p>
+<ul>
+<li><p>相关命令</p>
+<pre><code>HDEL
+HDEL key field[field...] 删除对象的一个或几个属性域，不存在的属性将被忽略
+HEXISTS
+HEXISTS key field 查看对象是否存在该属性域
+HGET
+HGET key field 获取对象中该field属性域的值
+HGETALL
+HGETALL key 获取对象的所有属性域和值
+HINCRBY
+HINCRBY key field value 将该对象中指定域的值增加给定的value，原子自增操作，只能是integer的属性值可以使用
+HINCRBYFLOAT
+HINCRBYFLOAT key field increment 将该对象中指定域的值增加给定的浮点数
+HKEYS
+HKEYS key 获取对象的所有属性字段
+HVALS
+HVALS key 获取对象的所有属性值
+HLEN
+HLEN key 获取对象的所有属性字段的总数
+HMGET
+HMGET key field[field...] 获取对象的一个或多个指定字段的值
+HSET
+HSET key field value 设置对象指定字段的值
+HMSET
+HMSET key field value [field value ...] 同时设置对象中一个或多个字段的值
+HSETNX
+HSETNX key field value 只在对象不存在指定的字段时才设置字段的值
+HSTRLEN
+HSTRLEN key field 返回对象指定field的value的字符串长度，如果该对象或者field不存在，返回0.
+HSCAN
+HSCAN key cursor [MATCH pattern] [COUNT count] 类似SCAN命令
+</code></pre></li>
+<li><p>使用示例</p>
+<pre><code>127.0.0.1:6379&gt; hset person name jack
+(integer) 1
+127.0.0.1:6379&gt; hset person age 20
+(integer) 1
+127.0.0.1:6379&gt; hset person sex famale
+(integer) 1
+127.0.0.1:6379&gt; hgetall person
+1) &quot;name&quot;
+2) &quot;jack&quot;
+3) &quot;age&quot;
+4) &quot;20&quot;
+5) &quot;sex&quot;
+6) &quot;famale&quot;
+127.0.0.1:6379&gt; hkeys person
+1) &quot;name&quot;
+2) &quot;age&quot;
+3) &quot;sex&quot;
+127.0.0.1:6379&gt; hvals person
+1) &quot;jack&quot;
+2) &quot;20&quot;
+3) &quot;famale&quot;
+</code></pre></li>
+</ul>
+<h4 id="Set（集合）"><a href="#Set（集合）" class="headerlink" title="Set（集合）"></a>Set（集合）</h4><p>可以理解为一堆值不重复的列表，类似数学领域中的集合概念，且Redis也提供了针对集合的求交集、并集、差集等操作。</p>
+<p>set 的内部实现是一个 value永远为null的HashMap，实际就是通过计算hash的方式来快速排重的，这也是set能提供判断一个成员是否在集合内的原因。</p>
+<ul>
+<li>应用场景</li>
+</ul>
+<p>Redis set对外提供的功能与list类似是一个列表的功能，特殊之处在于set是可以自动排重的，当你需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，这个也是list所不能提供的。</p>
+<ul>
+<li><p>相关命令</p>
+<pre><code>SADD
+SADD key member [member ...] 添加一个或者多个元素到集合(set)里
+SACRD
+SCARD key 获取集合里面的元素数量
+SDIFF
+SDIFF key [key ...] 获得队列不存在的元素
+SDIFFSTORE
+SDIFFSTORE destination key [key ...] 获得队列不存在的元素，并存储在一个关键的结果集
+SINTER
+SINTER key [key ...] 获得两个集合的交集
+SINTERSTORE
+SINTERSTORE destination key [key ...] 获得两个集合的交集，并存储在一个集合中
+SISMEMBER
+SISMEMBER key member 确定一个给定的值是一个集合的成员
+SMEMBERS
+SMEMBERS key 获取集合里面的所有key
+SMOVE
+SMOVE source destination member 移动集合里面的一个key到另一个集合
+SPOP
+SPOP key [count] 获取并删除一个集合里面的元素
+SRANDMEMBER
+SRANDMEMBER key [count] 从集合里面随机获取一个元素
+SREM
+SREM key member [member ...] 从集合里删除一个或多个元素，不存在的元素会被忽略
+SUNION
+SUNION key [key ...] 添加多个set元素
+SUNIONSTORE
+SUNIONSTORE destination key [key ...] 合并set元素，并将结果存入新的set里面
+SSCAN
+SSCAN key cursor [MATCH pattern] [COUNT count] 迭代set里面的元素
+</code></pre></li>
+<li><p>使用示例</p>
+<pre><code>redis&gt; SADD myset &quot;Hello&quot;
+(integer) 1
+redis&gt; SADD myset &quot;World&quot;
+(integer) 1
+redis&gt; SMEMBERS myset
+1) &quot;World&quot;
+2) &quot;Hello&quot;
+redis&gt; SADD myset &quot;one&quot;
+(integer) 1
+redis&gt; SISMEMBER myset &quot;one&quot;
+(integer) 1
+redis&gt; SISMEMBER myset &quot;two&quot;
+(integer) 0
+</code></pre></li>
+</ul>
+<h4 id="Sorted-Set（有序集合）"><a href="#Sorted-Set（有序集合）" class="headerlink" title="Sorted Set（有序集合）"></a>Sorted Set（有序集合）</h4><p>Redis有序集合类似Redis集合，不同的是增加了一个功能，即集合是有序的。一个有序集合的每个成员带有分数，用于进行排序。</p>
+<p>Redis有序集合添加、删除和测试的时间复杂度均为O(1)(固定时间，无论里面包含的元素集合的数量)。列表的最大长度为2^32- 1元素(4294967295，超过40亿每个元素的集合)。</p>
+<p>Redis sorted set的内部使用HashMap和跳跃表(SkipList)来保证数据的存储和有序，HashMap里放的是成员到score的映射，而跳跃表里存放的是所有的成员，排序依据是HashMap里存的score,使用跳跃表的结构可以获得比较高的查找效率，并且在实现上比较简单。</p>
+<ul>
+<li>使用场景</li>
+</ul>
+<p>Redis sorted set的使用场景与set类似，区别是set不是自动有序的，而sorted set可以通过用户额外提供一个优先级(score)的参数来为成员排序，并且是插入有序的，即自动排序。当你需要一个有序的并且不重复的集合列表，那么可以选择sorted set数据结构.</p>
+<p>比如用户的积分排行榜需求就可以通过有序集合实现。还有上面介绍的使用List实现轻量级的消息队列，其实也可以通过Sorted Set实现有优先级或按权重的队列。</p>
+<ul>
+<li><p>相关命令</p>
+<pre><code>ZADD
+ZADD key score1 member1 [score2 member2] 添加一个或多个成员到有序集合，或者如果它已经存在更新其分数
+ZCARD
+ZCARD key 得到的有序集合成员的数量
+ZCOUNT
+ZCOUNT key min max 计算一个有序集合成员与给定值范围内的分数
+ZINCRBY
+ZINCRBY key increment member 在有序集合增加成员的分数
+ZINTERSTORE
+ZINTERSTORE destination numkeys key [key ...] 多重交叉排序集合，并存储生成一个新的键有序集合。
+ZLEXCOUNT
+ZLEXCOUNT key min max 计算一个给定的字典范围之间的有序集合成员的数量
+ZRANGE
+ZRANGE key start stop [WITHSCORES] 由索引返回一个成员范围的有序集合（从低到高）
+ZRANGEBYLEX
+ZRANGEBYLEX key min max [LIMIT offset count]返回一个成员范围的有序集合（由字典范围）
+ZRANGEBYSCORE
+ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT] 返回有序集key中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )的成员，有序集成员按 score 值递增(从小到大)次序排列
+ZRANK
+ZRANK key member 确定成员的索引中有序集合
+ZREM
+ZREM key member [member ...] 从有序集合中删除一个或多个成员，不存在的成员将被忽略
+ZREMRANGEBYLEX
+ZREMRANGEBYLEX key min max 删除所有成员在给定的字典范围之间的有序集合
+ZREMRANGEBYRANK
+ZREMRANGEBYRANK key start stop 在给定的索引之内删除所有成员的有序集合
+ZREMRANGEBYSCORE
+ZREMRANGEBYSCORE key min max 在给定的分数之内删除所有成员的有序集合
+ZREVRANGE
+ZREVRANGE key start stop [WITHSCORES] 返回一个成员范围的有序集合，通过索引，以分数排序，从高分到低分
+ZREVRANGEBYSCORE
+ZREVRANGEBYSCORE key max min [WITHSCORES] 返回一个成员范围的有序集合，以socre排序从高到低
+ZREVRANK
+ZREVRANK key member 确定一个有序集合成员的索引，以分数排序，从高分到低分
+ZSCORE
+ZSCORE key member 获取给定成员相关联的分数在一个有序集合
+ZUNIONSTORE
+ZUNIONSTORE destination numkeys key [key ...] 添加多个集排序，所得排序集合存储在一个新的键
+ZSCAN
+ZSCAN key cursor [MATCH pattern] [COUNT count] 增量迭代排序元素集和相关的分数
+</code></pre></li>
+<li><p>使用示例</p>
+<pre><code>redis 127.0.0.1:6379&gt; zadd dbs 100 redis
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd dbs 98 memcached
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd dbs 99 mongodb
+(integer) 1
+redis 127.0.0.1:6379&gt; zadd dbs 99 leveldb
+(integer) 1
+redis 127.0.0.1:6379&gt; zcard dbs
+(integer) 4
+redis 127.0.0.1:6379&gt; zcount dbs 10 99
+(integer) 3
+redis 127.0.0.1:6379&gt; zrank dbs leveldb
+(integer) 1
+redis 127.0.0.1:6379&gt; zrank dbs other
+(nil)
+redis 127.0.0.1:6379&gt; zrangebyscore dbs 98 100
+1) &quot;memcached&quot;
+2) &quot;leveldb&quot;
+3) &quot;mongodb&quot;
+4) &quot;redis&quot;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2017/05/10/redis入门/" data-id="cmq84a2h7000bxsqha5z2ouje" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/01/07/kafka集群/" class="article-date">
@@ -264,661 +1047,9 @@ server.3=120.25.239.155:2888:3888
 
 
   
-    <article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/04/快速排序/" class="article-date">
-  <time datetime="2016-06-04T12:21:10.000Z" itemprop="datePublished">2016-06-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/04/快速排序/">快速排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>在数组中找一个支点(任意),经过一趟排序后，支点左边的数都要比支点小，支点右边的数都要比支点大！</p>
-<p>现在我们有一个数组：int arr[]={1,4,5,67,2,7,8,6,9,44};</p>
-<p>经过一趟排序之后，如果我选择数组中间的数作为支点：7(任意的)，那么第一趟排序后的结果是这样的：{1,4,5,6,2,7,8,67,9,44}</p>
-<p>那么就实现了支点左边的数比支点小，支点右边的数比支点大</p>
-<h4 id="递归分析与代码实现"><a href="#递归分析与代码实现" class="headerlink" title="递归分析与代码实现"></a>递归分析与代码实现</h4><p>现在我们的数组是这样的：{1,4,5,6,2,7,8,67,9,44}，既然我们比7小的在左边，比7大的在右边，那么我们只要将”左边“的排好顺序，又将”右边“的排好序，那整个数组是不是就有序了？</p>
-<p>回顾一下递归：”左边“的排好顺序，”右边“的排好序，跟我们第一趟排序的做法是一样的。</p>
-<p>只不过是参数不一样：第一趟排序是任选了一个支点，比支点小的在左边，比支点大的在右边。那么，我们想要”左边“的排好顺序，只要在”左边“部分找一个支点，比支点小的在左边，比支点大的在右边。</p>
-<p>递归出口也很容易找到：如果数组只有一个元素时，那么就不用排序了</p>
-<p>代码如下：</p>
-<pre><code>public static void main(String[] args) {
-    int[] arr = {1, 4, 5, 67, 2, 7, 8, 6, 9, 44};
-
-    quickSort(arr, 0, 9);
-
-    System.out.println(arr);
-
-
-}
-
-/**
- * 快速排序
- *
- * @param arr
- * @param L   指向数组第一个元素
- * @param R   指向数组最后一个元素
- */
-public static void quickSort(int[] arr, int L, int R) {
-    int i = L;
-    int j = R;
-
-    //支点
-    int pivot = arr[(L + R) / 2];
-
-    //左右两端进行扫描，只要两端还没有交替，就一直扫描
-    while (i &lt;= j) {
-
-        //寻找直到比支点大的数
-        while (pivot &gt; arr[i])
-            i++;
-
-        //寻找直到比支点小的数
-        while (pivot &lt; arr[j])
-            j--;
-
-        //此时已经分别找到了比支点小的数(右边)、比支点大的数(左边)，它们进行交换
-        if (i &lt;= j) {
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-            i++;
-            j--;
-        }
-    }
-    //上面一个while保证了第一趟排序支点的左边比支点小，支点的右边比支点大了。
-
-
-    //“左边”再做排序，直到左边剩下一个数(递归出口)
-    if (L &lt; j)
-        quickSort(arr, L, j);
-
-    //“右边”再做排序，直到右边剩下一个数(递归出口)
-    if (i &lt; R)
-        quickSort(arr, i, R);
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2016/06/04/快速排序/" data-id="cmq84a2hb000jxsqh1bynlczp" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-冒泡排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/03/冒泡排序/" class="article-date">
-  <time datetime="2016-06-03T14:16:29.000Z" itemprop="datePublished">2016-06-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/03/冒泡排序/">冒泡排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="冒泡排序就这么简单"><a href="#冒泡排序就这么简单" class="headerlink" title="冒泡排序就这么简单"></a>冒泡排序就这么简单</h2><p>排序对我们来说是一点也不陌生了，当你打Dota的时候也有天梯分，从高往下数，这个排名是有规律的，就是一种排序。</p>
-<h2 id="冒泡排序的实现"><a href="#冒泡排序的实现" class="headerlink" title="冒泡排序的实现"></a>冒泡排序的实现</h2><blockquote>
-<p>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果他们的顺序错误就把他们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越大的元素会经由交换慢慢“浮”到数列的顶端，故名冒泡排序。</p>
-</blockquote>
-<p>算法描述：</p>
-<ul>
-<li>i从0开始，i与i+1比较，如果i&gt;i+1，那么就互换</li>
-<li>i不断增加，直到i&lt;n-1（n是数组元素的个数，n-1是数组已经最后一个元素） ，一趟下来，可以让数组元素中最大值排在数组的最后面</li>
-</ul>
-<p>从最简单开始，首先我们创建一个数组，该数组有6位数字：</p>
-<pre><code>int[] arrays = {8, 3, 2, 6, 7, 9};
-</code></pre><p>6位数的数组需要5躺排序的，每躺排序之后次数减1(因为前一趟已经把前一趟数的最大值确定下来了)！</p>
-<p>于是我们可以根据for循环和变量将上面的代码进行排序：</p>
-<pre><code>int temp;
-
-//外层循环是排序的趟数
-for (int i = 0; i &lt; arrays.length - 1 ; i++) {
-
-    //内层循环是当前趟数需要比较的次数
-    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
-
-        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
-        if (arrays[j] &gt; arrays[j + 1]) {
-            temp = arrays[j];
-            arrays[j] = arrays[j + 1];
-            arrays[j + 1] = temp;
-        }
-    }
-}
-</code></pre><h2 id="冒泡排序优化"><a href="#冒泡排序优化" class="headerlink" title="冒泡排序优化"></a>冒泡排序优化</h2><p>从上面的例子我们可以看出来，如果数据足够乱的情况下是需要经过5躺比较才能将数组完整排好序。但是我们在第二躺比较后就已经得到排好序的数组了。</p>
-<p>但是，我们的程序在第二趟排序后仍会执行第三趟、第四趟排序。这是没有必要的，因此我们可以对其进行优化一下：</p>
-<ul>
-<li>如果在某躺排序中没有发生交换位置，那么我们可以认为该数组已经排好序了<ul>
-<li>因为我们每趟排序的目的就是将当前趟最大的数置换到对应的位置上，没有发生置换说明就已经排好序了</li>
-</ul>
-</li>
-</ul>
-<p>代码如下：</p>
-<pre><code>//装载临时变量
-int temp;
-
-//记录是否发生了置换， 0 表示没有发生置换、 1 表示发生了置换
-int isChange;
-
-//外层循环是排序的趟数
-for (int i = 0; i &lt; arrays.length - 1; i++) {
-
-    //每比较一趟就重新初始化为0
-    isChange = 0;
-
-    //内层循环是当前趟数需要比较的次数
-    for (int j = 0; j &lt; arrays.length - i - 1; j++) {
-
-        //前一位与后一位与前一位比较，如果前一位比后一位要大，那么交换
-        if (arrays[j] &gt; arrays[j + 1]) {
-            temp = arrays[j];
-            arrays[j] = arrays[j + 1];
-            arrays[j + 1] = temp;
-
-            //如果进到这里面了，说明发生置换了
-            isChange = 1;
-
-        }
-    }
-    //如果比较完一趟没有发生置换，那么说明已经排好序了，不需要再执行下去了
-    if (isChange == 0) {
-        break;
-    }
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2016/06/03/冒泡排序/" data-id="cmq84a2h9000gxsqhhum2vd60" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-递归" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/03/递归/" class="article-date">
-  <time datetime="2016-06-03T14:16:29.000Z" itemprop="datePublished">2016-06-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/03/递归/">递归</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="递归介绍"><a href="#递归介绍" class="headerlink" title="递归介绍"></a>递归介绍</h2><p>递归在程序语言中简单的理解是：方法自己调用自己。</p>
-<p>递归其实和循环是非常像的，循环都可以改写成递归，递归未必能改写成循环，这是一个充分不必要的条件。</p>
-<ul>
-<li>那么，有了循环，为什么还要用递归呢？？在某些情况下(费波纳切数列，汉诺塔)，使用递归会比循环简单很多很多</li>
-</ul>
-<p>想要用递归必须知道两个条件：</p>
-<ul>
-<li>递归出口(终止递归的条件)</li>
-<li>递归表达式(规律)</li>
-</ul>
-<p>技巧：在递归中常常是将问题切割成两个部分(1和整体的思想)，这能够让我们快速找到递归表达式(规律)</p>
-<h2 id="求和"><a href="#求和" class="headerlink" title="求和"></a>求和</h2><p>如果我们使用for循环来进行求和1+2+3+4+….+100，那是很简单的：</p>
-<pre><code>int sum = 0;
-for (int i = 1; i &lt;= 100; i++) {
-
-    sum = sum + i;
-
-}
-System.out.println(&quot;公众号：Java3y：&quot; + sum);
-</code></pre><p>for循环都可以使用递归来进行改写，而使用递归必须要知道两个条件：</p>
-<ul>
-<li>递归出口</li>
-<li>递归表达式(规律)</li>
-</ul>
-<p>我们来找出它的规律：1+2+3+…+n，这是一个求和的运算，那么我们可以假设X=1+2+3+…+n，可以将1+2+3+…+(n-1)看成是一个整体。而这个整体做的事又和我们的初始目的(求和)相同。以我们的高中数学知识我们又可以将上面的式子看成X=sum(n-1)+n</p>
-<p>我们找到我们的递归表达式(规律)，它就是sum(n-1)+n,那递归出口呢，这个题目的递归出口就有很多了，我列举一下：</p>
-<p>如果n=1时，那么就返回1<br>如果n=2时，那么就返回(1+2)=3<br>如果n=3时，那么就返回(1+2+3)=6</p>
-<p>递归表达式和递归出口我们都找到了，下面就代码演示：</p>
-<p>递归出口为1：</p>
-<pre><code>public static void main(String[] args) {
-    System.out.println(sum(100));
-}
-
-/**
- *
- * @param n 要加到的数字，比如题目的100
- * @return
- */
-public static int sum(int n) {
-
-    if (n == 1) {
-        return 1;
-    } else {
-        return sum(n - 1) + n;
-    }
-}
-</code></pre><h2 id="数组内部的最大值"><a href="#数组内部的最大值" class="headerlink" title="数组内部的最大值"></a>数组内部的最大值</h2><p>使用的是循环，那么我们通常这样实现：</p>
-<pre><code>int[] arrays = {2, 3, 4, 5, 1, 5, 2, 9, 5, 6, 8, 3, 2};
-
-//将数组的第一个假设是最大值
-int max = arrays[0];
-
-for (int i = 1; i &lt; arrays.length; i++) {
-
-    if (arrays[i] &gt; max) {
-        max = arrays[i];
-    }
-}
-
-System.out.println(max);
-</code></pre><p>如果我们用递归的话，那怎么用弄呢？首先还是先要找到递归表达式(规律)和递归出口</p>
-<ul>
-<li>我们又可以运用1和整体的思想来找到规律<ul>
-<li>将数组第一个数-&gt;2与数组后面的数-&gt;{3, 4, 5, 1, 5, 2, 9, 5, 6, 8, 3, 2}进行切割，将数组后面的数看成是一个整体X={3, 4, 5, 1, 5, 2, 9, 5, 6, 8, 3, 2}，那么我们就可以看成是第一个数和一个整体进行比较if(2&gt;X) return 2  else(2&lt;X) return X</li>
-<li>而我们要做的就是找出这个整体的最大值与2进行比较。找出整体的最大值又是和我们的初始目的(找出最大值)是一样的</li>
-<li>也就可以写成if( 2&gt;findMax() )return 2 else return findMax()</li>
-</ul>
-</li>
-<li>递归出口，如果数组只有1个元素时，那么这个数组最大值就是它了。</li>
-</ul>
-<p>使用到数组的时候，我们通常为数组设定左边界和右边界，这样比较好地进行切割。</p>
-<ul>
-<li>L表示左边界，往往表示的是数组第一个元素，也就会赋值为0(角标为0是数组的第一个元素)</li>
-<li>R表示右边界，往往表示的是数组的长度，也就会赋值为arrays.length-1（长度-1在角标中才是代表最后一个元素)</li>
-</ul>
-<p>那么我们递归的写法就是：</p>
-<pre><code>public static void main(String[] args) {
-
-      int[] arrays = {2, 3, 4, 5, 1, 5, 2, 9, 5, 6, 8, 3, 1};
-
-      System.out.println(findMax(arrays, 0, arrays.length - 1));
-
-  }
-
-
-  /**
-   * 递归，找出数组最大的值
-   * @param arrays 数组
-   * @param L      左边界，第一个数
-   * @param R      右边界，数组的长度
-   * @return
-   */
-
-  public static int findMax(int[] arrays, int L, int R) {
-
-      //如果该数组只有一个数，那么最大的就是该数组第一个值了
-      if (L == R) {
-          return arrays[L];
-      } else {
-
-          int a = arrays[L];
-          int b = findMax(arrays, L + 1, R);//找出整体的最大值
-
-          if (a &gt; b) {
-              return a;
-          } else {
-              return b;
-          }
-      }
-
-  }
-</code></pre><h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>菲波那切数列长这个样子：{1 1 2 3 5 8 13 21 34 55….. n }</p>
-<p>数学好的同学可能很容易就找到规律了：前两项之和等于第三项</p>
-<p>如果让我们求出第n项是多少，那么我们就可以很简单写出对应的递归表达式了：Z = (n-2) + (n-1)</p>
-<p>递归出口在本题目是需要有两个的，因为它是前两项加起来才得出第三项的值</p>
-<p>同样地，那么我们的递归出口可以写成这样：</p>
-<pre><code>if(n==1) retrun 1;
-if(n==2) return 2;
-</code></pre><p>看一下完整的代码:</p>
-<pre><code>public static void main(String[] args) {
-
-    int[] arrays = {1, 1, 2, 3, 5, 8, 13, 21};
-    //bubbleSort(arrays, 0, arrays.length - 1);
-
-    int fibonacci = fibonacci(10);
-    System.out.println(fibonacci);
-
-}
-
-public static int fibonacci(int n) {
-    if (n == 1) {
-        return 1;
-    } else if (n == 2) {
-        return 1;
-    } else {
-        return (fibonacci(n - 1) + fibonacci(n - 2));
-    }
-
-}
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>要使用递归首先要知道两件事：</p>
-<ul>
-<li>递归出口(终止递归的条件)</li>
-<li>递归表达式(规律)</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2016/06/03/递归/" data-id="cmq84a2hc000mxsqhp6xrzbyg" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Mybatis【与Spring整合】" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/04/11/Mybatis【与Spring整合】/" class="article-date">
-  <time datetime="2016-04-11T12:36:29.000Z" itemprop="datePublished">2016-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/11/Mybatis【与Spring整合】/">Mybatis【与Spring整合】</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="导入jar包"><a href="#导入jar包" class="headerlink" title="导入jar包"></a>导入jar包</h4><p>以下使用的是Oracle数据库来进行测试</p>
-<ul>
-<li>aopalliance.jar</li>
-<li>asm-3.3.1.jar</li>
-<li>aspectjweaver.jar</li>
-<li>c3p0-0.9.1.2.jar</li>
-<li>cglib-2.2.2.jar</li>
-<li>commons-logging.jar</li>
-<li>log4j-1.2.16.jar</li>
-<li>mybatis-3.1.1.jar</li>
-<li>mybatis-spring-1.1.1.jar</li>
-<li>mysql-connector-java-5.1.7-bin.jar</li>
-<li>ojdbc5.jar</li>
-<li>org.springframework.aop-3.0.5.RELEASE.jar</li>
-<li>org.springframework.asm-3.0.5.RELEASE.jar</li>
-<li>org.springframework.beans-3.0.5.RELEASE.jar</li>
-<li>org.springframework.context-3.0.5.RELEASE.jar</li>
-<li>org.springframework.core-3.0.5.RELEASE.jar</li>
-<li>org.springframework.expression-3.0.5.RELEASE.jar</li>
-<li>org.springframework.jdbc-3.0.5.RELEASE.jar</li>
-<li>org.springframework.orm-3.0.5.RELEASE.jar</li>
-<li>org.springframework.transaction-3.0.5.RELEASE.jar</li>
-<li>org.springframework.web.servlet-3.0.5.RELEASE.jar</li>
-<li>org.springframework.web-3.0.5.RELEASE.jar</li>
-</ul>
-<h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><p>create table emps(<br>  eid number(5) primary key,<br>  ename varchar2(20),<br>  esal number(8,2),<br>  esex varchar2(2)<br>);</p>
-<h4 id="创建实体"><a href="#创建实体" class="headerlink" title="创建实体"></a>创建实体</h4><pre><code>package entity;
-
-/**
- * 员工
- * @author AdminTC
- */
-public class Emp {
-    private Integer id;
-    private String name;
-    private Double sal;
-    private String sex;
-    public Emp(){}
-    public Emp(Integer id, String name, Double sal, String sex) {
-        this.id = id;
-        this.name = name;
-        this.sal = sal;
-        this.sex = sex;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Double getSal() {
-        return sal;
-    }
-    public void setSal(Double sal) {
-        this.sal = sal;
-    }
-    public String getSex() {
-        return sex;
-    }
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-}
-</code></pre><h4 id="创建实体与表的映射文件"><a href="#创建实体与表的映射文件" class="headerlink" title="创建实体与表的映射文件"></a>创建实体与表的映射文件</h4><p>&lt;?xml version=”1.0” encoding=”UTF-8” ?&gt;<br>&lt;!DOCTYPE mapper PUBLIC “-//mybatis.org//DTD Mapper 3.0//EN”<br>“<a href="http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;" target="_blank" rel="noopener">http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</a></p>
-<mapper namespace="empNamespace"><br><br>    <resultmap type="entity.Emp" id="empMap"><br>        <id property="id" column="eid"><br>        <result property="name" column="ename"><br>        <result property="sal" column="esal"><br>        <result property="sex" column="esex"><br>    </result></result></result></id></resultmap><br><br>    <!-- 增加员工 --><br>    <insert id="add" parametertype="entity.Emp"><br>        insert into emps(eid,ename,esal,esex) values(#{id},#{name},#{sal},#{sex})<br>    </insert><br><br></mapper>
-
-<h4 id="创建Mybatis映射文件配置环境"><a href="#创建Mybatis映射文件配置环境" class="headerlink" title="创建Mybatis映射文件配置环境"></a>创建Mybatis映射文件配置环境</h4><p>数据库的信息交由Spring管理！Mybatis配置文件负责加载对应映射文件即可</p>
-<pre><code>&lt;configuration&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;zhongfucheng/entity/EmpMapper.xml&quot;/&gt;
-
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre><h4 id="配置Spring核心过滤器【也是加载总配置文件】"><a href="#配置Spring核心过滤器【也是加载总配置文件】" class="headerlink" title="配置Spring核心过滤器【也是加载总配置文件】"></a>配置Spring核心过滤器【也是加载总配置文件】</h4><pre><code>&lt;!-- 核心springmvc核心控制器 --&gt;
-&lt;servlet&gt;
-    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
-    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
-    &lt;init-param&gt;
-        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
-        &lt;param-value&gt;classpath:spring.xml&lt;/param-value&gt;
-    &lt;/init-param&gt;
-&lt;/servlet&gt;
-&lt;servlet-mapping&gt;
-    &lt;servlet-name&gt;DispatcherServlet&lt;/servlet-name&gt;
-    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;
-&lt;/servlet-mapping&gt;
-</code></pre><h4 id="配置数据库信息、事务"><a href="#配置数据库信息、事务" class="headerlink" title="配置数据库信息、事务"></a>配置数据库信息、事务</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
-       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
-       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
-
-
-    &lt;!-- 配置C3P0连接池,目的：管理数据库连接 --&gt;
-    &lt;bean id=&quot;comboPooledDataSourceID&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;
-        &lt;property name=&quot;driverClass&quot; value=&quot;oracle.jdbc.driver.OracleDriver&quot;/&gt;
-        &lt;property name=&quot;jdbcUrl&quot; value=&quot;jdbc:oracle:thin:@127.0.0.1:1521:test&quot;/&gt;
-        &lt;property name=&quot;user&quot; value=&quot;scott&quot;/&gt;
-        &lt;property name=&quot;password&quot; value=&quot;tiger&quot;/&gt;
-    &lt;/bean&gt;
-
-
-    &lt;!-- 配置SqlSessionFactoryBean，目的：加载mybaits配置文件和映射文件，即替代原Mybatis工具类的作用 --&gt;
-    &lt;bean id=&quot;sqlSessionFactoryBeanID&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
-        &lt;property name=&quot;configLocation&quot; value=&quot;classpath:mybatis.xml&quot;/&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
-    &lt;/bean&gt;
-
-
-    &lt;!-- 配置Mybatis的事务管理器，即因为Mybatis底层用的是JDBC事务管事器，所以在这里依然配置JDBC事务管理器 --&gt;
-    &lt;bean id=&quot;dataSourceTransactionManagerID&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
-        &lt;property name=&quot;dataSource&quot; ref=&quot;comboPooledDataSourceID&quot;/&gt;
-    &lt;/bean&gt;
-
-    &lt;!-- 配置事务通知，即让哪些方法需要事务支持 --&gt;
-    &lt;tx:advice id=&quot;tx&quot; transaction-manager=&quot;dataSourceTransactionManagerID&quot;&gt;
-        &lt;tx:attributes&gt;
-            &lt;tx:method name=&quot;*&quot; propagation=&quot;REQUIRED&quot;/&gt;
-        &lt;/tx:attributes&gt;
-    &lt;/tx:advice&gt;
-
-    &lt;!-- 配置事务切面，即让哪些包下的类需要事务 --&gt;
-    &lt;aop:config&gt;
-        &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* cn.com.service.*.*(..))&quot;/&gt;
-        &lt;aop:advisor advice-ref=&quot;tx&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
-    &lt;/aop:config&gt;
-
-    &lt;!--扫描注解--&gt;
-    &lt;context:component-scan base-package=&quot;cn.com&quot;/&gt;
-
-
-&lt;/beans&gt;
-</code></pre><h4 id="创建Dao、Service、Action"><a href="#创建Dao、Service、Action" class="headerlink" title="创建Dao、Service、Action"></a>创建Dao、Service、Action</h4><pre><code>@Repository
-public class EmpDao {
-    @Autowired
-    private SqlSessionFactory sqlSessionFactory;
-    /**
-     * 增加员工
-     */
-    public void add(Emp emp) throws Exception {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        sqlSession.insert(&quot;empNamespace.add&quot;, emp);
-        sqlSession.close();
-    }
-
-
-}
-
-@Service
-public class EmpService {
-
-
-    @Autowired
-    private zhongfucheng.dao.EmpDao empDao;
-    public void addEmp(Emp emp) throws Exception {
-        empDao.add(emp);
-    }
-}
-
-@Controller
-@RequestMapping(&quot;/emp&quot;)
-public class EmpAction {
-
-    @Autowired
-    private EmpService empService;
-
-    @RequestMapping(&quot;/register&quot;)
-    public void register(Emp emp) throws Exception {
-        empService.addEmp(emp);
-        System.out.println(&quot;注册成功&quot;);
-    }
-
-}
-</code></pre><h4 id="JSP页面测试"><a href="#JSP页面测试" class="headerlink" title="JSP页面测试"></a>JSP页面测试</h4><pre><code>&lt;%@ page language=&quot;java&quot; pageEncoding=&quot;UTF-8&quot;%&gt;
-&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;员工注册&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;form action=&quot;${pageContext.request.contextPath}/emp/register.action&quot; method=&quot;POST&quot;&gt;
-        &lt;table border=&quot;2&quot; align=&quot;center&quot;&gt;
-            &lt;tr&gt;
-                &lt;th&gt;编号&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;id&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;姓名&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;薪水&lt;/th&gt;
-                &lt;td&gt;&lt;input type=&quot;text&quot; name=&quot;sal&quot;&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;th&gt;性别&lt;/th&gt;
-                &lt;td&gt;
-                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;男&quot;/&gt;男
-                    &lt;input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;女&quot; checked/&gt;女
-                &lt;/td&gt;
-            &lt;/tr&gt;
-            &lt;tr&gt;
-                &lt;td colspan=&quot;2&quot; align=&quot;center&quot;&gt;
-                    &lt;input type=&quot;submit&quot; value=&quot;注册&quot;/&gt;
-                &lt;/td&gt;
-            &lt;/tr&gt;
-        &lt;/table&gt;
-    &lt;/form&gt;     
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>web.xml加载Spring配置文件</li>
-<li>Spring配置文件配置数据连接池，SessionFactory、事务、扫描注解</li>
-<li>Mybatis总配置文件、实体以及相对应的映射文件</li>
-<li>将映射文件加入到总配置文件中</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2016/04/11/Mybatis【与Spring整合】/" data-id="cmq84a2h60008xsqh733c2t37" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术文章/">技术文章</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </section>
@@ -931,7 +1062,7 @@ public class EmpAction {
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/">Codex</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude-Code/">Claude Code</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/">Codex</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Skill/">Skill</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令行/">命令行</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -940,7 +1071,7 @@ public class EmpAction {
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AI/" style="font-size: 17.5px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Codex/" style="font-size: 10px;">Codex</a> <a href="/tags/分布式/" style="font-size: 12.5px;">分布式</a> <a href="/tags/工程实践/" style="font-size: 10px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 20px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 15px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 12.5px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 12.5px;">软件工程</a>
+      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Claude-Code/" style="font-size: 14px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 14px;">Codex</a> <a href="/tags/Skill/" style="font-size: 10px;">Skill</a> <a href="/tags/分布式/" style="font-size: 12px;">分布式</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/工程实践/" style="font-size: 14px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 18px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 14px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 16px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 14px;">软件工程</a>
     </div>
   </div>
 
@@ -949,7 +1080,7 @@ public class EmpAction {
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -961,23 +1092,23 @@ public class EmpAction {
       <ul>
         
           <li>
+            <a href="/2026/06/10/项目使用Codex有哪些注意事项/">项目使用Codex有哪些注意事项</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/什么是Skill以及如何生成自己的Skill/">什么是Skill，以及如何生成自己的Skill</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/Claude-Code常用指令整理/">Claude Code常用指令整理</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/Claude-Code使用指南从第一次启动到完成一个任务/">Claude Code使用指南：从第一次启动到完成一个任务</a>
+          </li>
+        
+          <li>
             <a href="/2026/06/10/Codex提高软件编程效率的10个技巧/">Codex提高软件编程效率的10个技巧</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/普通开发者使用AI的三条边界/">普通开发者使用AI的三条边界</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/AI-Agent时代的开发工作流/">AI Agent时代的开发工作流</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/2026年重新理解AI编程助手/">2026年，重新理解AI编程助手</a>
-          </li>
-        
-          <li>
-            <a href="/2017/05/10/redis入门/">redis入门</a>
           </li>
         
       </ul>
