@@ -68,10 +68,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-普通开发者使用AI的三条边界" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-项目使用Codex有哪些注意事项" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2026/06/10/普通开发者使用AI的三条边界/" class="article-date">
-  <time datetime="2026-06-10T03:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+    <a href="/2026/05/28/项目使用Codex有哪些注意事项/" class="article-date">
+  <time datetime="2026-05-28T08:00:00.000Z" itemprop="datePublished">2026-05-28</time>
 </a>
     
   </div>
@@ -82,7 +82,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2026/06/10/普通开发者使用AI的三条边界/">普通开发者使用AI的三条边界</a>
+      <a class="article-title" href="/2026/05/28/项目使用Codex有哪些注意事项/">项目使用Codex有哪些注意事项</a>
     </h1>
   
 
@@ -90,46 +90,57 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>AI 工具变强之后，最容易出现两种极端看法。一种是觉得它什么都能做，开发者很快就不重要了；另一种是觉得它经常出错，所以完全不值得用。</p>
-<p>我的感受比较中间：AI 很有用，但它不是魔法。它能帮我们节省大量搜索、整理、样板代码和重复验证的时间，也会在上下文不足、需求模糊、边界复杂时犯错。关键不是用不用，而是知道在哪些边界内用。</p>
-<p>对普通开发者来说，我认为最重要的是三条边界：成本边界、隐私边界、正确性边界。只要这三条边界想清楚，AI 就会从一个让人焦虑的新东西，变成一个可以稳定使用的工具。</p>
-<p><img src="/images/ai-flowcharts/ai-boundaries-decision.svg" alt="普通开发者使用AI的三条边界"></p>
-<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI 的能力越强，越不能无脑使用。因为它不只是生成几句话，还可能参与代码修改、文档总结、日志分析、数据处理，甚至操作开发环境。</p>
-<p>一个成熟的使用方式，不是问“AI 能不能做这件事”，而是问三个问题：</p>
-<p>第一，这件事交给 AI 做，成本是否划算？</p>
-<p>第二，交给 AI 的上下文里，有没有不该暴露的信息？</p>
-<p>第三，AI 给出的结果，能不能被验证？</p>
-<p>如果这三个问题都能回答清楚，就可以大胆用。如果回答不清楚，就应该缩小任务范围，或者干脆自己处理。</p>
-<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>先说成本边界。AI 的成本不只是钱，还包括时间和注意力。一个简单命令、一个熟悉 API、一个五分钟能写完的函数，如果反复和 AI 解释背景，可能反而更慢。比较适合交给 AI 的，是那些信息量大、重复性高、需要整理但风险可控的任务，比如读一批代码总结结构、补测试用例初稿、整理迁移步骤、生成文档草稿。</p>
-<p>再说隐私边界。不要把密钥、生产数据库、用户隐私数据、公司内部敏感信息直接贴给 AI。即使工具声称有企业级保护，也应该遵守最小暴露原则。能脱敏就脱敏，能用样例数据就不用真实数据，能描述结构就不要贴完整内容。</p>
-<p>最后是正确性边界。AI 的回答必须可验证。代码要能跑测试，SQL 要能解释执行计划，配置要能在测试环境验证，技术结论要能找到官方文档或源码依据。对于无法验证的内容，最多只能当成思路，不能当成结论。</p>
-<p>我自己比较喜欢把 AI 任务分成三类。</p>
-<p>第一类是低风险任务，可以直接让它做，比如整理 Markdown、解释报错、生成脚手架、翻译英文文档。</p>
-<p>第二类是中风险任务，可以让它做初稿，但必须 review，比如修改业务代码、补单元测试、调整配置。</p>
-<p>第三类是高风险任务，只能让它辅助分析，不能直接执行，比如生产数据修复、权限策略、支付金额计算、安全漏洞处理。</p>
-<p>这样分层之后，使用 AI 会稳很多。不是每次都纠结“能不能信”，而是先判断任务风险，再决定让它参与到什么程度。</p>
-<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把“说得像真的”当成“真的”。AI 很擅长组织语言，所以它的错误也可能很顺。遇到版本号、API 行为、兼容性、法律合规、安全策略这些问题，最好看官方资料。</p>
-<p>第二个坑是把完整代码库一次性丢给 AI。上下文越多不一定越好，关键是相关。给太多无关信息，既增加成本，也可能让它抓错重点。</p>
-<p>第三个坑是用 AI 掩盖自己没想清楚的问题。如果需求本身模糊，AI 只能扩大这种模糊。比较好的做法是先让它帮你把需求拆清楚，再进入实现。</p>
-<p>第四个坑是跳过复盘。每次 AI 帮你完成一个任务，都可以回头看一下：哪些提示有效，哪些地方它误解了，哪些验证步骤必不可少。用 AI 也需要积累经验。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>普通开发者使用 AI，不需要追每一个新模型，也不需要把所有工作都交出去。真正重要的是建立边界感。</p>
-<p>成本边界提醒我们：不是所有问题都值得用 AI。</p>
-<p>隐私边界提醒我们：不是所有上下文都可以交给 AI。</p>
-<p>正确性边界提醒我们：不是所有回答都能直接相信。</p>
-<p>把这三条边界守住，AI 就会是一个很好的放大器。它放大的不是偷懒，而是开发者已经具备的判断力、表达能力和工程习惯。</p>
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>前面写过一篇《Codex提高软件编程效率的10个技巧》，偏方法论；这篇更像一张检查单：项目真正接入 Codex 时，有哪些地方要先想清楚。</p>
+<p>Codex 这类 coding agent 的能力很强。OpenAI 官方把 Codex 描述为用于软件开发的 coding agent，可以帮助写代码、理解陌生代码库、review 代码、调试问题和自动化开发任务。问题也正在这里：它能做的事情越多，项目越需要明确边界。</p>
+<p>如果只是让它写一段 demo，风险不大；如果让它进入真实仓库、读取配置、修改文件、运行命令，情况就完全不同了。我的原则是：先把权限、上下文、验证、审查、回滚想清楚，再谈效率提升。</p>
+<p><img src="/images/ai-flowcharts/codex-project-checklist.svg" alt="项目使用Codex注意事项流程图"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>项目使用 Codex，要守住四条线：权限线、上下文线、验证线、责任线。</p>
+<p>权限线，是指它能读什么、能写什么、能运行什么命令。不要因为方便就给过大的权限。</p>
+<p>上下文线，是指你要告诉它项目规则、任务边界、验收标准。上下文不给清楚，它只能猜。</p>
+<p>验证线，是指所有输出都要能被测试、构建、手工检查或 review 证明。</p>
+<p>责任线，是指最终合并和发布的人仍然是开发者，不是 AI。</p>
+<p>Codex 可以提高速度，但不能替代工程纪律。相反，越是用 AI，越需要清楚的工程纪律。</p>
+<p><img src="/images/ai-flowcharts/codex-project-review-guide.svg" alt="Codex项目审查指引"></p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>第一步，给项目准备 <code>AGENTS.md</code> 或类似规则文件。里面不需要写太多废话，重点写长期有效规则：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Project Rules</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>Source posts are under source/_posts.</span><br><span class="line"><span class="bullet">- </span>Static images are under source/images.</span><br><span class="line"><span class="bullet">- </span>public is generated output; do not hand-edit it unless generation is blocked.</span><br><span class="line"><span class="bullet">- </span>After changing posts, generate the site and verify public/archives/index.html.</span><br><span class="line"><span class="bullet">- </span>Do not modify deployment config unless explicitly requested.</span><br><span class="line"><span class="bullet">- </span>New Markdown files must use title/date/tags front matter.</span><br></pre></td></tr></table></figure>
+<p>这类规则能减少重复沟通。Codex 官方最佳实践也强调，把项目特定指令写进 <code>AGENTS.md</code> 这类文件，可以帮助 agent 按项目约定工作。</p>
+<p>第二步，把任务写小。不要说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">帮我把博客项目整体优化一下。</span><br></pre></td></tr></table></figure>
+<p>更好的写法是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">新增一篇 2026 年 AI 技术文章，文件放在 source/_posts，图片放在 source/images。</span><br><span class="line">生成静态站后确认 archives 页面出现新标题。</span><br><span class="line">不要修改旧文章内容，不要升级 Hexo 版本。</span><br></pre></td></tr></table></figure>
+<p>第三步，让 Codex 先说明计划。真实项目里，我通常会写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">先不要编辑文件。请先说明你准备查看哪些文件、准备新增或修改哪些文件、验证命令是什么、可能风险是什么。</span><br></pre></td></tr></table></figure>
+<p>这个步骤能提前发现误解。比如它准备升级依赖、删除 public、重构主题，而你的需求只是新增文章，这时就要立刻纠偏。</p>
+<p>第四步，要求它自己验证，但不要只相信它的总结。比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">完成后请运行生成命令，检查归档页是否包含新标题，并说明验证结果。如果命令失败，请贴出关键错误和你的处理方式。</span><br></pre></td></tr></table></figure>
+<p>第五步，人工看 diff。尤其注意：</p>
+<p>是否改了无关文件；</p>
+<p>是否改了部署配置；</p>
+<p>是否把密钥、token、内部地址写进文章或配置；</p>
+<p>是否误删生成文件；</p>
+<p>是否绕过了测试失败；</p>
+<p>是否用“应该可以”代替真实验证。</p>
+<p>第六步，发布前确认回滚路径。对于博客这类项目，至少要知道源文章在哪、生成结果在哪、发布仓库提交是哪一个。如果线上异常，可以回退到上一版发布提交。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑，是把仓库里的所有东西都当成可改。真实项目里，生成目录、锁文件、迁移脚本、部署配置、密钥模板都需要区别对待。Codex 不一定天然知道哪些文件是“碰不得”的，要写进规则。</p>
+<p>第二个坑，是让它在没有验证命令的情况下提交结论。比如“已完成，应该能运行”。这类话没有工程价值。要么跑了命令，要么说明没跑以及为什么没跑。</p>
+<p>第三个坑，是忽略依赖和环境差异。老项目尤其明显：Node 版本、包管理器、旧框架、编码问题，都可能让生成命令失败。遇到这类问题，不要急着升级全家桶，先找最小兼容方案。</p>
+<p>第四个坑，是把 AI 输出直接发布。文章、代码、配置都一样，最后要有人读一遍。AI 可能写错事实、误解业务、过度自信，也可能把本地临时信息写进正文。</p>
+<p>第五个坑，是没有沉淀经验。每次遇到一个项目级规则，都应该考虑写进 <code>AGENTS.md</code>、README、skill 或检查清单。否则下次还会重复踩。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>项目使用 Codex，最重要的不是“让它多做点”，而是“让它在清楚边界内稳定做事”。权限要收住，上下文要写清，验证要真实，review 要保留。</p>
+<p>我比较推荐的节奏是：先从低风险任务开始，比如文档、测试、脚本、小 bug；等项目规则沉淀得足够清楚，再让 Codex 参与更复杂的开发任务。这样既能享受效率提升，也不至于把项目交给一团不可控的自动化。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://developers.openai.com/codex/" target="_blank" rel="noopener">OpenAI Codex</a></li>
+<li><a href="https://developers.openai.com/codex/learn/best-practices" target="_blank" rel="noopener">OpenAI Codex best practices</a></li>
 <li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
-<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
-<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/普通开发者使用AI的三条边界/" data-id="cmq84a2hc000nxsqhci0rcuns" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/05/28/项目使用Codex有哪些注意事项/" data-id="cmq850yj900046kqh5563k2ao" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Codex/">Codex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
 
     </footer>
   </div>
@@ -138,10 +149,10 @@
 
 
   
-    <article id="post-AI-Agent时代的开发工作流" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-什么是Skill以及如何生成自己的Skill" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2026/06/10/AI-Agent时代的开发工作流/" class="article-date">
-  <time datetime="2026-06-10T02:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+    <a href="/2026/05/22/什么是Skill以及如何生成自己的Skill/" class="article-date">
+  <time datetime="2026-05-22T07:00:00.000Z" itemprop="datePublished">2026-05-22</time>
 </a>
     
   </div>
@@ -152,7 +163,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2026/06/10/AI-Agent时代的开发工作流/">AI Agent时代的开发工作流</a>
+      <a class="article-title" href="/2026/05/22/什么是Skill以及如何生成自己的Skill/">什么是Skill，以及如何生成自己的Skill</a>
     </h1>
   
 
@@ -160,40 +171,53 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>以前说到 AI 编程，大多数人想到的是代码补全：写一半函数，它帮你补完；写一个注释，它生成几行实现。这当然有用，但它更像是键盘旁边的加速器。</p>
-<p>现在越来越多工具开始强调 Agent。Agent 和普通聊天助手最大的区别，是它不只是回答问题，而是可以围绕一个目标持续执行：读仓库、找文件、改代码、运行命令、生成 diff、创建分支，甚至提交 pull request。</p>
-<p>这让我想到以前搭建 Hexo 博客的时候，很多事情都是一步一步手工来：写 Markdown、生成静态文件、检查页面、部署到 GitHub Pages。今天这些步骤仍然存在，只是其中一部分可以交给 AI Agent 帮忙跑。开发者要做的，不再只是“亲手敲完每一步”，而是设计一个可靠的工作流。</p>
-<p><img src="/images/ai-flowcharts/ai-agent-workflow.svg" alt="AI Agent开发工作流"></p>
-<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>AI Agent 时代的开发工作流，本质上是从“同步结对”走向“异步委派”。</p>
-<p>同步结对很好理解：你坐在编辑器前，AI 在旁边补代码，你一边看一边改。这适合探索、小修小补、快速理解代码。</p>
-<p>异步委派则更像给同事派任务：你把目标、背景、限制、验收标准说清楚，让 agent 自己在一个隔离环境里完成，然后你再 review 它的结果。OpenAI Codex 和 GitHub Copilot cloud agent 这类工具，都在往这个方向发展。</p>
-<p>这并不意味着开发者可以完全放手。恰恰相反，工作流变复杂之后，人更需要把关。一个好的 agent 任务，应该像一个好的 issue：背景明确、范围可控、验收清楚、失败时容易回滚。</p>
-<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>我理解的 AI Agent 开发工作流，可以分成四步：任务委派、计划、实现、审查。</p>
-<p>第一步是任务委派。不要只写一句“优化一下项目”。更好的写法是：“请阅读文章列表生成逻辑，新增 2026 年文章后确认归档页按年份展示；不要修改主题样式；完成后运行 hexo generate 并说明结果。”这样的任务有目标、有边界、有验证方式。</p>
-<p>第二步是计划。Agent 动手之前，最好先让它说明会改哪些地方、为什么要改、如何验证。这个环节非常重要，因为很多错误不是发生在写代码时，而是发生在理解需求时。方向错了，代码越多越麻烦。</p>
-<p>第三步是实现。实现时要鼓励 agent 小步提交思路，而不是一次性做大改。比如先新增文件，再运行生成，再检查输出。每一步都有反馈，问题就容易定位。</p>
-<p>第四步是审查。审查不是简单看它说“已完成”，而是看实际 diff、命令输出和页面效果。尤其是自动生成内容、批量替换、依赖升级、部署脚本这类任务，一定要确认没有改到不该改的地方。</p>
-<p>如果团队里使用 GitHub 工作流，还可以把 agent 的输出放到 PR 里处理。这样人类 review、CI、讨论记录都还在原来的工程体系里，不会因为用了 AI 就绕过质量门禁。</p>
-<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把 Agent 当成万能自动化。Agent 能执行任务，但它依赖上下文和工具权限。环境不完整、依赖装不上、测试命令缺失、文档过时，都会让它走偏。</p>
-<p>第二个坑是权限给得太大。能读仓库、能改文件、能跑命令已经很强了，如果再加上网络、密钥、生产环境权限，就必须非常谨慎。Agent 适合在隔离环境里处理开发任务，不适合不经审查直接操作生产系统。</p>
-<p>第三个坑是没有验收标准。人类开发者接到模糊需求会反问，Agent 往往会直接猜。猜出来的结果可能看上去很完整，但并不一定是你要的东西。</p>
-<p>第四个坑是忽略团队习惯。一个项目原来怎么写测试、怎么发版、怎么做 code review，不应该因为引入 AI 就全部推翻。更好的方式是让 AI 进入现有流程，而不是让流程迁就 AI。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>AI Agent 带来的变化，不只是“写代码更快”，而是开发任务的组织方式变了。以前很多事情必须人一直盯着做，现在可以把一部分明确任务放到后台执行，人再回来审查结果。</p>
-<p>但越是这样，越需要工程纪律。任务要小，边界要清楚，验证要真实，权限要克制，结果要 review。Agent 做的是执行和辅助判断，人做的是方向、责任和最后确认。</p>
-<p>我觉得这会成为 2026 年之后开发者的一项基本能力：不是和 AI 比谁写代码快，而是学会把 AI 放进可靠的软件工程流程里。</p>
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>用 AI 编程工具一段时间后，我发现一个很现实的问题：很多提示词会被反复复制。比如“请先读代码不要修改”“请按这个格式输出审查结果”“请运行这些验证命令”“请用我们项目的发布流程”。这些话每次都粘一遍，既麻烦，也容易漏。</p>
+<p>Skill 就是为了解决这类问题而出现的。它把一套可复用的工作流程、检查清单、领域知识或工具调用方式，包装成一个可以被 AI 按需加载的能力。你可以把它理解成“给 AI 用的操作手册”，但它比普通文档更强调触发条件和执行步骤。</p>
+<p>Claude Code 官方文档里说，skills 通过 <code>SKILL.md</code> 扩展 Claude 的能力，可以在相关时自动使用，也可以通过 <code>/skill-name</code> 直接调用。Codex 这边也有类似的技能机制：一个 skill 通常包含说明文件，以及可选的脚本、参考资料和资源文件。两者的共同点是：把重复经验沉淀为可复用流程。</p>
+<p><img src="/images/ai-flowcharts/skill-lifecycle.svg" alt="Skill生命周期"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>Skill 不是越大越好，而是越清楚越好。一个好的 skill 应该回答四个问题：</p>
+<p>第一，它解决什么重复问题？</p>
+<p>第二，什么时候应该使用它？</p>
+<p>第三，使用它时要按什么步骤执行？</p>
+<p>第四，输出结果应该如何验证？</p>
+<p>如果一个 skill 只是把一大堆资料塞进去，反而会降低效果。因为 AI 每次使用时会消耗上下文，描述越含糊，越容易触发错误；内容越臃肿，越容易淹没真正关键的步骤。</p>
+<p>我更喜欢把 skill 做成“小而稳”的工具。比如：</p>
+<p><code>hexo-blog-writer</code>：专门指导 AI 写 Hexo 博客文章，包括 front matter、图片路径、生成命令、部署检查。</p>
+<p><code>api-review</code>：专门审查接口改动，包括鉴权、错误码、兼容性、日志、测试。</p>
+<p><code>release-check</code>：专门做发版前检查，包括 diff、测试、配置、回滚方案。</p>
+<p>这些 skill 都有明确边界，比“我的万能开发助手”更容易生效。</p>
+<p><img src="/images/ai-flowcharts/skill-folder-guide.svg" alt="Skill目录结构指引"></p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>一个最小 skill 通常可以从一个文件夹开始：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my-skill/</span><br><span class="line">  SKILL.md</span><br></pre></td></tr></table></figure>
+<p><code>SKILL.md</code> 里最重要的是 front matter 和正文说明：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">name: hexo-blog-writer</span><br><span class="line">description: Use when writing or updating Hexo blog posts with Markdown front matter, images, local generation, and GitHub Pages deployment checks.</span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="section"># Hexo Blog Writer</span></span><br><span class="line"></span><br><span class="line">Use this skill when the user asks to write, update, generate, or deploy posts in this Hexo blog.</span><br><span class="line"></span><br><span class="line"><span class="section">## Workflow</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1. </span>Check existing posts under source/_posts.</span><br><span class="line"><span class="bullet">2. </span>Create UTF-8 Markdown with title, date, and tags.</span><br><span class="line"><span class="bullet">3. </span>Put images under source/images.</span><br><span class="line"><span class="bullet">4. </span>Generate the static site.</span><br><span class="line"><span class="bullet">5. </span>Verify archives and article pages.</span><br><span class="line"><span class="bullet">6. </span>Deploy only after generation succeeds.</span><br><span class="line"></span><br><span class="line"><span class="section">## Rules</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>Do not edit old posts unless requested.</span><br><span class="line"><span class="bullet">- </span>Do not hand-edit public files unless this project's Hexo version requires a workaround.</span><br><span class="line"><span class="bullet">- </span>Always verify the generated archive page contains the new article.</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>description</code> 很关键。它不是给人看的简介，而是帮助 AI 判断什么时候应该加载这个 skill。写得太窄，可能触发不了；写得太宽，又会到处乱触发。</p>
+<p>如果流程需要稳定执行脚本，可以加 <code>scripts/</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my-skill/</span><br><span class="line">  SKILL.md</span><br><span class="line">  scripts/</span><br><span class="line">    validate_front_matter.js</span><br></pre></td></tr></table></figure>
+<p>如果有较长参考资料，可以放到 <code>references/</code>，并在 <code>SKILL.md</code> 里说明什么时候读。这样平时不占上下文，只有需要时才加载。</p>
+<p>如果有模板、示例图片、配置样板，可以放到 <code>assets/</code>。例如写报告、生成幻灯片、创建博客配图时，这个目录很有用。</p>
+<p>我的生成步骤一般是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 先把重复任务写成普通提示词。</span><br><span class="line">2. 连续使用几次后，找出稳定不变的步骤。</span><br><span class="line">3. 把步骤整理成 SKILL.md。</span><br><span class="line">4. 用一个真实任务测试它。</span><br><span class="line">5. 如果触发太频繁，就收窄 description。</span><br><span class="line">6. 如果经常忘步骤，就把规则写得更明确。</span><br></pre></td></tr></table></figure>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑，是把 skill 写成百科。Skill 不是知识库全文，它应该优先保存流程、约束和关键判断。长资料可以放 references，需要时再读。</p>
+<p>第二个坑，是 description 写得太虚。比如“帮助开发”这种描述几乎没有意义。更好的写法是“Use when reviewing API changes for authentication, compatibility, error handling, and tests.”</p>
+<p>第三个坑，是没有真实任务验证。一个 skill 看起来写得很好，不代表实际会触发，也不代表输出稳定。一定要拿真实项目试一次。</p>
+<p>第四个坑，是把易变信息写死。比如某个临时分支、一次性需求、当天的部署地址，不适合写进长期 skill。Skill 应该保存长期有效的规则。</p>
+<p>第五个坑，是让 skill 绕过人工判断。Skill 可以让 AI 更熟悉流程，但不能替你承担最终责任。尤其是部署、删除数据、改权限、处理密钥，仍然要有人确认。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Skill 的本质，是把反复出现的 AI 协作经验产品化。它不神秘，也不一定复杂。只要你发现自己第三次复制同一段提示词，就可以考虑把它做成一个 skill。</p>
+<p>我判断一个 skill 是否值得保留，通常看三个标准：是否减少重复输入，是否降低错误概率，是否让输出更容易验收。满足这三点，就值得沉淀。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
-<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
-<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
+<li><a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude Code skills</a></li>
+<li><a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">Claude Code commands reference</a></li>
+<li><a href="https://developers.openai.com/codex" target="_blank" rel="noopener">Codex skills</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/AI-Agent时代的开发工作流/" data-id="cmq84a2h30004xsqhodog60rx" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/05/22/什么是Skill以及如何生成自己的Skill/" data-id="cmq850yj800036kqhq0646pg7" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工程/">软件工程</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Claude-Code/">Claude Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Codex/">Codex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skill/">Skill</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/工程实践/">工程实践</a></li></ul>
 
     </footer>
   </div>
@@ -202,10 +226,10 @@
 
 
   
-    <article id="post-2026年重新理解AI编程助手" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Claude-Code常用指令整理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2026/06/10/2026年重新理解AI编程助手/" class="article-date">
-  <time datetime="2026-06-10T01:00:00.000Z" itemprop="datePublished">2026-06-10</time>
+    <a href="/2026/05/15/Claude-Code常用指令整理/" class="article-date">
+  <time datetime="2026-05-15T06:00:00.000Z" itemprop="datePublished">2026-05-15</time>
 </a>
     
   </div>
@@ -216,7 +240,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2026/06/10/2026年重新理解AI编程助手/">2026年，重新理解AI编程助手</a>
+      <a class="article-title" href="/2026/05/15/Claude-Code常用指令整理/">Claude Code常用指令整理</a>
     </h1>
   
 
@@ -224,38 +248,139 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>从 2017 年之后，这个博客停了很久。中间几年技术变化很多，但真正让我觉得开发方式被改变的，不是某一个框架，也不是某一种语言，而是 AI 编程助手变得越来越像一个可以一起干活的同事。</p>
-<p>刚开始用 AI 的时候，我更习惯把它当成搜索引擎的升级版：问一个概念，让它解释；贴一段报错，让它分析；想不起某个 API，就让它补一下示例代码。这个阶段确实有用，但用久了会发现，它只是让“查资料”变快了，并没有真正改变开发流程。</p>
-<p>到了 2026 年，我对 AI 编程助手的理解变了。它不是简单替我写几行代码，而是参与到“理解需求、阅读代码、拆分任务、修改实现、运行验证、总结结果”的整个链路里。真正的差别不在于它能不能生成代码，而在于它能不能在一个真实项目里按上下文做事。</p>
-<p><img src="/images/ai-flowcharts/ai-coding-assistant-loop.svg" alt="AI编程助手协作闭环"></p>
-<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>我现在更愿意把 AI 编程助手看成一种协作工具，而不是答案机器。</p>
-<p>答案机器的使用方式是：“我问一个问题，你给我一个答案。”这种方式适合查概念、写小片段、解释命令，但一旦进入真实项目，就很容易失真。因为真实项目里最重要的不是“这段代码理论上怎么写”，而是“在这个项目已有结构里应该怎么改”。</p>
-<p>协作工具的使用方式则不一样。我们需要先让 AI 了解项目背景，再把任务拆成可验证的小步骤，然后让它读代码、提出方案、做修改、跑检查。最后人再 review 它的 diff，而不是直接相信它的结论。</p>
-<p>这也是我认为 2026 年普通开发者最该掌握的能力：不是会不会问“帮我写一个函数”，而是会不会把问题描述成一个清楚、边界明确、可以验收的开发任务。</p>
-<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>第一步是给上下文。不要只说“帮我修一下这个 bug”，而是说清楚现象、期望、相关文件、怎么复现、什么不能改。如果项目里有测试命令，也应该直接告诉它。AI 最怕的是上下文不完整，它会用猜测填空，而猜测在工程里通常会变成 bug。</p>
-<p>第二步是拆任务。比如要做一个功能，不要一上来就让 AI “完整实现”。更稳妥的方式是先让它读相关代码并说明当前结构，再让它给出改动计划。计划确认之后，再让它动手实现。这样做的好处是，中间每一步都能纠偏，不至于最后得到一大坨看起来很努力但方向不对的代码。</p>
-<p>第三步是看 diff。AI 写代码再快，也不能跳过 review。尤其要看三类地方：有没有改到无关文件，有没有引入过度抽象，有没有把异常路径处理得过于乐观。很多时候 AI 的代码能跑通主流程，但边界条件会比较脆。</p>
-<p>第四步是跑测试。没有测试的项目，至少也要跑构建、启动、本地页面检查，或者准备几个手工验证步骤。AI 的自信程度和代码正确率不是一回事。它说“应该可以”没有意义，命令输出和实际页面才有意义。</p>
-<p>第五步是让它总结。每次完成一个任务后，我会让 AI 说明改了什么、为什么这样改、跑了哪些验证、还有什么风险。这个总结不是形式主义，它能帮助人快速进入 review 状态，也能暴露它有没有真的理解任务。</p>
-<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑是把 AI 生成的代码当成最终答案。它可以很快给出一个能看的版本，但工程质量还需要人来兜底。尤其是权限、金额、隐私、并发、删除数据这些地方，不能因为它写得顺手就直接合并。</p>
-<p>第二个坑是一次性给太大的任务。任务越大，AI 越容易在中途丢失重点。一个比较好的经验是，把任务拆到“一个 PR 可以清楚 review”的大小。如果你自己都说不清验收标准，AI 更不可能稳定完成。</p>
-<p>第三个坑是只追求速度。AI 最容易制造一种错觉：好像所有事情都能马上完成。但软件开发里，快只是其中一个指标。可维护、可验证、符合项目风格，很多时候比快更重要。</p>
-<p>第四个坑是忽略成本。2026 年的 AI 工具已经越来越强，但强模型、长上下文、多轮对话、后台 agent 都是有成本的。日常开发中，简单问题可以用轻量方式解决，复杂问题再交给更强的模型或 agent。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>AI 编程助手真正改变的，不是让开发者不用写代码，而是让开发者可以把一部分明确、重复、可验证的工作委派出去。开发者的价值并没有消失，反而更集中在判断、设计、拆解、验证和取舍上。</p>
-<p>如果把 AI 当成搜索框，它只是一个更快的问答工具；如果把它当成协作对象，就需要给它上下文、边界和验收标准。2026 年重新理解 AI 编程助手，我觉得关键就在这里：少一点神奇想象，多一点工程方法。</p>
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>刚开始用 Claude Code 时，我最关心的是“到底有哪些命令”。后来用多了才发现，命令本身不是重点，命令背后的工作流才是重点。一个命令如果不知道什么时候用，很快就会变成收藏夹里的知识；只有放到真实开发场景里，才会变成效率。</p>
+<p>Claude Code 的命令主要在会话里用 <code>/</code> 触发。官方文档说明，输入 <code>/</code> 可以看到当前环境可用的命令，也可以继续输入字母过滤。需要注意的是，不同平台、计划、版本、登录状态下，可见命令可能不完全一样，所以不要把网上某一份命令清单当成绝对真理。</p>
+<p>这篇笔记按开发阶段整理常用命令：项目准备、任务推进、上下文管理、审查发布、排障恢复。每个命令都配一个我会怎么用的场景。</p>
+<p><img src="/images/ai-flowcharts/claude-code-commands-map.svg" alt="Claude Code常用指令地图"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>Claude Code 的命令可以理解为“会话控制器”。它们不是替代自然语言，而是帮助你快速切换模式、控制上下文、查看改动、管理风险。</p>
+<p>我个人最常用的不是最炫的命令，而是这些朴素命令：</p>
+<p><code>/init</code>：新项目第一次接入时生成项目说明。</p>
+<p><code>/plan</code>：复杂任务先进入计划模式，避免直接乱改。</p>
+<p><code>/context</code>：查看上下文占用，判断是不是该压缩或清理。</p>
+<p><code>/compact</code>：长会话继续推进前压缩上下文。</p>
+<p><code>/diff</code>：查看当前文件改动。</p>
+<p><code>/code-review</code>：提交前让 Claude Code 对 diff 做一次审查。</p>
+<p><code>/rewind</code>：方向错了时回退到前面的检查点。</p>
+<p><code>/skills</code>：查看可用 skill，了解当前环境能调用哪些能力。</p>
+<p><img src="/images/ai-flowcharts/claude-code-commands-cheatsheet.svg" alt="Claude Code指令速查"></p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>新项目第一步，我会用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/init</span><br></pre></td></tr></table></figure>
+<p>它适合生成项目级说明，但生成之后不要直接信。你应该打开生成的说明文件，把真实规则补上去，比如安装命令、测试命令、不要修改的目录、发布流程、代码风格。AI 写的项目记忆如果不校对，后面会把错误规则越用越熟。</p>
+<p>遇到稍微复杂一点的任务，我会先用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/plan 给订单列表增加按状态筛选，先不要修改文件</span><br></pre></td></tr></table></figure>
+<p>计划模式的意义，是把“要改什么”提前暴露出来。如果计划里出现了明显不相关的文件，或者准备重构过多内容，就可以及时纠正。</p>
+<p>会话变长后，我会用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/context</span><br></pre></td></tr></table></figure>
+<p>它能帮助你理解上下文被什么占住了。如果一个会话里混了很多无关问题，我通常不会继续硬聊，而是用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/compact 请保留当前任务目标、已修改文件、未完成事项和验证结果</span><br></pre></td></tr></table></figure>
+<p>这个写法比单独 <code>/compact</code> 更稳，因为你告诉它压缩时要保留什么。</p>
+<p>准备验收时，我会用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/diff</span><br></pre></td></tr></table></figure>
+<p>看 diff 是 AI 编程里最重要的习惯之一。不要只看“我改了三个文件，测试通过”这种总结，要看它到底改了什么。</p>
+<p>提交前，可以再跑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/code-review</span><br></pre></td></tr></table></figure>
+<p>如果是安全敏感、权限、支付、登录、数据删除这类改动，我还会要求更严格的审查，并手工看关键路径。</p>
+<p>如果发现方向错了，不要在错误基础上继续补丁叠补丁，可以考虑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/rewind</span><br></pre></td></tr></table></figure>
+<p>这类命令的价值，是让错误回退更可控。相比手动在一堆改动里挑挑拣拣，回到清晰检查点通常更干净。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个提醒：命令要放在消息开头。Claude Code 文档里说明，命令只有在消息开头才会被识别，后面的内容会作为参数传给命令。所以不要写成“请帮我 /plan …”，而应该直接以 <code>/plan</code> 开头。</p>
+<p>第二个提醒：不要迷信命令清单。官方文档也提示，不是所有命令都会出现在每个用户环境中。你本机没有某个命令，不一定是你用错了，也可能是版本、平台、计划或环境差异。</p>
+<p>第三个提醒：<code>/clear</code> 和 <code>/compact</code> 的用途不同。<code>/compact</code> 适合当前任务还没完，但上下文太长；<code>/clear</code> 更适合换一个新任务。不要为了“清爽”把一个还在推进的任务直接清掉。</p>
+<p>第四个提醒：审查命令不能替代人工 review。<code>/code-review</code> 可以帮你发现很多明显问题，但关键业务逻辑、权限边界、数据一致性，仍然需要开发者自己负责。</p>
+<p>第五个提醒：不要把 <code>/init</code> 当成一次性动作。项目结构变了、测试命令变了、发布方式变了，都应该更新项目记忆，否则后面 Claude Code 会一直按照旧规则工作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Claude Code 常用指令可以按一句话记：准备时 <code>/init</code>，复杂任务 <code>/plan</code>，长会话 <code>/context</code> 和 <code>/compact</code>，验收时 <code>/diff</code> 和 <code>/code-review</code>，出问题时 <code>/rewind</code>。</p>
+<p>真正提高效率的不是记住更多命令，而是知道什么时候该让工具停下来想、什么时候该让它动手、什么时候必须由人来验收。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://openai.com/index/introducing-codex/" target="_blank" rel="noopener">OpenAI Codex announcement</a></li>
-<li><a href="https://developers.openai.com/api/docs/guides/agents" target="_blank" rel="noopener">OpenAI Agents docs</a></li>
-<li><a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent" target="_blank" rel="noopener">GitHub Copilot cloud agent docs</a></li>
+<li><a href="https://code.claude.com/docs/en/commands" target="_blank" rel="noopener">Claude Code commands reference</a></li>
+<li><a href="https://code.claude.com/docs/en/interactive-mode" target="_blank" rel="noopener">Claude Code interactive mode</a></li>
+<li><a href="https://code.claude.com/docs/en/cli-reference" target="_blank" rel="noopener">Claude Code CLI reference</a></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2026/06/10/2026年重新理解AI编程助手/" data-id="cmq84a2gz0000xsqhngo76a2w" class="article-share-link">Share</a>
+      <a data-url="https://guxingxianyue.github.io/2026/05/15/Claude-Code常用指令整理/" data-id="cmq850yj600016kqhlkabjong" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Claude-Code/">Claude Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/命令行/">命令行</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Claude-Code使用指南从第一次启动到完成一个任务" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2026/05/08/Claude-Code使用指南从第一次启动到完成一个任务/" class="article-date">
+  <time datetime="2026-05-08T05:00:00.000Z" itemprop="datePublished">2026-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/08/Claude-Code使用指南从第一次启动到完成一个任务/">Claude Code使用指南：从第一次启动到完成一个任务</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="开场个人观察"><a href="#开场个人观察" class="headerlink" title="开场个人观察"></a>开场个人观察</h2><p>这两年 AI 编程工具变化很快，从最早的补全、问答，到现在可以进入项目、读文件、改代码、跑命令的 coding agent，开发方式已经明显不一样了。Claude Code 属于这一类工具：它不是单纯的聊天窗口，而是更靠近终端里的协作开发助手。</p>
+<p>我觉得普通开发者第一次用 Claude Code，最容易踩的坑不是“不会安装”，而是上来就把它当成万能实习生：丢一句“帮我优化项目”，然后等它自己理解所有背景。这样做偶尔能有惊喜，但很难稳定。更好的方式，是把它放进一个清楚的工作流里：先让它认识项目，再让它计划，再让它小步修改，最后看 diff 和验证结果。</p>
+<p>下面这篇笔记不追求把所有功能讲完，而是记录一套适合日常开发的入门流程。只要这套流程跑顺了，后面再去学命令、skills、hooks、MCP，都会自然很多。</p>
+<p><img src="/images/ai-flowcharts/claude-code-guide-flow.svg" alt="Claude Code使用流程"></p>
+<h2 id="核心观点"><a href="#核心观点" class="headerlink" title="核心观点"></a>核心观点</h2><p>Claude Code 的价值不在于“一句话生成一堆代码”，而在于把项目上下文、终端命令和代码修改串起来。你给它的任务越像一个可验收的小 issue，它的输出越容易 review。</p>
+<p>我会把一次比较稳的 Claude Code 使用过程分成六步：</p>
+<p>第一，进入正确的项目目录。AI 工具再强，也需要知道自己应该读哪个仓库、改哪个目录。</p>
+<p>第二，先问项目结构，不急着让它改代码。比如让它说明入口文件、构建命令、测试命令、核心模块和风险点。</p>
+<p>第三，把需求写清楚。最好包括目标、范围、验收标准、限制条件。</p>
+<p>第四，让它先计划。复杂任务尤其不要一开始就让它写文件。</p>
+<p>第五，小步执行。一次只做一个焦点，不要把修 bug、重构、加测试、改样式都塞进同一轮。</p>
+<p>第六，看 diff、跑测试、沉淀规则。AI 生成的代码必须被验证，不能只看它的总结。</p>
+<p><img src="/images/ai-flowcharts/claude-code-guide-terminal.svg" alt="Claude Code终端指引"></p>
+<h2 id="实践方法"><a href="#实践方法" class="headerlink" title="实践方法"></a>实践方法</h2><p>第一次进入一个项目，我会先在项目根目录启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /path/to/project</span><br><span class="line">claude</span><br></pre></td></tr></table></figure>
+<p>如果是在 Windows 上，路径可能类似：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd E:\workspace\your<span class="literal">-project</span></span><br><span class="line">claude</span><br></pre></td></tr></table></figure>
+<p>进入会话后，不要马上说“帮我改”。我更建议第一句这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先不要修改文件。请阅读这个项目的目录结构和关键配置，告诉我：</span><br><span class="line">1. 这是一个什么类型的项目；</span><br><span class="line">2. 入口文件和主要模块在哪里；</span><br><span class="line">3. 安装、测试、构建命令可能是什么；</span><br><span class="line">4. 如果后续要修改代码，哪些目录需要谨慎处理。</span><br></pre></td></tr></table></figure>
+<p>这个提示的作用，是先校准 Claude Code 对项目的理解。如果它一开始就找错入口，后面的修改很容易偏。</p>
+<p>当你已经知道要做什么，可以把需求写成一个小任务：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">目标：给登录页增加错误提示。</span><br><span class="line">范围：只修改登录页组件、登录请求处理和必要的测试。</span><br><span class="line">验收：输入错误密码时显示明确错误；网络失败时提示稍后重试；原有成功登录流程不变。</span><br><span class="line">限制：不要重构全局请求库，不要改路由结构。</span><br><span class="line">验证：完成后运行 npm test 和 npm run build；如果失败，请说明原因。</span><br></pre></td></tr></table></figure>
+<p>如果任务涉及多个文件，我会加一句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">先给计划，不要直接改文件。计划里请列出准备阅读的文件、修改步骤、验证方式和可能风险。</span><br></pre></td></tr></table></figure>
+<p>计划确认后，再让它执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">按这个计划实现。每一步尽量保持最小改动，完成后总结改了哪些文件，并给出验证结果。</span><br></pre></td></tr></table></figure>
+<p>这套节奏看起来慢一点，但实际更省时间。因为你把“方向错了以后返工”的成本提前降下来了。</p>
+<h2 id="踩坑提醒"><a href="#踩坑提醒" class="headerlink" title="踩坑提醒"></a>踩坑提醒</h2><p>第一个坑，是让 Claude Code 同时做太多事。比如“顺便优化一下代码风格、顺便补测试、顺便升级依赖”。这些“顺便”很容易把任务边界打散。我的做法是：一个任务只保留一个核心目标，其他想法另开任务。</p>
+<p>第二个坑，是不看 diff。AI 工具会给你很自信的总结，但总结不等于真实改动。尤其是配置文件、权限文件、构建脚本、数据库迁移脚本，一定要逐个看。</p>
+<p>第三个坑，是把测试命令留到最后才想起来。更好的方式是在任务里直接写清楚“完成后要跑哪些命令”。如果项目没有测试，也要写手工验收标准。</p>
+<p>第四个坑，是没有项目记忆。Claude Code 官方文档提到可以用 <code>/init</code> 生成项目说明，也可以用记忆文件沉淀项目规则。我的理解是：只要某条规则你重复说了三次，就应该写进项目说明里。</p>
+<p>第五个坑，是会话太长还硬撑。长会话里上下文会越来越多，模型可能开始抓不住重点。这个时候应该用上下文管理命令压缩、清理或重新开会话，而不是继续堆提示词。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Claude Code 的入门重点不是背命令，而是建立一个稳定的协作节奏：先读项目，再给计划，小步执行，看 diff，跑验证，沉淀规则。</p>
+<p>如果把它当成“替我写代码的人”，你会经常担心它改错；如果把它当成“可以读项目、执行任务、接受 review 的协作助手”，它的价值会稳定很多。</p>
+<p>我的建议是：先拿一个低风险项目练习，从文档、测试、小 bug 开始，不要一上来就让它改核心链路。等你熟悉它的节奏之后，再逐渐把更复杂的任务交给它。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://code.claude.com/docs/en/cli-reference" target="_blank" rel="noopener">Claude Code CLI reference</a></li>
+<li><a href="https://code.claude.com/docs/en/common-workflows" target="_blank" rel="noopener">Claude Code common workflows</a></li>
+<li><a href="https://code.claude.com/docs/en/interactive-mode" target="_blank" rel="noopener">Claude Code interactive mode</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://guxingxianyue.github.io/2026/05/08/Claude-Code使用指南从第一次启动到完成一个任务/" data-id="cmq850yj400006kqhif4vjuub" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Claude-Code/">Claude Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/编程效率/">编程效率</a></li></ul>
 
     </footer>
   </div>
@@ -851,202 +976,6 @@ redis 127.0.0.1:6379&gt; zrangebyscore dbs 98 100
 
 
   
-    <article id="post-kafka集群" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/01/07/kafka集群/" class="article-date">
-  <time datetime="2017-01-07T04:16:17.000Z" itemprop="datePublished">2017-01-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/07/kafka集群/">kafka集群</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Kafka初识"><a href="#Kafka初识" class="headerlink" title="Kafka初识"></a>Kafka初识</h2><ul>
-<li><p>Kafka使用背景</p>
-<p>  在我们大量使用分布式数据库、分布式计算集群的时候，是否会遇到这样的一些问题：</p>
-<ul>
-<li>我们想分析下用户行为（pageviews），以便我们设计出更好的广告位</li>
-<li>我想对用户的搜索关键词进行统计，分析出当前的流行趋势</li>
-<li>有些数据，存储数据库浪费，直接存储硬盘效率又低</li>
-</ul>
-</li>
-<li><p>Kafka的定义</p>
-<p>  它是一个分布式消息系统,具有高水平扩展和高吞吐量的特点。</p>
-</li>
-</ul>
-<h2 id="Kafka相关概念"><a href="#Kafka相关概念" class="headerlink" title="Kafka相关概念"></a>Kafka相关概念</h2><ul>
-<li><p>AMQP协议：是一个标准开放的应用层的消息中间件（Message Oriented Middleware）协议。AMQP定义了通过网络发送的字节流的数据格式。因此兼容性非常好，任何实现AMQP协议的程序都可以和与AMQP协议兼容的其他程序交互，可以很容易做到跨语言，跨平台。</p>
-</li>
-<li><p>一些基本的概念</p>
-<ul>
-<li>消费者：（Consumer）：从消息队列中请求消息的客户端应用程序</li>
-<li>生产者：（Producer）：向broker发布消息的应用程序</li>
-<li>AMQP服务端（broker）：用来接收生产者发送的消息并将这些消息路由给服务器中的队列，便于fafka将生产者发送的消息，动态的添加到磁盘并给每一条消息一个偏移量，所以对于kafka一个broker就是一个应用程序的实例</li>
-</ul>
-</li>
-</ul>
-<p>kafka支持的客户端语言：Kafka客户端支持当前大部分主流语言，包括：C、C++、Erlang、Java、.net、perl、PHP、Python、Ruby、Go、Javascript<br>可以使用以上任何一种语言和kafka服务器进行通信（即辨析自己的consumer从kafka集群订阅消息也可以自己写producer程序）</p>
-<ul>
-<li><p>Kafka架构</p>
-<p>  生产者生产消息、kafka集群、消费者获取消息这样一种架构，如下图：</p>
-<p>  <img src="https://i.imgur.com/fFh8aZr.png" alt></p>
-<p>  kafka集群中的消息，是通过Topic（主题）来进行组织的，如下图：</p>
-<p>  <img src="https://i.imgur.com/yMOoyNJ.png" alt></p>
-<p>  一些基本的概念：</p>
-<ul>
-<li>主题（Topic）：一个主题类似新闻中的体育、娱乐、教育等分类概念，在实际工程中通常一个业务一个主题。</li>
-<li><p>分区（Partition）：一个Topic中的消息数据按照多个分区组织，分区是kafka消息队列组织的最小单位，一个分区可以看作是一个FIFO（ First Input First Output的缩写，先入先出队列）的队列。</p>
-<p>kafka分区是提高kafka性能的关键所在，当你发现你的集群性能不高时，常用手段就是增加Topic的分区，分区里面的消息是按照从新到老的顺序进行组织，消费者从队列头订阅消息，生产者从队列尾添加消息。</p>
-<p>工作图：<br><img src="https://i.imgur.com/4eSzo4r.png" alt></p>
-<p>备份（Replication）：为了保证分布式可靠性，kafka0.8开始对每个分区的数据进行备份（不同的Broker上），防止其中一个Broker宕机造成分区上的数据不可用。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="Kafka集群搭建"><a href="#Kafka集群搭建" class="headerlink" title="Kafka集群搭建"></a>Kafka集群搭建</h2><ul>
-<li><p>软件环境</p>
-<ul>
-<li>已经搭建好的zookeeper集群(文章最后另写)</li>
-<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
-<li>软件版本kafka_2.11-0.9.0.1.tgz</li>
-</ul>
-</li>
-<li><p>创建目录并下载安装软件</p>
-<pre><code>#下载软件
-wget https://archive.apache.org/dist/kafka/0.9.0.1/kafka_2.11-0.9.0.1.tgz
-#解压软件
-tar -xvf kafka_2.11-0.9.0.1.tgz
-</code></pre></li>
-<li><p>修改配置文件</p>
-<p>  主要关注config/server.properties     </p>
-<pre><code>broker.id=0  #当前机器在集群中的唯一标识，和zookeeper的myid性质一样
-port=9092 #当前kafka对外提供服务的端口默认是9092
-host.name = 120.76.230.134 #这个参数默认是关闭的，在0.8.1有个bug，DNS解析问题，失败率的问题
-#申明此kafka服务器需要监听的端口号，如果是在本机上跑虚拟机运行可以不用配置本项，默认会使用localhost的地址，如果是在远程服务器上运行则必须配置
-listeners = PLAINTEXT://120.76.230.134:9092 
-advertised.host.name = 120.76.230.134
-advertised.listeners=PLAINTEXT://120.76.230.134:9092
-log.dirs=/data/kafka/kafkalogs  #消息存放的目录
-#在log.retention.hours=168 下面新增下面三项
-message.max.byte=5242880
-default.replication.factor=2
-replica.fetch.max.bytes=5242880
-zookeeper.connect=120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 #zookeeper配置地址
-</code></pre></li>
-</ul>
-<pre><code>每个机子的broker.id、host.name都是不一样的，主要是关注以上几项参数配置。
-</code></pre><ul>
-<li><p>启动Kafka集群并测试</p>
-<p>  启动服务</p>
-<pre><code>#从后台启动Kafka集群（3台都需要启动）
-cd /data/kafka/kafka_2.11-0.11.0.1/bin #进入到kafka的bin目录 
-./kafka-server-start.sh -daemon ../config/server.properties
-</code></pre><p>  检查服务是否启动</p>
-<pre><code>#执行命令jps
-22246 Bootstrap
-26393 Kafka
-</code></pre><p>  创建Topic来验证是否创建成功</p>
-<pre><code>#创建Topic
-./kafka-topics.sh --create --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181 --replication-factor 2 --partitions 1 --topic test
-
-#解释
---replication-factor 2   #复制两份
---partitions 1 #创建1个分区
---topic #主题为test
-
-#在一台服务器上创建一个发布者
-#创建一个broker，发布者
-./kafka-console-producer.sh --broker-list 120.76.230.134:9092 --topic test
-
-#在一台服务器上创建一个订阅者
-./kafka-console-consumer.sh --bootstrap-server 120.76.230.134:9092 --topic test --from-beginning
-</code></pre><p>  测试（在发布者那里发布消息看看订阅者那里是否能正常收到~）：</p>
-</li>
-<li><p>其他命令    </p>
-<p>  大部分命令可以去官方文档查看</p>
-<ul>
-<li><p>查看topic</p>
-<pre><code>./kafka-topics.sh --list --zookeeper 120.76.230.134:5181,120.76.193.192:5181,120.25.239.155:5181
-#就会显示我们创建的所有topic
-</code></pre><p>kafka集群搭建完毕</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="zookeeper集群部署"><a href="#zookeeper集群部署" class="headerlink" title="zookeeper集群部署"></a>zookeeper集群部署</h2><ul>
-<li><p>为什么是基数</p>
-<ul>
-<li>集群必须有一半以上的机器统一才能成为leader</li>
-<li>一半的机器挂掉 整个集群挂掉</li>
-</ul>
-</li>
-<li><p>去官网下载好zookeeper包，解压</p>
-</li>
-<li><p>修改配置/conf/zoo.cfg文件</p>
-<pre><code># 基本事件单元，以毫秒为单位，用来控制心跳和超时
-tickTime=2000
-# 参数设定了允许所有跟随者与领导者进行连接并同步的时间，如果在设定的时间段内，半数以上的跟随者未能完成同步，领导者便会宣布放弃领导地位，进行另一次的领导选举
-# 如果zk集群环境数量确实很大，同步数据的时间会变长，因此这种情况下可以适当调大该参数
-#集群中的follower服务器(F)与leader服务器(L)之间 初始连接 时能容忍的最多心跳数（tickTime的数量）
-initLimit=10
-# 参数设定了允许一个跟随者与一个领导者进行同步的时间，如果在设定的时间段内，跟随者未完成同步，它将会被集群丢弃
-# 所有关联到这个跟随者的客户端将连接到另外一个跟随着
-syncLimit=5
-# 存储持久数据的本地文件系统位置
-dataDir=/data/zookeeper-3.4.9/data
-dataLogDir=/data/zookeeper-3.4.9/logs
-# 监听客户端连接的端口
-clientPort=5181
-
-server.1=120.76.230.134:2888:3888
-server.2=120.76.193.192:2888:3888
-server.3=120.25.239.155:2888:3888
-
-#server.1 这个1是服务器的标识也可以是其他的数字， 表示这个是第几号服务器，用来标识服务器，这个标识要写到快照目录下面myid文件里
-#120.76.230.134为集群里的IP地址，第一个端口是master和slave之间的通信端口，默认是2888，第二个端口是leader选举的端口，集群刚启动的时候选举或者leader挂掉之后进行新的选举的端口默认是3888
-</code></pre><p>  zoo_sample.cfg  这个文件是官方给我们的zookeeper的样板文件，给他复制一份命名为zoo.cfg，zoo.cfg是官方指定的文件命名规则。</p>
-</li>
-<li><p>创建myid文件</p>
-<p>  /data/zookeeper-3.4.9/data目录下要配置myid文件，内容跟server.id相对应，比如:1</p>
-<p>  ./zkServer.sh star启动zookeeper，每台都要启动一遍</p>
-</li>
-<li><p>重要配置说明</p>
-<ul>
-<li><p>myid文件和server.myid  在快照目录下存放的标识本台服务器的文件，他是整个zk集群用来发现彼此的一个重要标识。</p>
-</li>
-<li><p>zoo.cfg 文件是zookeeper配置文件 在conf目录里。</p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://guxingxianyue.github.io/2017/01/07/kafka集群/" data-id="cmq84a2h40005xsqhufvpix6g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分布式/">分布式</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -1062,7 +991,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude-Code/">Claude Code</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/">Codex</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Skill/">Skill</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令行/">命令行</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AI/">AI</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Agent/">Agent</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Claude-Code/">Claude Code</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Codex/">Codex</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Skill/">Skill</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/分布式/">分布式</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/命令行/">命令行</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/工程实践/">工程实践</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术文章/">技术文章</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据结构与算法/">数据结构与算法</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/编程效率/">编程效率</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工程/">软件工程</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1071,7 +1000,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Claude-Code/" style="font-size: 14px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 14px;">Codex</a> <a href="/tags/Skill/" style="font-size: 10px;">Skill</a> <a href="/tags/分布式/" style="font-size: 12px;">分布式</a> <a href="/tags/命令行/" style="font-size: 10px;">命令行</a> <a href="/tags/工程实践/" style="font-size: 14px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 18px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 14px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 16px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 14px;">软件工程</a>
+      <a href="/tags/AI/" style="font-size: 20px;">AI</a> <a href="/tags/Agent/" style="font-size: 10px;">Agent</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 13.33px;">Codex</a> <a href="/tags/Skill/" style="font-size: 10px;">Skill</a> <a href="/tags/分布式/" style="font-size: 11.67px;">分布式</a> <a href="/tags/命令行/" style="font-size: 11.67px;">命令行</a> <a href="/tags/工程实践/" style="font-size: 13.33px;">工程实践</a> <a href="/tags/技术文章/" style="font-size: 18.33px;">技术文章</a> <a href="/tags/数据结构与算法/" style="font-size: 13.33px;">数据结构与算法</a> <a href="/tags/编程效率/" style="font-size: 16.67px;">编程效率</a> <a href="/tags/软件工程/" style="font-size: 13.33px;">软件工程</a>
     </div>
   </div>
 
@@ -1080,7 +1009,7 @@ server.3=120.25.239.155:2888:3888
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/06/">六月 2026</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/05/">五月 2026</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1092,23 +1021,23 @@ server.3=120.25.239.155:2888:3888
       <ul>
         
           <li>
-            <a href="/2026/06/10/项目使用Codex有哪些注意事项/">项目使用Codex有哪些注意事项</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/什么是Skill以及如何生成自己的Skill/">什么是Skill，以及如何生成自己的Skill</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/Claude-Code常用指令整理/">Claude Code常用指令整理</a>
-          </li>
-        
-          <li>
-            <a href="/2026/06/10/Claude-Code使用指南从第一次启动到完成一个任务/">Claude Code使用指南：从第一次启动到完成一个任务</a>
-          </li>
-        
-          <li>
             <a href="/2026/06/10/Codex提高软件编程效率的10个技巧/">Codex提高软件编程效率的10个技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/普通开发者使用AI的三条边界/">普通开发者使用AI的三条边界</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/AI-Agent时代的开发工作流/">AI Agent时代的开发工作流</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/10/2026年重新理解AI编程助手/">2026年，重新理解AI编程助手</a>
+          </li>
+        
+          <li>
+            <a href="/2026/06/01/Claude-Code最常用的几个指令/">claude code 最常用的几个指令</a>
           </li>
         
       </ul>
