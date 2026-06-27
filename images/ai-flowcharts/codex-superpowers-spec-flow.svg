@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="600" viewBox="0 0 1080 600" role="img" aria-labelledby="title desc">
+  <title id="title">superpowers 增强 Spec Coding</title>
+  <desc id="desc">展示 Superpowers 如何用澄清、计划、测试、实现、调试、审查和沉淀增强 Spec Coding。</desc>
+  <rect width="1080" height="600" fill="#f8fafc"/>
+  <text x="540" y="44" text-anchor="middle" font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="26" font-weight="700" fill="#111827">Superpowers：把成熟开发流程装进 AI 协作</text>
+  <g font-family="Arial, 'Microsoft YaHei', sans-serif" font-size="15" fill="#111827">
+    <rect x="95" y="95" width="190" height="92" rx="10" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+    <text x="190" y="128" text-anchor="middle" font-weight="700">1. brainstorming</text>
+    <text x="190" y="155" text-anchor="middle">目标/非目标/验收</text>
+    <rect x="360" y="95" width="190" height="92" rx="10" fill="#ffffff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="455" y="128" text-anchor="middle" font-weight="700">2. writing-plans</text>
+    <text x="455" y="155" text-anchor="middle">小步/可验证/可回滚</text>
+    <rect x="625" y="95" width="190" height="92" rx="10" fill="#ffffff" stroke="#059669" stroke-width="2"/>
+    <text x="720" y="128" text-anchor="middle" font-weight="700">3. test-driven-dev</text>
+    <text x="720" y="155" text-anchor="middle">成功/异常/并发</text>
+    <rect x="180" y="295" width="190" height="92" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+    <text x="275" y="329" text-anchor="middle" font-weight="700">4. executing-plans</text>
+    <text x="275" y="356" text-anchor="middle">按计划逐步改动</text>
+    <rect x="445" y="295" width="190" height="92" rx="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2"/>
+    <text x="540" y="329" text-anchor="middle" font-weight="700">5. systematic-debugging</text>
+    <text x="540" y="356" text-anchor="middle">日志/断言/最小修复</text>
+    <rect x="710" y="295" width="190" height="92" rx="10" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+    <text x="805" y="329" text-anchor="middle" font-weight="700">6. code-review</text>
+    <text x="805" y="356" text-anchor="middle">越界/兼容/风险</text>
+    <rect x="310" y="475" width="460" height="56" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="540" y="508" text-anchor="middle" font-weight="700">7. verification + finishing branch：验证、收尾、沉淀经验</text>
+  </g>
+  <g stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M285 141H360"/><path d="M550 141H625"/>
+    <path d="M720 187C660 255 350 248 275 295"/>
+    <path d="M720 187C650 255 585 265 540 295"/>
+    <path d="M720 187C765 245 795 265 805 295"/>
+    <path d="M275 387C335 440 405 465 485 475"/>
+    <path d="M540 387V475"/>
+    <path d="M805 387C745 440 675 465 595 475"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+</svg>
